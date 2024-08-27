@@ -1,0 +1,27 @@
+meta {
+  name: crud
+  type: http
+  seq: 2
+}
+
+post {
+  url: http://localhost:3000/usuario
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "nome": "eduardo",
+    "horaida": 5,
+    "horavolta": 12,
+    "endereco": "rua macacada",
+    "bairro": "floresta",
+    "cidade": "ararangua",
+    "login": "eduardinho",
+    "senha": 1234,
+    "cpf": 1212,
+    "telefone": 999,
+    "email": "eduardo@gmail.com"
+  }
+}
