@@ -33,10 +33,10 @@ export default function Login({ navigation }) {
   return (
     <View style={styles.container}>
       <LinearGradient
-        colors={['black', '#EAEAEA','#EAEAEA','#EAEAEA', 'black']}
+        colors={['', '#EAEAEA','#EAEAEA','#EAEAEA', '']}
         style={styles.background}
       />
-      <BlurView intensity={70} style={styles.blurContainer}>
+      <BlurView intensity={60} style={styles.blurContainer}>
         <Image
           style={styles.imagem}
           source={require('../ft/MAVERIK.png')}
@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#F5F5F5',
+    backgroundColor: '#ffff',
   },
   background: {
     ...StyleSheet.absoluteFillObject,
@@ -93,18 +93,13 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
     alignItems: 'center',
     justifyContent: 'center',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 10 },
-    shadowOpacity: 0.2,
-    shadowRadius: 15,
-    elevation: 5,
   },
   imagem: {
     height: 120,
     width: 120,
     marginBottom: 20,
     borderRadius: 60,
-    borderColor: '#EAEAEA',
+    borderColor: '#ffff',
     borderWidth: 2,
   },
   txt: {
@@ -123,7 +118,7 @@ const styles = StyleSheet.create({
   inputContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    borderRadius: 25,
+    borderRadius: 10,
     paddingHorizontal: 15,
     marginVertical: 10,
     width: '100%',
@@ -146,7 +141,7 @@ const styles = StyleSheet.create({
   button: {
     width: '100%',
     height: 42,
-    borderRadius: 25,
+    borderRadius: 10,
     backgroundColor: 'red',
     alignItems: 'center',
     justifyContent: 'center',
