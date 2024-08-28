@@ -7,7 +7,7 @@ def usuario_controller():
             try:
                 data = request.get_json()
                 print(data)
-                usuario = Usuario(data['nome'], data['horaida'], data['horavolta'], data['endereco'], data['bairro'], data['cidade'], data['login'], data['senha'], data['cpf'], data['telefone'], data['email'])
+                usuario = Usuario(data['nome'], data['horarioida'], data['horariovolta'], data['endereco'], data['bairro'], data['cidade'], data['login'], data['senha'], data['cpf'], data['telefone'], data['email'])
                 db.session.add(usuario)
                 db.session.commit()
                 return 'usuario cadastrado com sucesso', 200
@@ -30,8 +30,8 @@ def usuario_controller():
                 if put_usuario is None:
                     return {'error': 'usuario não encontrado'}, 404
                 put_usuario.nome = data.get('nome', put_usuario.nome)
-                put_usuario.horaida = data.get('horaida', put_usuario.horaida)
-                put_usuario.horavolta = data.get('horavolta', put_usuario.horavolta)
+                put_usuario.horarioida = data.get('horarioida', put_usuario.horarioida)
+                put_usuario.horariovolta = data.get('horariovolta', put_usuario.horariovolta)
                 put_usuario.endereco = data.get('endereco', put_usuario.endereco)
                 put_usuario.bairro = data.get('bairro', put_usuario.bairro)
                 put_usuario.cidade = data.get('cidade', put_usuario.cidade)

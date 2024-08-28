@@ -14,8 +14,8 @@ class Rotas(db.Model):
     rota_ida_id = db.Column(ForeignKey('rota.id'), nullable=False)
     rota_volta_id = db.Column(ForeignKey('rota.id'), nullable=False)
 
-    rota_ida = relationship('Rota', foreig_keys=[rota_ida_id], backref='rotas')
-    rota_volta = relationship('Rota', foreign_keys=[rota_volta_id], backref='rotas')
+    rota_ida = relationship('Rota', foreign_keys=[rota_ida_id], backref='rotas_ida')
+    rota_volta = relationship('Rota', foreign_keys=[rota_volta_id], backref='rotas_volta')
 
 
     def __init__(self, rota_ida_id, rota_volta_id):

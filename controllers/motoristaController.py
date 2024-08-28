@@ -30,8 +30,6 @@ def motorista_controller():
                 if put_motorista is None:
                     return {'error': 'motorista não encontrado'}, 404
                 put_motorista.nome = data.get('nome', put_motorista.nome)
-                put_motorista.horaida = data.get('horaida', put_motorista.horaida)
-                put_motorista.horavolta = data.get('horavolta', put_motorista.horavolta)
                 put_motorista.endereco = data.get('endereco', put_motorista.endereco)
                 put_motorista.bairro = data.get('bairro', put_motorista.bairro)
                 put_motorista.cidade = data.get('cidade', put_motorista.cidade)

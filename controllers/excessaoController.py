@@ -7,7 +7,7 @@ def excessao_controller():
             try:
                 data = request.get_json()
                 print(data)
-                excessao = Excessao(data['descricao'], data['status'])
+                excessao = Excessao(data['descricao'], data['opcao'], data['status'])
                 db.session.add(excessao)
                 db.session.commit()
                 return 'excessao cadastrada com sucesso', 200
@@ -16,7 +16,7 @@ def excessao_controller():
             
         elif request.method == 'GET':
             try:
-                data = excessao.query.all()
+                data = Excessao.query.all()
                 lista = {'excessoes': [excessao.to_dict() for excessao in data]}
                 return lista
             except Exception as e:
@@ -30,6 +30,7 @@ def excessao_controller():
                 if put_excessao is None:
                     return {'error': 'excessao não encontrada'}, 404
                 put_excessao.descricao = data.get('descricao', put_excessao.descricao)
+                put_excessao.opcao = data.get('opcao', put_excessao.opcao)
                 put_excessao.status = data.get('status', put_excessao.status)
                 db.session.commit()
                 return 'excessao atualizada com sucesso', 200

@@ -5,8 +5,8 @@ class Usuario(db.Model):
         return{
             'id': self.id,
             'nome': self.nome,
-            'horaida': self.horaida,
-            'horavolta': self.horavolta,
+            'horarioida': self.horarioida,
+            'horariovolta': self.horariovolta,
             'endereco': self.endereco,
             'bairro': self.bairro,
             'cidade': self.cidade,
@@ -19,8 +19,8 @@ class Usuario(db.Model):
     
     id = db.Column(db.Integer, primary_key = True, nullable=False, unique=True)
     nome = db.Column(db.String(100), nullable=False)
-    horaida = db.Column(db.Time, nullable=False)
-    horavolta = db.Column(db.Time, nullable=False)
+    horarioida = db.Column(db.Integer, nullable=False)
+    horariovolta = db.Column(db.Integer, nullable=False)
     endereco = db.Column(db.String(100), nullable=False)
     bairro = db.Column(db.String(100), nullable=False)
     cidade = db.Column(db.String(100), nullable=False)
@@ -31,10 +31,10 @@ class Usuario(db.Model):
     email = db.Column(db.String(100), nullable=False)
 
 
-    def __init__(self, nome, horaida, horavolta, endereco, bairro, cidade, login, senha, cpf, telefone, email):
+    def __init__(self, nome, horarioida, horariovolta, endereco, bairro, cidade, login, senha, cpf, telefone, email):
         self.nome = nome
-        self.horaida = horaida
-        self.horavolta = horavolta
+        self.horarioida = horarioida
+        self.horariovolta = horariovolta
         self.endereco = endereco
         self.bairro = bairro
         self.cidade = cidade
