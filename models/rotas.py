@@ -11,11 +11,11 @@ class Rotas(db.Model):
         }
     
     id = db.Column(db.Integer, primary_key = True, nullable=False, unique=True)
-    rota_ida_id = db.Column(ForeignKey('rota_ida.id'), nullable=False)
-    rota_volta_id = db.Column(ForeignKey('rota_volta.id'), nullable=False)
+    rota_ida_id = db.Column(ForeignKey('rota.id'), nullable=False)
+    rota_volta_id = db.Column(ForeignKey('rota.id'), nullable=False)
 
-    rota_ida = relationship('rota_ida', backref='rotas')
-    rota_volta = relationship('rota_volta', backref='rotas')
+    rota_ida = relationship('Rota', foreig_keys=[rota_ida_id], backref='rotas')
+    rota_volta = relationship('Rota', foreign_keys=[rota_volta_id], backref='rotas')
 
 
     def __init__(self, rota_ida_id, rota_volta_id):
