@@ -16,7 +16,7 @@ def votacao_controller():
             
         elif request.method == 'GET':
             try:
-                data = votacao.query.all()
+                data = Votacao.query.all()
                 lista = {'votacoes': [votacao.to_dict() for votacao in data]}
                 return lista
             except Exception as e:

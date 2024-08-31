@@ -4,23 +4,16 @@ meta {
   seq: 2
 }
 
-post {
-  url: http://localhost:3000/motorista
+get {
+  url: http://localhost:3000/votacao
   body: json
   auth: none
 }
 
 body:json {
   {
-    "nome": "frasseto",
-    "endereco": "rua negro",
-    "bairro": "escuridao",
-    "cidade": "criciuma",
-    "login": "carvao",
-    "senha": 1111,
-    "cpf": 6667,
-    "telefone": 999,
-    "email": "eduardo@gmail.com"
+    "id": 1,
+    "opcao": 2
   }
   
 }

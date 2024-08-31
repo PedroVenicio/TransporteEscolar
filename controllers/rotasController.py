@@ -16,7 +16,7 @@ def rotas_controller():
             
         elif request.method == 'GET':
             try:
-                data = rotas.query.all()
+                data = Rotas.query.all()
                 lista = {'rotas': [rotas.to_dict() for rotas in data]}
                 return lista
             except Exception as e:
@@ -26,7 +26,7 @@ def rotas_controller():
             try:
                 data = request.get_json()
                 put_rotas_id = data['id']
-                put_rotas = rotas.query.get(put_rotas_id)
+                put_rotas = Rotas.query.get(put_rotas_id)
                 if put_rotas is None:
                     return {'error': 'rotas não encontrada'}, 404
                 put_rotas.rota_ida_id = data.get('rota_ida_id', put_rotas.rota_ida_id)
@@ -40,7 +40,7 @@ def rotas_controller():
             try:
                 data = request.get_json()
                 delete_rotas_id = data['id']
-                delete_rotas = rotas.query.get(delete_rotas_id)
+                delete_rotas = Rotas.query.get(delete_rotas_id)
                 if delete_rotas is None:
                     return {'error': 'rota não encontrada'}, 404
                 db.session.delete(delete_rotas)
