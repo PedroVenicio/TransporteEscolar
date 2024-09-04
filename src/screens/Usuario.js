@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import axios from 'axios';
 
 function Usuario() {
@@ -15,8 +15,10 @@ function Usuario() {
     const [telefone, setTelefone] = useState('');
     const [email, setEmail] = useState('');
 
+    const [get, setGet] = useState([]);
 
-    function cadastrarUsuario() {
+
+    function postUsuarios() {
         if (nome, horarioida, horariovolta, endereco, bairro, cidade, login, senha, cpf, telefone, email !== ''){
             try{
                 axios.post('http://localhost:3000/usuario',
@@ -49,29 +51,54 @@ function Usuario() {
             }
             catch (e) {
                 console.log(e);
-                alert('Erro ao cadastrar')
+                alert('Erro ao cadastrar (dados inválidos)')
             }
         }
         else{
-            alert('Insira dados aos')
+            alert('Insira dados nos campos')
         }
     }
 
+    async function getUsuarios() {
+        const response = await axios.get('http://localhost:3000/usuario');
+        setGet(response.data.usuarios);
+        console.log(get)
+    }
+
+    useEffect(() => {
+        getUsuarios();
+    }, []);
+
     return (
         <div>
-            <h1>Cadastro usuário</h1>
-            <input type='text' value={nome} placeholder='nome' onChange={event => setNome(event.target.value)}/>
-            <input type='text' value={horarioida} placeholder='horario ida' onChange={event => setHorarioida(event.target.value)}/>
-            <input type='text' value={horariovolta} placeholder='horario volta' onChange={event => setHorariovolta(event.target.value)}/>
-            <input type='text' value={endereco} placeholder='endereco' onChange={event => setEndereco(event.target.value)}/>
-            <input type='text' value={bairro} placeholder='bairro' onChange={event => setBairro(event.target.value)}/>
-            <input type='text' value={cidade} placeholder='cidade' onChange={event => setCidade(event.target.value)}/>
-            <input type='text' value={login} placeholder='login' onChange={event => setLogin(event.target.value)}/>
-            <input type='text' value={senha} placeholder='senha' onChange={event => setSenha(event.target.value)}/>
-            <input type='text' value={cpf} placeholder='cpf' onChange={event => setCpf(event.target.value)}/>
-            <input type='text' value={telefone} placeholder='telefone' onChange={event => setTelefone(event.target.value)}/>
-            <input type='text' value={email} placeholder='email' onChange={event => setEmail(event.target.value)}/>
-            
+            <div>
+                <h1>Cadastro usuário</h1>
+                <input type='text' value={nome} placeholder='nome' onChange={event => setNome(event.target.value)}/>
+                <input type='text' value={horarioida} placeholder='horario ida' onChange={event => setHorarioida(event.target.value)}/>
+                <input type='text' value={horariovolta} placeholder='horario volta' onChange={event => setHorariovolta(event.target.value)}/>
+                <input type='text' value={endereco} placeholder='endereco' onChange={event => setEndereco(event.target.value)}/>
+                <input type='text' value={bairro} placeholder='bairro' onChange={event => setBairro(event.target.value)}/>
+                <input type='text' value={cidade} placeholder='cidade' onChange={event => setCidade(event.target.value)}/>
+                <input type='text' value={login} placeholder='login' onChange={event => setLogin(event.target.value)}/>
+                <input type='text' value={senha} placeholder='senha' onChange={event => setSenha(event.target.value)}/>
+                <input type='text' value={cpf} placeholder='cpf' onChange={event => setCpf(event.target.value)}/>
+                <input type='text' value={telefone} placeholder='telefone' onChange={event => setTelefone(event.target.value)}/>
+                <input type='text' value={email} placeholder='email' onChange={event => setEmail(event.target.value)}/>
+                <button onClick={postUsuarios}>
+                    cadastrar
+                </button>
+            </div>
+            <div>
+                <h1>Pesquisar usuario</h1>
+                <button onClick={getUsuarios}>pesquisar</button>
+                <div>
+                    {get.map((usuario) => (
+                        <div key={usuario.id}>
+                            {usuario.nome}
+                        </div>
+                    ))}
+                </div>
+            </div>
         </div>
     );
 }
