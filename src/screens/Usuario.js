@@ -15,6 +15,48 @@ function Usuario() {
     const [telefone, setTelefone] = useState('');
     const [email, setEmail] = useState('');
 
+
+    function cadastrarUsuario() {
+        if (nome, horarioida, horariovolta, endereco, bairro, cidade, login, senha, cpf, telefone, email !== ''){
+            try{
+                axios.post('http://localhost:3000/usuario',
+                    {
+                        nome: nome,
+                        horarioida: horarioida,
+                        horariovolta: horariovolta,
+                        endereco: endereco,
+                        bairro: bairro,
+                        cidade: cidade,
+                        login: login,
+                        senha: senha,
+                        cpf: cpf,
+                        telefone: telefone,
+                        email: email
+                    },
+                )
+                alert('Usuario cadastrado')
+                setNome('')
+                setHorarioida('')
+                setHorariovolta('')
+                setEndereco('')
+                setBairro('')
+                setCidade('')
+                setLogin('')
+                setSenha('')
+                setCpf('')
+                setTelefone('')
+                setEmail('')
+            }
+            catch (e) {
+                console.log(e);
+                alert('Erro ao cadastrar')
+            }
+        }
+        else{
+            alert('Insira dados aos')
+        }
+    }
+
     return (
         <div>
             <h1>Cadastro usuário</h1>
@@ -25,6 +67,11 @@ function Usuario() {
             <input type='text' value={bairro} placeholder='bairro' onChange={event => setBairro(event.target.value)}/>
             <input type='text' value={cidade} placeholder='cidade' onChange={event => setCidade(event.target.value)}/>
             <input type='text' value={login} placeholder='login' onChange={event => setLogin(event.target.value)}/>
+            <input type='text' value={senha} placeholder='senha' onChange={event => setSenha(event.target.value)}/>
+            <input type='text' value={cpf} placeholder='cpf' onChange={event => setCpf(event.target.value)}/>
+            <input type='text' value={telefone} placeholder='telefone' onChange={event => setTelefone(event.target.value)}/>
+            <input type='text' value={email} placeholder='email' onChange={event => setEmail(event.target.value)}/>
+            
         </div>
     );
 }
