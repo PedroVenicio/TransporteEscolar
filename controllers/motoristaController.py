@@ -16,7 +16,7 @@ def motorista_controller():
             
         elif request.method == 'GET':
             try:
-                data = motorista.query.all()
+                data = Motorista.query.all()
                 lista = {'motoristas': [motorista.to_dict() for motorista in data]}
                 return lista
             except Exception as e:
