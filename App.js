@@ -1,10 +1,11 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Fontisto, MaterialIcons } from '@expo/vector-icons';
+import { Fontisto, MaterialIcons, AntDesign } from '@expo/vector-icons';
+import axios from 'axios';
 
 import Login from './Screens/Login_tela';
-import Home from './Screens/Home_tela';
+import Votacao from './Screens/Votacao_tela';
 import Localizacao from './Screens/Localizacao';
 import Pagamento from './Screens/Pagamentos';
 
@@ -31,11 +32,11 @@ function HomeTabs() {
         }}
       />
       <Tab.Screen
-        name='Home'
-        component={Home}
+        name='Votacao'
+        component={Votacao}
         options={{
-          tabBarLabel: 'Home',
-          tabBarIcon: ({ color }) => (<Fontisto name="home" size={30} color={color} />)
+          tabBarLabel: 'Votação',
+          tabBarIcon: ({ color }) => (<AntDesign name="checksquareo" size={24} color={color} />)
         }}
       />
       <Tab.Screen
