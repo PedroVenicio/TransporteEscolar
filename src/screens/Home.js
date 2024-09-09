@@ -14,6 +14,14 @@ function Home() {
         navigate('/usuario');
     };
 
+    function motoristaCadAction() {
+        navigate('/motorista');
+    };
+
+    function vanCadAction() {
+        navigate('/van');
+    };
+
     return (
         <div>
             <h1>Tela inicial</h1>
@@ -22,6 +30,12 @@ function Home() {
             </button>
             <button onClick={userCadAction}>
                 Usuario
+            </button>
+            <button onClick={motoristaCadAction}>
+                Motorista
+            </button>
+            <button onClick={vanCadAction}>
+                Van
             </button>
         </div>
     );
