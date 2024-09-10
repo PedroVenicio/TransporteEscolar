@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View, StyleSheet, Text, Image, TouchableOpacity, Modal, Pressable } from 'react-native';
 import { CheckBox } from '@rneui/themed';
+import axios from 'axios';
 
 
 export default function Votacao({ navigation }) {
@@ -10,8 +11,21 @@ export default function Votacao({ navigation }) {
   const [selectedVotos, setSelectedVotos] = useState(null);
   const votos = ['vou e volto', 'vou, mas não volto', 'não vou, mas volto', 'não vou e não volto'];
 
-  function postData() {
-
+  function postVotacao() {
+    try {
+      axios.post('http://localhost:3000/votacao',
+        {
+          opcao: selectedVotos,
+          userId: 10,
+        }
+      )
+      alert('Voto cadastrado.')
+      setModalVisible(false);
+    }
+    catch (error) {
+      console.log(error);
+      alert('Erro ao votar. Tente novamente mais tarde')
+    }
   }
 
   return (
@@ -40,7 +54,7 @@ export default function Votacao({ navigation }) {
         }}>
         <View>
           <Text>Confirmar voto: "{selectedVotos}"?</Text>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={postVotacao}>
             <Text>Sim</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={() => setModalVisible(!modalVisible)}>
