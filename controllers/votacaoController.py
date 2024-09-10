@@ -2,13 +2,20 @@ from flask import request
 from models.votacao import Votacao
 from database.db import db
 
+votos = ['vou e volto', 'vou, mas não volto', 'não vou, mas volto', 'não vou e não volto']
+
 def votacao_controller():
         if request.method == 'POST':
             try:
-                data = request.get_json()
-                print(data)
-                votacao = Votacao(data['opcao'])
-                db.session.add(votacao)
+                votacao = request.get_json()
+                print(votacao)
+                idUser = votacao['userId']
+                for i in votos:
+                    if i == votacao['opcao']:
+                        opcao = votos.index(i) + 1
+                        data = {"opcao": opcao, "userId": idUser}
+                voto = Votacao(data['opcao'], data['userId'])
+                db.session.add(voto)
                 db.session.commit()
                 return 'votacao cadastrada com sucesso', 200
             except Exception as e:
@@ -30,6 +37,7 @@ def votacao_controller():
                 if put_votacao is None:
                     return {'error': 'votacao não encontrada'}, 404
                 put_votacao.opcao = data.get('opcao', put_votacao.opcao)
+                put_votacao.userId = data.get('userId', put_votacao.userId)
                 db.session.commit()
                 return 'votacao atualizada com sucesso', 200
             except Exception as e:

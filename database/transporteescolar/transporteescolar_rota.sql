@@ -16,31 +16,31 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `rotas`
+-- Table structure for table `rota`
 --
 
-DROP TABLE IF EXISTS `rotas`;
+DROP TABLE IF EXISTS `rota`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `rotas` (
+CREATE TABLE `rota` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `rota_ida_id` int(11) NOT NULL,
   `rota_volta_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `rota_ida_id` (`rota_ida_id`),
   KEY `rota_volta_id` (`rota_volta_id`),
-  CONSTRAINT `rotas_ibfk_1` FOREIGN KEY (`rota_ida_id`) REFERENCES `rota_ida` (`id`),
-  CONSTRAINT `rotas_ibfk_2` FOREIGN KEY (`rota_volta_id`) REFERENCES `rota_volta` (`id`)
+  CONSTRAINT `rota_ibfk_1` FOREIGN KEY (`rota_ida_id`) REFERENCES `rota_ida` (`id`),
+  CONSTRAINT `rota_ibfk_2` FOREIGN KEY (`rota_volta_id`) REFERENCES `rota_volta` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `rotas`
+-- Dumping data for table `rota`
 --
 
-LOCK TABLES `rotas` WRITE;
-/*!40000 ALTER TABLE `rotas` DISABLE KEYS */;
-/*!40000 ALTER TABLE `rotas` ENABLE KEYS */;
+LOCK TABLES `rota` WRITE;
+/*!40000 ALTER TABLE `rota` DISABLE KEYS */;
+/*!40000 ALTER TABLE `rota` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
