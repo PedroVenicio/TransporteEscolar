@@ -1,5 +1,5 @@
 import React from 'react';
-import './style/style.css';
+import styles from '../styles/style.module.css';
 import { useNavigate } from 'react-router-dom';
 
 function Home() {
@@ -23,7 +23,7 @@ function Home() {
     };
 
     return (
-        <div>
+        <div className={styles.container}>
             <h1>Tela inicial</h1>
             <button onClick={backAction}>
                 Voltar
