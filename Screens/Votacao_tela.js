@@ -13,7 +13,7 @@ export default function Votacao({ navigation }) {
 
   function postVotacao() {
     try {
-      axios.post('http://localhost:3000/votacao',
+      axios.post('http://192.168.0.223:3000/votacao',
         {
           opcao: selectedVotos,
           userId: 10,
