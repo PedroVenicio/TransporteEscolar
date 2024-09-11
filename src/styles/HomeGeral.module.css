@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
 .container {
   display: flex;
   flex-direction: column;
@@ -6,15 +8,52 @@
 
 .cabecalho {
   display: flex;
-  height: 10vh;
+  height: 12vh;
   width: 100%;
   align-content: center;
   text-align: center;
   align-items: center;
+  justify-content: space-between;
 }
 
 .logo {
   height: 30vh;
+}
+
+.direcionar{
+  height: 100%;
+  width: 46%;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 700;
+  color: #860204; 
+  align-content: center;
+  text-align: right;
+  cursor: default;
+}
+
+.direcionar span {
+  margin-right: 1rem; 
+}
+
+.social {
+  height: 100%;
+  width: 25%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px; 
+}
+
+.facebook, .instagram, .threads, .wpp {
+  width: 9%;
+  margin-right: 5px; 
+  object-fit: contain;
+  transition: transform 0.3s ease;
+  border-radius: 16px;
+}
+
+.facebook:hover, .instagram:hover, .threads:hover, .wpp:hover {
+  transform: scale(1.2); 
 }
 
 .botao {
@@ -29,11 +68,11 @@
   position: relative;
   overflow: hidden;
   z-index: 1;
-  background-color: #B90505; 
+  background-color: #860204; 
   border: none; 
   cursor: pointer;
   text-align: center;
-  margin-left: 75%; 
+  margin-left: 10px; 
 }
 
 .botao:after {
@@ -62,7 +101,7 @@
 }
 
 .onibus1 {
-  height: 100vh;
+  height: 110vh;
   width: 100%;
   object-fit: cover;
   position: relative; 
@@ -74,12 +113,21 @@
   left: 0;
   height: 100%;
   width: 100%;
-  background-color: rgba(0, 0, 0, 0.5); 
+  background-color: rgba(0, 0, 0, 0.4); 
   pointer-events: none; 
-  z-index: 1; 
 }
 
-.teste {
-  height: 10vh;
+.Servicos {
+  height: 120vh;
   width: 100%;
-}
+ }
+
+.Comotrabalhamos {
+  height: 120vh;
+  width: 100%;
+ }
+
+.Localizacao {
+  height: 120vh;
+  width: 100%;
+ }
