@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, StyleSheet, Text, Image, TouchableOpacity, Modal, Pressable } from 'react-native';
 import { CheckBox } from '@rneui/themed';
 import axios from 'axios';
+import * as Network from 'expo-network';
+
 
 
 export default function Votacao({ navigation }) {
@@ -11,9 +13,22 @@ export default function Votacao({ navigation }) {
   const [selectedVotos, setSelectedVotos] = useState(null);
   const votos = ['vou e volto', 'vou, mas não volto', 'não vou, mas volto', 'não vou e não volto'];
 
+  const [ip, setIp] = useState(null); 
+  const [disable, setDisable] = useState(false)
+
+  const ipCatch = async () => {
+    const ip = await Network.getIpAddressAsync()
+    setIp(ip)
+  }
+
+  useEffect(() => {
+    ipCatch()
+    horario()
+  }, [])
+
   function postVotacao() {
     try {
-      axios.post('http://192.168.0.223:3000/votacao',
+      axios.post('http://10.119.0.19:3000/votacao',
         {
           opcao: selectedVotos,
           userId: 10,
@@ -21,6 +36,8 @@ export default function Votacao({ navigation }) {
       )
       alert('Voto cadastrado.')
       setModalVisible(false);
+      setSelectedVotos(null)
+      setDisable(true)
     }
     catch (error) {
       console.log(error);
@@ -28,6 +45,10 @@ export default function Votacao({ navigation }) {
     }
   }
 
+  async function horario() {
+    const data = new Date()
+    alert(data)
+  }
   return (
     <View style={styles.container}>
       {votos.map((votos, index) => (
@@ -39,6 +60,7 @@ export default function Votacao({ navigation }) {
             checkedIcon="dot-circle-o"
             uncheckedIcon="circle-o"
             checkedColor="red"
+            disabled={disable}
           />
         </View>
       ))}
