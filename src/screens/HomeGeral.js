@@ -7,6 +7,7 @@ import facebook from "../ft/facebook.png";
 import instagram from "../ft/instagram.png";
 import threads from "../ft/threads.png";
 import wpp from "../ft/wpp.png";
+import van from "../ft/van.png";
 
 function HomeGeral() {
   const navigate = useNavigate();
@@ -33,22 +34,22 @@ function HomeGeral() {
           <span onClick={() => scrollToSection('localizacao')}>Localização</span>
         </div>
         <nav className={styles.social}>
-          <img 
-            src={facebook} 
-            className={styles.facebook} 
-            onClick={() => window.location.href = "https://www.facebook.com/aravansturismo/?locale=pt_BR"} 
+          <img
+            src={facebook}
+            className={styles.facebook}
+            onClick={() => window.location.href = "https://www.facebook.com/aravansturismo/?locale=pt_BR"}
           />
-          <img 
-            src={instagram} 
-            className={styles.instagram} 
+          <img
+            src={instagram}
+            className={styles.instagram}
             onClick={() => window.location.href = "https://www.instagram.com/explore/locations/965953128/ara-vans-viagens-e-turismo/"}
           />
-          <img src={threads} 
-            className={styles.threads} 
+          <img src={threads}
+            className={styles.threads}
             onClick={() => window.location.href = "https://www.threads.net/@aravanstur"}
           />
-          <img src={wpp} 
-            className={styles.wpp} 
+          <img src={wpp}
+            className={styles.wpp}
             onClick={() => window.location.href = "https://api.whatsapp.com/send?phone=5548999999180&text=WhatsApp%20AraVans"}
           />
         </nav>
@@ -63,18 +64,33 @@ function HomeGeral() {
       </div>
 
       <div id="servicos" className={styles.Servicos}>
-        <h2>Serviços</h2>
-        
+        <div className={styles.titulo}>
+          <h2>Serviços</h2>
+        </div>
+        <div className={styles.centroServico}>
+          <div className={styles.cardServico}>
+          <img src={van} className={styles.van} />
+          </div>
+
+          <div className={styles.cardServico}>
+          <img src={van} className={styles.van} />
+          </div>
+
+          <div className={styles.cardServico}>
+          <img src={van} className={styles.van} />
+          </div>
+        </div>
+
       </div>
 
       <div id="trabalhamos" className={styles.Comotrabalhamos}>
         <h2>Como trabalhamos</h2>
-        
+
       </div>
 
       <div id="localizacao" className={styles.Localizacao}>
         <h2>Localização</h2>
-        
+
       </div>
     </div>
   );
