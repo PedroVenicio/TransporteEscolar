@@ -32,7 +32,7 @@ function HomeGeral() {
           <span onClick={() => scrollToSection('trabalhamos')}>Como trabalhamos</span>
           <span onClick={() => scrollToSection('localizacao')}>Localização</span>
         </div>
-        <div className={styles.social}>
+        <nav className={styles.social}>
           <img 
             src={facebook} 
             className={styles.facebook} 
@@ -51,7 +51,7 @@ function HomeGeral() {
             className={styles.wpp} 
             onClick={() => window.location.href = "https://api.whatsapp.com/send?phone=5548999999180&text=WhatsApp%20AraVans"}
           />
-        </div>
+        </nav>
         <button className={styles.botao} onClick={backAction}>
           Login
         </button>
