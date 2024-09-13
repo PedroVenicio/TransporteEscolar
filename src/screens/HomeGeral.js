@@ -1,13 +1,22 @@
 import React from 'react';
+import Slider from 'react-slick';
 import styles from '../styles/HomeGeral.module.css';
 import { useNavigate } from 'react-router-dom';
 import logo from "../ft/logo.png";
-import onibus1 from "../ft/onibus1.jpg";
+import onibus1 from "../ft/onibus1.png";
 import facebook from "../ft/facebook.png";
 import instagram from "../ft/instagram.png";
 import threads from "../ft/threads.png";
 import wpp from "../ft/wpp.png";
 import van from "../ft/van.png";
+import onibus2 from "../ft/onibus2.png";
+import seguranca from "../ft/seguranca.png";
+import qualidade from "../ft/qualidade.png";
+import foto1 from "../ft/foto1.png"; 
+import foto2 from "../ft/foto2.png"; 
+import foto3 from "../ft/foto3.png"; 
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 function HomeGeral() {
   const navigate = useNavigate();
@@ -22,6 +31,16 @@ function HomeGeral() {
       section.scrollIntoView({ behavior: 'smooth' });
     }
   }
+
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 3000,
+  };
 
   return (
     <div className={styles.container}>
@@ -42,7 +61,7 @@ function HomeGeral() {
           <img
             src={instagram}
             className={styles.instagram}
-            onClick={() => window.location.href = "https://www.instagram.com/explore/locations/965953128/ara-vans-viagens-e-turismo/"}
+            onClick={() => window.location.href = "https://www.instagram.com/aravanstur/"}
           />
           <img src={threads}
             className={styles.threads}
@@ -59,38 +78,122 @@ function HomeGeral() {
       </div>
 
       <div id="home" className={styles.corpo}>
-        <img src={onibus1} className={styles.onibus1} alt="Onibus" />
-        <div className={styles.onibus1Overlay}></div>
+        <div className={styles.imagemContainer}>
+          <img src={onibus1} className={styles.imagem} alt="Onibus" />
+          <div className={styles.overlay}>
+            <div className={styles.overlayContent}>
+              <txt>Conheça nossa equipe e frota!</txt>
+              <button onClick={() => scrollToSection('servicos')}>Clique!</button>
+            </div>
+          </div>
+        </div>
       </div>
 
       <div id="servicos" className={styles.Servicos}>
         <div className={styles.titulo}>
-          <h2>Serviços</h2>
+          <txt>Serviços</txt>
         </div>
         <div className={styles.centroServico}>
           <div className={styles.cardServico}>
-          <img src={van} className={styles.van} />
+            <img src={van} className={styles.van} />
+            <div className={styles.TitServico}>
+              <txt>titulo 1</txt>
+            </div>
+            <div className={styles.descritivoServico}>
+              <txt>...</txt>
+            </div>
           </div>
 
           <div className={styles.cardServico}>
-          <img src={van} className={styles.van} />
+            <img src={van} className={styles.van} />
+            <div className={styles.TitServico}>
+              <txt>titulo 2</txt>
+            </div>
+            <div className={styles.descritivoServico}>
+              <txt>...</txt>
+            </div>
           </div>
 
           <div className={styles.cardServico}>
-          <img src={van} className={styles.van} />
+            <img src={van} className={styles.van} />
+            <div className={styles.TitServico}>
+              <txt>titulo 3</txt>
+            </div>
+            <div className={styles.descritivoServico}>
+              <txt>...</txt>
+            </div>
           </div>
         </div>
-
       </div>
 
-      <div id="trabalhamos" className={styles.Comotrabalhamos}>
-        <h2>Como trabalhamos</h2>
-
+      <div id="trabalhamos" className={styles.comotrabalhamos}>
+        <div className={styles.titulo}>
+          <txt>Como trabalhamos?</txt>
+        </div>
+        <div className={styles.centroComotrab}>
+          <div className={styles.imgonibus2}>
+            <img src={onibus2} className={styles.onibus2} />
+          </div>
+          <div className={styles.cmtrabespecif}>
+            <div className={styles.valores}>
+              <div className={styles.divimgicon}>
+                <img src={seguranca} className={styles.imgicon} />
+              </div>
+              <div className={styles.divtxt}>
+                <div className={styles.TTtxt}>
+                  <txt>Segurança</txt>
+                </div>
+                <div className={styles.txt}>
+                  <txt>.....</txt>
+                </div>
+              </div>
+            </div>
+            <div className={styles.valores}>
+              <div className={styles.divimgicon}>
+                <img src={qualidade} className={styles.imgicon} />
+              </div>
+              <div className={styles.divtxt}>
+                <div className={styles.TTtxt}>
+                  <txt>Qualidade</txt>
+                </div>
+                <div className={styles.txt}>
+                  <txt>.....</txt>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
-      <div id="localizacao" className={styles.Localizacao}>
-        <h2>Localização</h2>
-
+      <div id="localizacao" className={styles.localizacao}>
+        <div className={styles.titulo}>
+          <txt>Venha até nós!</txt>
+        </div>
+        <div className={styles.meiolocalizacao}>
+          <div className={styles.fotoslocal}>
+            <Slider {...settings}>
+              <div>
+                <img src={foto1} alt="Foto 1" style={{ width: '100%', height: 'auto' }} />
+              </div>
+              <div>
+                <img src={foto2} alt="Foto 2" style={{ width: '100%', height: 'auto' }} />
+              </div>
+              <div>
+                <img src={foto3} alt="Foto 3" style={{ width: '100%', height: 'auto' }} />
+              </div>
+            </Slider>
+          </div>
+          <div className={styles.linkloc}>
+            <iframe
+              src="https://www.google.com/maps/embed/v1/place?key=AIzaSyBloQgYAwgxRmK4wPpBIlyI-u5dxL7DaJc&amp;q=RUA%20ANASTACIO%20JOAO%20DE%20SOUZA%2C%20633%20-%20URUSSANGUINHA%2C%20ARARANGUA%20-%20SC%2C%20Brasil&amp;zoom=16allowfullscreen"
+              width="100%"
+              height="100%"
+              style={{ border: 0 }}
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+            ></iframe>
+          </div>
+        </div>
       </div>
     </div>
   );
