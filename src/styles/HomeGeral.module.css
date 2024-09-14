@@ -197,19 +197,19 @@
 
 .cardServico {
   width: 30%;
-  height: 100%;
-  margin: 0 30px; 
+  height: 90%;
+  margin: 0 10px; 
   display: flex;
   align-items: center;
-  box-shadow: 1px 1px 10px #dad5d5;
+  box-shadow: 1px 1px 10px #d8d6d6;
   border-radius: 4%;
   flex-direction: column;
 }
 
 .van {
-  width: 30%;
-  height: 20%;
-  filter: drop-shadow(4px 4px 20px #860204);
+  width: 35%;
+  height: 15%;
+  filter: drop-shadow(4px 4px 20px #ffffff);
   transition: transform 0.3s ease, filter 0.3s ease; 
   margin-top: 12px;
 }

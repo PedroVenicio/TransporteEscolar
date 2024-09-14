@@ -12,9 +12,10 @@ import van from "../ft/van.png";
 import onibus2 from "../ft/onibus2.png";
 import seguranca from "../ft/seguranca.png";
 import qualidade from "../ft/qualidade.png";
-import foto1 from "../ft/foto1.png"; 
-import foto2 from "../ft/foto2.png"; 
-import foto3 from "../ft/foto3.png"; 
+import foto1 from "../ft/foto1.jpg"; 
+import foto2 from "../ft/foto2.jpg"; 
+import foto3 from "../ft/foto3.jpg"; 
+import foto4 from "../ft/foto4.jpg";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
@@ -51,7 +52,7 @@ function HomeGeral() {
       <div className={styles.cabecalho}>
         <img src={logo} className={styles.logo} />
         <div className={styles.direcionar}>
-          <span onClick={() => scrollToSection('home')}>Home</span>
+          <span onClick={() => scrollToSection('FrotaEquipe')}>Frota e equipe</span>
           <span onClick={() => scrollToSection('servicos')}>Serviços</span>
           <span onClick={() => scrollToSection('trabalhamos')}>Como trabalhamos</span>
           <span onClick={() => scrollToSection('localizacao')}>Localização</span>
@@ -81,12 +82,12 @@ function HomeGeral() {
         </button>
       </div>
 
-      <div id="home" className={styles.corpo}>
+      <div id="FrotaEquipe" className={styles.corpo}>
         <div className={styles.imagemContainer}>
           <img src={onibus1} className={styles.imagem} alt="Onibus" />
           <div className={styles.overlay}>
             <div className={styles.overlayContent}>
-              <txt>Conheça nossa equipe e frota!</txt>
+              <txt>Conheça nossa frota e equipe!</txt>
               <button onClick={FrotaeEquipeAction}>Clique!</button>
             </div>
           </div>
@@ -101,30 +102,51 @@ function HomeGeral() {
           <div className={styles.cardServico}>
             <img src={van} className={styles.van} />
             <div className={styles.TitServico}>
-              <txt>titulo 1</txt>
+              <txt>Transporte universitário</txt>
             </div>
             <div className={styles.descritivoServico}>
-              <txt>...</txt>
+              <txt>......</txt>
             </div>
           </div>
 
           <div className={styles.cardServico}>
             <img src={van} className={styles.van} />
             <div className={styles.TitServico}>
-              <txt>titulo 2</txt>
+              <txt>Transporte escolar 
+              </txt>
             </div>
             <div className={styles.descritivoServico}>
-              <txt>...</txt>
+              <txt>......</txt>
             </div>
           </div>
 
           <div className={styles.cardServico}>
             <img src={van} className={styles.van} />
             <div className={styles.TitServico}>
-              <txt>titulo 3</txt>
+              <txt>Fretamento empresarial</txt>
             </div>
             <div className={styles.descritivoServico}>
-              <txt>...</txt>
+              <txt>......</txt>
+            </div>
+          </div>
+
+          <div className={styles.cardServico}>
+            <img src={van} className={styles.van} />
+            <div className={styles.TitServico}>
+              <txt>Agência de viagem</txt>
+            </div>
+            <div className={styles.descritivoServico}>
+              <txt>......</txt>
+            </div>
+          </div>
+
+          <div className={styles.cardServico}>
+            <img src={van} className={styles.van} />
+            <div className={styles.TitServico}>
+              <txt>Turismo</txt>
+            </div>
+            <div className={styles.descritivoServico}>
+              <txt>......</txt>
             </div>
           </div>
         </div>
@@ -184,6 +206,9 @@ function HomeGeral() {
               </div>
               <div>
                 <img src={foto3} alt="Foto 3" style={{ width: '100%', height: 'auto' }} />
+              </div>
+              <div>
+                <img src={foto4} alt="Foto 4" style={{ width: '100%', height: 'auto' }} />
               </div>
             </Slider>
           </div>
