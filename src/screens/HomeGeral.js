@@ -21,9 +21,13 @@ import "slick-carousel/slick/slick-theme.css";
 function HomeGeral() {
   const navigate = useNavigate();
 
-  function backAction() {
-    navigate('/login');
-  }
+    function backAction() {
+        navigate('/login');
+    };
+
+    function FrotaeEquipeAction() {
+        navigate('/FrotaeEquipe');
+    };
 
   function scrollToSection(id) {
     const section = document.getElementById(id);
@@ -83,7 +87,7 @@ function HomeGeral() {
           <div className={styles.overlay}>
             <div className={styles.overlayContent}>
               <txt>Conheça nossa equipe e frota!</txt>
-              <button onClick={() => scrollToSection('servicos')}>Clique!</button>
+              <button onClick={FrotaeEquipeAction}>Clique!</button>
             </div>
           </div>
         </div>
