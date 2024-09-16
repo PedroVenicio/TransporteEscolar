@@ -3,6 +3,8 @@ import { TextInput, StyleSheet, Image, TouchableOpacity, Text, View, Animated } 
 import { FontAwesome, Feather } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { BlurView } from 'expo-blur';
+import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function Login({ navigation }) {
   const [login, setLogin] = useState('');
@@ -21,11 +23,22 @@ export default function Login({ navigation }) {
         duration: 150,
         useNativeDriver: true,
       }),
-    ]).start(() => {
-      if (login === 'dudu' && password === '123') {
-        navigation.navigate('Home');
-      } else {
-        alert('Credenciais inválidas. Tente novamente.');
+    ]).start(async() => {
+      try{
+        const response = await axios.post('http://192.168.0.223:3000/login', 
+        {
+          login: login,
+          senha: password
+        });
+        
+        const { access_token } = response.data;
+
+        await AsyncStorage.setItem('token', access_token)
+        navigation.navigate('Home')
+      }
+      catch(error){
+        console.log('Erro ao logar: ', error)
+        alert('Falha no login, tente novamente mais tarde.')
       }
     });
   };
