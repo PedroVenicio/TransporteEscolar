@@ -1,9 +1,12 @@
 from flask import request
 from models.votacao import Votacao
+from models.usuario import Usuario
 from database.db import db
+from flask_jwt_extended import jwt_required
 
 votos = ['vou e volto', 'vou, mas não volto', 'não vou, mas volto', 'não vou e não volto']
 
+@jwt_required()
 def votacao_controller():
         if request.method == 'POST':
             try:
@@ -16,6 +19,10 @@ def votacao_controller():
                         data = {"opcao": opcao, "userId": idUser}
                 voto = Votacao(data['opcao'], data['userId'])
                 db.session.add(voto)
+
+                put_statsVotacao_id = data['userId']
+                put_statsVotacao = Usuario.query.get(put_statsVotacao_id)
+                put_statsVotacao.voto = data.get('voto', 1)
                 db.session.commit()
                 return 'votacao cadastrada com sucesso', 200
             except Exception as e:

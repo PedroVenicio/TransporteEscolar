@@ -1,7 +1,9 @@
 from flask import request
 from models.motorista import Motorista
 from database.db import db
+from flask_jwt_extended import jwt_required
 
+@jwt_required()
 def motorista_controller():
         if request.method == 'POST':
             try:
