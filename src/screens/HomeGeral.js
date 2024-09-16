@@ -12,9 +12,9 @@ import van from "../ft/van.png";
 import onibus2 from "../ft/onibus2.png";
 import seguranca from "../ft/seguranca.png";
 import qualidade from "../ft/qualidade.png";
-import foto1 from "../ft/foto1.jpg"; 
-import foto2 from "../ft/foto2.jpg"; 
-import foto3 from "../ft/foto3.jpg"; 
+import foto1 from "../ft/foto1.jpg";
+import foto2 from "../ft/foto2.jpg";
+import foto3 from "../ft/foto3.jpg";
 import foto4 from "../ft/foto4.jpg";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -22,13 +22,13 @@ import "slick-carousel/slick/slick-theme.css";
 function HomeGeral() {
   const navigate = useNavigate();
 
-    function backAction() {
-        navigate('/login');
-    };
+  function backAction() {
+    navigate('/login');
+  };
 
-    function FrotaeEquipeAction() {
-        navigate('/FrotaeEquipe');
-    };
+  function FrotaeEquipeAction() {
+    navigate('/FrotaeEquipe');
+  };
 
   function scrollToSection(id) {
     const section = document.getElementById(id);
@@ -58,24 +58,29 @@ function HomeGeral() {
           <span onClick={() => scrollToSection('localizacao')}>Localização</span>
         </div>
         <nav className={styles.social}>
-          <img
-            src={facebook}
-            className={styles.facebook}
-            onClick={() => window.location.href = "https://www.facebook.com/aravansturismo/?locale=pt_BR"}
-          />
-          <img
-            src={instagram}
-            className={styles.instagram}
-            onClick={() => window.location.href = "https://www.instagram.com/aravanstur/"}
-          />
-          <img src={threads}
-            className={styles.threads}
-            onClick={() => window.location.href = "https://www.threads.net/@aravanstur"}
-          />
-          <img src={wpp}
-            className={styles.wpp}
-            onClick={() => window.location.href = "https://api.whatsapp.com/send?phone=5548999999180&text=WhatsApp%20AraVans"}
-          />
+          <div className={styles.txtfaleconosco}>
+            Contate-nos
+          </div>
+          <div className={styles.socialicon}>
+            <img
+              src={facebook}
+              className={styles.facebook}
+              onClick={() => window.location.href = "https://www.facebook.com/aravansturismo/?locale=pt_BR"}
+            />
+            <img
+              src={instagram}
+              className={styles.instagram}
+              onClick={() => window.location.href = "https://www.instagram.com/aravanstur/"}
+            />
+            <img src={threads}
+              className={styles.threads}
+              onClick={() => window.location.href = "https://www.threads.net/@aravanstur"}
+            />
+            <img src={wpp}
+              className={styles.wpp}
+              onClick={() => window.location.href = "https://api.whatsapp.com/send?phone=5548999999180&text=WhatsApp%20AraVans"}
+            />
+          </div>
         </nav>
         <button className={styles.botao} onClick={backAction}>
           Login
@@ -112,7 +117,7 @@ function HomeGeral() {
           <div className={styles.cardServico}>
             <img src={van} className={styles.van} />
             <div className={styles.TitServico}>
-              <txt>Transporte escolar 
+              <txt>Transporte escolar
               </txt>
             </div>
             <div className={styles.descritivoServico}>
