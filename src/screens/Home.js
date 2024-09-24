@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from '../styles/style.module.css';
+import styles from '../styles/HomeAdm.module.css';
 import { useNavigate } from 'react-router-dom';
 
 function Home() {
@@ -24,18 +24,21 @@ function Home() {
 
     return (
         <div className={styles.container}>
-            <h1>Tela inicial</h1>
-            <button onClick={backAction}>
-                Voltar
+            <div className={styles.txt}>
+            <h1>Escolha o que </h1>
+            <h1>deseja gerenciar!</h1>
+            </div>
+            <button onClick={userCadAction} className={styles.button}>
+                Usuário
             </button>
-            <button onClick={userCadAction}>
-                Usuario
-            </button>
-            <button onClick={motoristaCadAction}>
+            <button onClick={motoristaCadAction} className={styles.button}>
                 Motorista
             </button>
-            <button onClick={vanCadAction}>
-                Van
+            <button onClick={vanCadAction} className={styles.button}>
+                Automóveis
+            </button>
+            <button onClick={backAction} className={styles.button}>
+                Voltar
             </button>
         </div>
     );
