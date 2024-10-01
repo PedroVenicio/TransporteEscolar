@@ -93,7 +93,7 @@ function HomeGeral() {
           <div className={styles.overlay}>
             <div className={styles.overlayContent}>
               <txt>Conheça nossa frota e equipe!</txt>
-              <button onClick={FrotaeEquipeAction}>Clique!</button>
+              <button className={styles.botao} onClick={FrotaeEquipeAction}>Clique!</button>
             </div>
           </div>
         </div>
