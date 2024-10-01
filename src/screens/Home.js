@@ -7,7 +7,7 @@ function Home() {
     const navigate = useNavigate();
 
     function backAction() {
-        navigate('/login');
+        navigate('/HomeGeral');
     };
 
     function userCadAction() {
