@@ -1,6 +1,5 @@
-from datetime import datetime
+allVotacoes = {'voto': [{'id': 7, 'opcao': 1, 'userId': 12}, {'id': 8, 'opcao': 2, 'userId': 11}, {'id': 9, 'opcao': 4, 'userId': 10}]}
 
-tempo = datetime.now()
-hora = int(tempo.strftime("%H"))
-if hora == 16:
-    print('oaaai')
+listVotacao = (allVotacoes['voto'])
+for i in listVotacao:
+    print(i['opcao'])
