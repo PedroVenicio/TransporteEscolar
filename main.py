@@ -39,29 +39,36 @@ class App():
             allVotacoes = {'votacoes': [votacao.to_dict() for votacao in dataVotacao]}
             listVotacao = (allVotacoes['votacoes'])
 
-            cincoAM = []
-            meioDia = []
+            cincoAM = ""
+            meioDia = ""
 
             for i in listUsuario:
                 if i['horarioida'] == 5:
-                    cincoAM.append(i['id'])
+                    string = str(i['id'])
+                    cincoAM += string + ", "
                 if i['horarioida'] == 12:
-                    meioDia.append(i['id'])
+                    string = str(i['id'])
+                    meioDia += string + ", "
 
-            if hora == 17: #17:15 = 1715
+            if hora == 13: #17:15 = 1715 
+                print('entrou no if')
                 for i in listVotacao:
+                    print('percorrendo lista')
                     if i['opcao'] == 1 or i['opcao'] == 2:
+                        print('if 2')
                         rota = {
                             "data": dia,
                             "hora": 5,
                             "alunos": cincoAM
                         }
-                        try:
-                            add = Rota_ida(rota['data'], rota['hora'], rota['alunos'])
-                            db.session.add(add)
-                            db.session.commit()
-                        except Exception as e:
-                            return 'Rota nao cadastrada: {}'.format(str(e)), 405
+                try:
+                    print('entrou no try')
+                    """ add = Rota_ida(rota['data'], rota['hora'], rota['alunos'])
+                    db.session.add(add)
+                    db.session.commit() """
+                except Exception as e:
+                    print(e)
+                    return 'Rota nao cadastrada: {}'.format(str(e)), 405
 
     def run(self):
         return self.app.run(port=3000, host='0.0.0.0', debug=True)
