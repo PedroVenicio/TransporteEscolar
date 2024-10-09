@@ -8,6 +8,7 @@ import threading
 from models.rota import Rota_ida, Rota_volta
 from models.votacao import Votacao
 from models.usuario import Usuario
+import time
 
 
 
@@ -27,48 +28,49 @@ class App():
 
     def criarRotas(self):
         with self.app.app_context():
-            tempo = datetime.now()
-            dia = tempo.strftime("%Y-%m-%d")
-            hora = int(tempo.strftime("%H")) #strftime("%H""%M")
+            while True:
+                tempo = datetime.now()
+                dia = tempo.strftime("%Y-%m-%d")
+                hora = int(tempo.strftime("%H""%M""%S")) #strftime("%H""%M")
 
-            dataUsuario = Usuario.query.all()
-            allUsuarios = {'usuarios': [usuario.to_dict() for usuario in dataUsuario]}
-            listUsuario = (allUsuarios['usuarios'])
+                dataUsuario = Usuario.query.all()
+                allUsuarios = {'usuarios': [usuario.to_dict() for usuario in dataUsuario]}
+                listUsuario = (allUsuarios['usuarios'])
 
-            dataVotacao = Votacao.query.all()
-            allVotacoes = {'votacoes': [votacao.to_dict() for votacao in dataVotacao]}
-            listVotacao = (allVotacoes['votacoes'])
+                dataVotacao = Votacao.query.all()
+                allVotacoes = {'votacoes': [votacao.to_dict() for votacao in dataVotacao]}
+                listVotacao = (allVotacoes['votacoes'])
 
-            cincoAM = ""
-            meioDia = ""
+                cincoAM = []
+                meioDia = []
+                passageiros = ""
 
-            for i in listUsuario:
-                if i['horarioida'] == 5:
-                    string = str(i['id'])
-                    cincoAM += string + ", "
-                if i['horarioida'] == 12:
-                    string = str(i['id'])
-                    meioDia += string + ", "
+                for i in listUsuario:
+                    if i['horarioida'] == 5:
+                        cincoAM.append(i['id'])
+                    if i['horarioida'] == 12:
+                        meioDia.append(i['id'])
 
-            if hora == 13: #17:15 = 1715 
-                print('entrou no if')
-                for i in listVotacao:
-                    print('percorrendo lista')
-                    if i['opcao'] == 1 or i['opcao'] == 2:
-                        print('if 2')
-                        rota = {
-                            "data": dia,
-                            "hora": 5,
-                            "alunos": cincoAM
-                        }
-                try:
-                    print('entrou no try')
-                    """ add = Rota_ida(rota['data'], rota['hora'], rota['alunos'])
-                    db.session.add(add)
-                    db.session.commit() """
-                except Exception as e:
-                    print(e)
-                    return 'Rota nao cadastrada: {}'.format(str(e)), 405
+                if hora == 171700: #17:15 = 1715 
+                    for i in listVotacao:
+                        if i['opcao'] == 1 or i['opcao'] == 2:
+                            for ids in cincoAM:
+                                if ids == i['userId']:
+                                    string = str(i['userId'])
+                                    passageiros += string+ ", "
+                    rota = {
+                        "data": dia,
+                        "hora": 5,
+                        "alunos": passageiros
+                    }
+                    try:
+                        add = Rota_ida(rota['data'], rota['hora'], rota['alunos'])
+                        db.session.add(add)
+                        db.session.commit()
+                    except Exception as e:
+                        print(e)
+                        return 'Rota nao cadastrada: {}'.format(str(e)), 405
+                    time.sleep(2)
 
     def run(self):
         return self.app.run(port=3000, host='0.0.0.0', debug=True)
