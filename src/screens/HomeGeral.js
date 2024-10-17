@@ -138,16 +138,6 @@ function HomeGeral() {
           <div className={styles.cardServico}>
             <img src={van} className={styles.van} />
             <div className={styles.TitServico}>
-              <txt>Agência de viagem</txt>
-            </div>
-            <div className={styles.descritivoServico}>
-              <txt>......</txt>
-            </div>
-          </div>
-
-          <div className={styles.cardServico}>
-            <img src={van} className={styles.van} />
-            <div className={styles.TitServico}>
               <txt>Turismo</txt>
             </div>
             <div className={styles.descritivoServico}>
