@@ -12,6 +12,7 @@ function Motorista() {
     const [cpf, setCpf] = useState('');
     const [telefone, setTelefone] = useState('');
     const [email, setEmail] = useState('');
+    const [foto, setFoto] = useState('')
 
     const [id, setId] = useState('');
     const [alterLogin, setAlterLogin] = useState('');
@@ -40,6 +41,7 @@ function Motorista() {
         setAlterEmail(motorista.email);
         setAlterLogin(motorista.login);
         setAlterSenha(motorista.senha);
+        setFoto(motorista.foto);
         setOpen(true);
     }
     const handleClose = () => setOpen(false);
@@ -60,7 +62,8 @@ function Motorista() {
                         senha: senha,
                         cpf: cpf,
                         telefone: telefone,
-                        email: email
+                        email: email,
+                        foto: foto
                     }
                 )
                 alert('Motorista cadastrado')
@@ -71,6 +74,7 @@ function Motorista() {
                 setCpf('')
                 setTelefone('')
                 setEmail('')
+                setFoto(null)
                 getMotoristas()
             }
             catch (error) {
@@ -120,10 +124,12 @@ function Motorista() {
                         senha: alterSenha,
                         cpf: alterCpf,
                         telefone: alterTelefone,
-                        email: alterEmail
+                        email: alterEmail,
+                        foto: foto
                     }
                 )
                 alert('Motorista alterado')
+                getMotoristas()
             }
             catch (error) {
                 console.log(error);
@@ -154,6 +160,32 @@ function Motorista() {
         ? get.filter(filtro => filtro.nome.toLowerCase().includes(pesquisa.toLowerCase()))
         : [];
 
+    function handleFile(event) {
+        const file = event.target.files[0]
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onloadend = () => {
+            const base64string = reader.result
+            setFoto(base64string);
+        };
+    }
+
+    function b64toimg(base64){
+        const base64data = base64.split(',')[1];
+        const binaryString = window.atob(base64data);
+        
+        const len = binaryString.length;
+        const bytes = new Uint8Array(len);
+
+        for (let i = 0; i < len; i++) {
+            bytes[i] = binaryString.charCodeAt(i);
+        }
+
+        const blob = new Blob([bytes], { type: 'image/png' });
+        const url = URL.createObjectURL(blob);
+        return <img src={url} alt="Motorista" />;
+    }
+
     return (
         <div>
             <div>
@@ -165,6 +197,7 @@ function Motorista() {
                 <input type='text' value={cpf} placeholder='cpf' onChange={event => setCpf(event.target.value)} />
                 <input type='text' value={telefone} placeholder='telefone' onChange={event => setTelefone(event.target.value)} />
                 <input type='text' value={email} placeholder='email' onChange={event => setEmail(event.target.value)} />
+                <input type='file' onChange={handleFile} />
                 <button onClick={postMotorista}>
                     cadastrar
                 </button>
@@ -176,6 +209,7 @@ function Motorista() {
                     {pesquisa.length > 0 ? (
                         filtrar.map((filtro) => (
                             <div key={filtro.id}>
+                                {b64toimg(filtro.foto)}
                                 {filtro.nome}
                                 <button onClick={() => handleOpen(filtro)}>alterar</button>
                                 <button onClick={() => deleteMotorista(filtro.id)}>deletar</button>
@@ -184,6 +218,7 @@ function Motorista() {
                     ) : (
                         get.map((motorista) => (
                             <div key={motorista.id}>
+                                {b64toimg(motorista.foto)}
                                 {motorista.nome}
                                 <button onClick={() => handleOpen(motorista)}>alterar</button>
                                 <button onClick={() => deleteMotorista(motorista.id)}>deletar</button>
@@ -204,6 +239,7 @@ function Motorista() {
                             <input type='text' value={alterEmail} placeholder='email' onChange={event => setAlterEmail(event.target.value)} />
                             <input type='text' value={alterLogin} placeholder='login' onChange={event => setAlterLogin(event.target.value)} />
                             <input type='text' value={alterSenha} placeholder='senha' onChange={event => setAlterSenha(event.target.value)} />
+                            <input type='file' onChange={handleFile} />
                             <button onClick={putMotoristas}>alterar</button>
                         </Box>
                     </Modal>
