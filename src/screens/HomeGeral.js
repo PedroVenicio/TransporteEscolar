@@ -47,6 +47,34 @@ function HomeGeral() {
     autoplaySpeed: 3000,
   };
 
+  // Defina os serviços como um array de objetos
+  const services = [
+    {
+      id: 1,
+      title: 'Transporte universitário',
+      description: 'Transporte de alunos entre a residência e a universidade.',
+      img: van,
+    },
+    {
+      id: 2,
+      title: 'Transporte escolar',
+      description: 'Transporte escolar privado é o serviço de transporte de alunos entre suas casas e a escola.',
+      img: van,
+    },
+    {
+      id: 3,
+      title: 'Fretamento empresarial',
+      description: 'Serviço de fretamento para empresas que necessitam de transporte para eventos ou atividades.',
+      img: van,
+    },
+    {
+      id: 4,
+      title: 'Turismo',
+      description: 'Transporte para passeios turísticos e excursões.',
+      img: van,
+    },
+  ];
+
   return (
     <div className={styles.container}>
       <header className={styles.cabecalho}>
@@ -106,14 +134,14 @@ function HomeGeral() {
           <span>Serviços</span>
         </div>
         <div className={styles.centroServico}>
-          {[...Array(4)].map((_, index) => (
-            <div className={styles.cardServico} key={index}>
-              <img src={van} className={styles.van} alt="Van" />
+          {services.map(({ id, title, description, img }) => (
+            <div className={styles.cardServico} key={id}>
+              <img src={img} className={styles.van} alt="Van" />
               <div className={styles.TitServico}>
-                <span>{['Transporte universitário', 'Transporte escolar', 'Fretamento empresarial', 'Turismo'][index]}</span>
+                <span>{title}</span>
               </div>
               <div className={styles.descritivoServico}>
-                <span>......</span>
+                <span>{description}</span>
               </div>
             </div>
           ))}
