@@ -22,20 +22,20 @@ import "slick-carousel/slick/slick-theme.css";
 function HomeGeral() {
   const navigate = useNavigate();
 
-  const backAction = () => {
+  function backAction() {
     navigate('/login');
   };
 
-  const FrotaeEquipeAction = () => {
+  function FrotaeEquipeAction() {
     navigate('/FrotaeEquipe');
   };
 
-  const scrollToSection = (id) => {
+  function scrollToSection(id) {
     const section = document.getElementById(id);
     if (section) {
       section.scrollIntoView({ behavior: 'smooth' });
     }
-  };
+  }
 
   const settings = {
     dots: true,
@@ -49,16 +49,18 @@ function HomeGeral() {
 
   return (
     <div className={styles.container}>
-      <header className={styles.cabecalho}>
+      <div className={styles.cabecalho}>
         <img src={logo} className={styles.logo} alt="Logo" />
-        <nav className={styles.direcionar}>
+        <div className={styles.direcionar}>
           <span onClick={() => scrollToSection('FrotaEquipe')}>Frota e equipe</span>
           <span onClick={() => scrollToSection('servicos')}>Serviços</span>
           <span onClick={() => scrollToSection('trabalhamos')}>Como trabalhamos</span>
           <span onClick={() => scrollToSection('localizacao')}>Localização</span>
-        </nav>
-        <div className={styles.social}>
-          <div className={styles.txtfaleconosco}>Contate-nos</div>
+        </div>
+        <nav className={styles.social}>
+          <div className={styles.txtfaleconosco}>
+            Contate-nos
+          </div>
           <div className={styles.socialicon}>
             <img
               src={facebook}
@@ -85,99 +87,155 @@ function HomeGeral() {
               onClick={() => window.location.href = "https://api.whatsapp.com/send?phone=5548999999180&text=WhatsApp%20AraVans"}
             />
           </div>
-        </div>
-        <button className={styles.botao} onClick={backAction}>Login</button>
-      </header>
+        </nav>
+        <button className={styles.botao} onClick={backAction}>
+          Login
+        </button>
+      </div>
 
-      <section id="FrotaEquipe" className={styles.corpo}>
+      <div id="FrotaEquipe" className={styles.corpo}>
         <div className={styles.imagemContainer}>
           <img src={onibus1} className={styles.imagem} alt="Onibus" />
           <div className={styles.overlay}>
             <div className={styles.overlayContent}>
-              <span>Conheça nossa frota e equipe!</span>
+              <p>Conheça nossa frota e equipe!</p>
               <button className={styles.botao} onClick={FrotaeEquipeAction}>Clique!</button>
             </div>
           </div>
         </div>
-      </section>
+      </div>
 
-      <section id="servicos" className={styles.Servicos}>
+      <div id="servicos" className={styles.Servicos}>
         <div className={styles.titulo}>
-          <span>Serviços</span>
+          <p>Serviços</p>
         </div>
         <div className={styles.centroServico}>
-          {[...Array(4)].map((_, index) => (
-            <div className={styles.cardServico} key={index}>
-              <img src={van} className={styles.van} alt="Van" />
-              <div className={styles.TitServico}>
-                <span>{['Transporte universitário', 'Transporte escolar', 'Fretamento empresarial', 'Turismo'][index]}</span>
-              </div>
-              <div className={styles.descritivoServico}>
-                <span>......</span>
-              </div>
+          <div className={styles.cardServico}>
+            <img src={van} className={styles.van} alt="Van" />
+            <div className={styles.TitServico}>
+              <p>Transporte universitário</p>
             </div>
-          ))}
-        </div>
-      </section>
+            <div className={styles.descritivoServico}>
+              <p style={{ textAlign: 'justify' }}>
+                Oferecemos transporte confiável e seguro para estudantes, garantindo que cheguem ao seu destino a tempo e em conforto.
+              </p>
+            </div>
+          </div>
 
-      <section id="trabalhamos" className={styles.comotrabalhamos}>
+          <div className={styles.cardServico}>
+            <img src={van} className={styles.van} alt="Van" />
+            <div className={styles.TitServico}>
+              <p>Transporte escolar</p>
+            </div>
+            <div className={styles.descritivoServico}>
+              <p style={{ textAlign: 'justify' }}>
+                Garantimos um transporte seguro e pontual para crianças e adolescentes, com motoristas qualificados e veículos em ótimas condições.
+              </p>
+            </div>
+          </div>
+
+          <div className={styles.cardServico}>
+            <img src={van} className={styles.van} alt="Van" />
+            <div className={styles.TitServico}>
+              <p>Fretamento empresarial</p>
+            </div>
+            <div className={styles.descritivoServico}>
+              <p style={{ textAlign: 'justify' }}>
+                Oferecemos soluções de fretamento para empresas, adaptando-nos às necessidades de transporte dos seus colaboradores.
+              </p>
+            </div>
+          </div>
+
+          <div className={styles.cardServico}>
+            <img src={van} className={styles.van} alt="Van" />
+            <div className={styles.TitServico}>
+              <p>Turismo</p>
+            </div>
+            <div className={styles.descritivoServico}>
+              <p style={{ textAlign: 'justify' }}>
+                Proporcionamos experiências únicas com nosso serviço de transporte turístico, levando você aos melhores destinos com conforto e segurança.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="trabalhamos" className={styles.comotrabalhamos}>
         <div className={styles.titulo}>
-          <span>Como trabalhamos?</span>
+          <p>Como trabalhamos?</p>
         </div>
         <div className={styles.centroComotrab}>
           <div className={styles.imgonibus2}>
-            <img src={onibus2} className={styles.onibus2} alt="Onibus 2" />
+            <img src={onibus2} className={styles.onibus2} alt="Onibus" />
           </div>
           <div className={styles.cmtrabespecif}>
-            {[
-              { src: seguranca, title: 'Segurança', description: '.....' },
-              { src: qualidade, title: 'Qualidade', description: '.....' },
-            ].map(({ src, title, description }, index) => (
-              <div className={styles.valores} key={index}>
-                <div className={styles.divimgicon}>
-                  <img src={src} className={styles.imgicon} alt={title} />
+            <div className={styles.valores}>
+              <div className={styles.divimgicon}>
+                <img src={seguranca} className={styles.imgicon} alt="Segurança" />
+              </div>
+              <div className={styles.divtxt}>
+                <div className={styles.TTtxt}>
+                  <p>Segurança</p>
                 </div>
-                <div className={styles.divtxt}>
-                  <div className={styles.TTtxt}>
-                    <span>{title}</span>
-                  </div>
-                  <div className={styles.txt}>
-                    <span>{description}</span>
-                  </div>
+                <div className={styles.txt}>
+                  <p style={{ textAlign: 'justify' }}>
+                    Priorizamos a segurança em todas as nossas operações, com motoristas experientes e veículos inspecionados regularmente.
+                  </p>
                 </div>
               </div>
-            ))}
+            </div>
+            <div className={styles.valores}>
+              <div className={styles.divimgicon}>
+                <img src={qualidade} className={styles.imgicon} alt="Qualidade" />
+              </div>
+              <div className={styles.divtxt}>
+                <div className={styles.TTtxt}>
+                  <p>Qualidade</p>
+                </div>
+                <div className={styles.txt}>
+                  <p style={{ textAlign: 'justify' }}>
+                    Nossa missão é oferecer um serviço de qualidade, com veículos confortáveis e um atendimento ao cliente excepcional.
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-      </section>
+      </div>
 
-      <section id="localizacao" className={styles.localizacao}>
+      <div id="localizacao" className={styles.localizacao}>
         <div className={styles.titulo}>
-          <span>Venha até nós!</span>
+          <p>Venha até nós!</p>
         </div>
         <div className={styles.meiolocalizacao}>
           <div className={styles.fotoslocal}>
             <Slider {...settings}>
-              {[foto1, foto2, foto3, foto4].map((foto, index) => (
-                <div key={index}>
-                  <img src={foto} alt={`Foto ${index + 1}`} style={{ width: '100%', height: 'auto' }} />
-                </div>
-              ))}
+              <div>
+                <img src={foto1} alt="Foto 1" style={{ width: '100%', height: 'auto' }} />
+              </div>
+              <div>
+                <img src={foto2} alt="Foto 2" style={{ width: '100%', height: 'auto' }} />
+              </div>
+              <div>
+                <img src={foto3} alt="Foto 3" style={{ width: '100%', height: 'auto' }} />
+              </div>
+              <div>
+                <img src={foto4} alt="Foto 4" style={{ width: '100%', height: 'auto' }} />
+              </div>
             </Slider>
           </div>
           <div className={styles.linkloc}>
             <iframe
-              src="https://www.google.com/maps/embed/v1/place?key=AIzaSyBloQgYAwgxRmK4wPpBIlyI-u5dxL7DaJc&amp;q=RUA%20ANASTACIO%20JOAO%20DE%20SOUZA%2C%20633%20-%20URUSSANGUINHA%2C%20ARARANGUA%20-%20SC%2C%20Brasil&amp;zoom=16"
+              src="https://www.google.com/maps/embed/v1/place?key=AIzaSyBloQgYAwgxRmK4wPpBIlyI-u5dxL7DaJc&amp;q=RUA%20ANASTACIO%20JOAO%20DE%20SOUZA%2C%20633%20-%20URUSSANGUINHA%2C%20ARARANGUA%20-%20SC%2C%20Brasil&amp;zoom=16allowfullscreen"
               width="100%"
               height="100%"
               style={{ border: 0 }}
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
-              title="Localização"
             ></iframe>
           </div>
         </div>
-      </section>
+      </div>
     </div>
   );
 }
