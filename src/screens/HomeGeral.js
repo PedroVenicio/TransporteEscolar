@@ -22,20 +22,20 @@ import "slick-carousel/slick/slick-theme.css";
 function HomeGeral() {
   const navigate = useNavigate();
 
-  function backAction() {
+  const backAction = () => {
     navigate('/login');
   };
 
-  function FrotaeEquipeAction() {
+  const FrotaeEquipeAction = () => {
     navigate('/FrotaeEquipe');
   };
 
-  function scrollToSection(id) {
+  const scrollToSection = (id) => {
     const section = document.getElementById(id);
     if (section) {
       section.scrollIntoView({ behavior: 'smooth' });
     }
-  }
+  };
 
   const settings = {
     dots: true,
@@ -49,176 +49,135 @@ function HomeGeral() {
 
   return (
     <div className={styles.container}>
-      <div className={styles.cabecalho}>
-        <img src={logo} className={styles.logo} />
-        <div className={styles.direcionar}>
+      <header className={styles.cabecalho}>
+        <img src={logo} className={styles.logo} alt="Logo" />
+        <nav className={styles.direcionar}>
           <span onClick={() => scrollToSection('FrotaEquipe')}>Frota e equipe</span>
           <span onClick={() => scrollToSection('servicos')}>Serviços</span>
           <span onClick={() => scrollToSection('trabalhamos')}>Como trabalhamos</span>
           <span onClick={() => scrollToSection('localizacao')}>Localização</span>
-        </div>
-        <nav className={styles.social}>
-          <div className={styles.txtfaleconosco}>
-            Contate-nos
-          </div>
+        </nav>
+        <div className={styles.social}>
+          <div className={styles.txtfaleconosco}>Contate-nos</div>
           <div className={styles.socialicon}>
             <img
               src={facebook}
               className={styles.facebook}
+              alt="Facebook"
               onClick={() => window.location.href = "https://www.facebook.com/aravansturismo/?locale=pt_BR"}
             />
             <img
               src={instagram}
               className={styles.instagram}
+              alt="Instagram"
               onClick={() => window.location.href = "https://www.instagram.com/aravanstur/"}
             />
-            <img src={threads}
+            <img
+              src={threads}
               className={styles.threads}
+              alt="Threads"
               onClick={() => window.location.href = "https://www.threads.net/@aravanstur"}
             />
-            <img src={wpp}
+            <img
+              src={wpp}
               className={styles.wpp}
+              alt="WhatsApp"
               onClick={() => window.location.href = "https://api.whatsapp.com/send?phone=5548999999180&text=WhatsApp%20AraVans"}
             />
           </div>
-        </nav>
-        <button className={styles.botao} onClick={backAction}>
-          Login
-        </button>
-      </div>
+        </div>
+        <button className={styles.botao} onClick={backAction}>Login</button>
+      </header>
 
-      <div id="FrotaEquipe" className={styles.corpo}>
+      <section id="FrotaEquipe" className={styles.corpo}>
         <div className={styles.imagemContainer}>
           <img src={onibus1} className={styles.imagem} alt="Onibus" />
           <div className={styles.overlay}>
             <div className={styles.overlayContent}>
-              <txt>Conheça nossa frota e equipe!</txt>
+              <span>Conheça nossa frota e equipe!</span>
               <button className={styles.botao} onClick={FrotaeEquipeAction}>Clique!</button>
             </div>
           </div>
         </div>
-      </div>
+      </section>
 
-      <div id="servicos" className={styles.Servicos}>
+      <section id="servicos" className={styles.Servicos}>
         <div className={styles.titulo}>
-          <txt>Serviços</txt>
+          <span>Serviços</span>
         </div>
         <div className={styles.centroServico}>
-          <div className={styles.cardServico}>
-            <img src={van} className={styles.van} />
-            <div className={styles.TitServico}>
-              <txt>Transporte universitário</txt>
+          {[...Array(4)].map((_, index) => (
+            <div className={styles.cardServico} key={index}>
+              <img src={van} className={styles.van} alt="Van" />
+              <div className={styles.TitServico}>
+                <span>{['Transporte universitário', 'Transporte escolar', 'Fretamento empresarial', 'Turismo'][index]}</span>
+              </div>
+              <div className={styles.descritivoServico}>
+                <span>......</span>
+              </div>
             </div>
-            <div className={styles.descritivoServico}>
-              <txt>......</txt>
-            </div>
-          </div>
-
-          <div className={styles.cardServico}>
-            <img src={van} className={styles.van} />
-            <div className={styles.TitServico}>
-              <txt>Transporte escolar
-              </txt>
-            </div>
-            <div className={styles.descritivoServico}>
-              <txt>......</txt>
-            </div>
-          </div>
-
-          <div className={styles.cardServico}>
-            <img src={van} className={styles.van} />
-            <div className={styles.TitServico}>
-              <txt>Fretamento empresarial</txt>
-            </div>
-            <div className={styles.descritivoServico}>
-              <txt>......</txt>
-            </div>
-          </div>
-
-          <div className={styles.cardServico}>
-            <img src={van} className={styles.van} />
-            <div className={styles.TitServico}>
-              <txt>Turismo</txt>
-            </div>
-            <div className={styles.descritivoServico}>
-              <txt>......</txt>
-            </div>
-          </div>
+          ))}
         </div>
-      </div>
+      </section>
 
-      <div id="trabalhamos" className={styles.comotrabalhamos}>
+      <section id="trabalhamos" className={styles.comotrabalhamos}>
         <div className={styles.titulo}>
-          <txt>Como trabalhamos?</txt>
+          <span>Como trabalhamos?</span>
         </div>
         <div className={styles.centroComotrab}>
           <div className={styles.imgonibus2}>
-            <img src={onibus2} className={styles.onibus2} />
+            <img src={onibus2} className={styles.onibus2} alt="Onibus 2" />
           </div>
           <div className={styles.cmtrabespecif}>
-            <div className={styles.valores}>
-              <div className={styles.divimgicon}>
-                <img src={seguranca} className={styles.imgicon} />
-              </div>
-              <div className={styles.divtxt}>
-                <div className={styles.TTtxt}>
-                  <txt>Segurança</txt>
+            {[
+              { src: seguranca, title: 'Segurança', description: '.....' },
+              { src: qualidade, title: 'Qualidade', description: '.....' },
+            ].map(({ src, title, description }, index) => (
+              <div className={styles.valores} key={index}>
+                <div className={styles.divimgicon}>
+                  <img src={src} className={styles.imgicon} alt={title} />
                 </div>
-                <div className={styles.txt}>
-                  <txt>.....</txt>
-                </div>
-              </div>
-            </div>
-            <div className={styles.valores}>
-              <div className={styles.divimgicon}>
-                <img src={qualidade} className={styles.imgicon} />
-              </div>
-              <div className={styles.divtxt}>
-                <div className={styles.TTtxt}>
-                  <txt>Qualidade</txt>
-                </div>
-                <div className={styles.txt}>
-                  <txt>.....</txt>
+                <div className={styles.divtxt}>
+                  <div className={styles.TTtxt}>
+                    <span>{title}</span>
+                  </div>
+                  <div className={styles.txt}>
+                    <span>{description}</span>
+                  </div>
                 </div>
               </div>
-            </div>
+            ))}
           </div>
         </div>
-      </div>
+      </section>
 
-      <div id="localizacao" className={styles.localizacao}>
+      <section id="localizacao" className={styles.localizacao}>
         <div className={styles.titulo}>
-          <txt>Venha até nós!</txt>
+          <span>Venha até nós!</span>
         </div>
         <div className={styles.meiolocalizacao}>
           <div className={styles.fotoslocal}>
             <Slider {...settings}>
-              <div>
-                <img src={foto1} alt="Foto 1" style={{ width: '100%', height: 'auto' }} />
-              </div>
-              <div>
-                <img src={foto2} alt="Foto 2" style={{ width: '100%', height: 'auto' }} />
-              </div>
-              <div>
-                <img src={foto3} alt="Foto 3" style={{ width: '100%', height: 'auto' }} />
-              </div>
-              <div>
-                <img src={foto4} alt="Foto 4" style={{ width: '100%', height: 'auto' }} />
-              </div>
+              {[foto1, foto2, foto3, foto4].map((foto, index) => (
+                <div key={index}>
+                  <img src={foto} alt={`Foto ${index + 1}`} style={{ width: '100%', height: 'auto' }} />
+                </div>
+              ))}
             </Slider>
           </div>
           <div className={styles.linkloc}>
             <iframe
-              src="https://www.google.com/maps/embed/v1/place?key=AIzaSyBloQgYAwgxRmK4wPpBIlyI-u5dxL7DaJc&amp;q=RUA%20ANASTACIO%20JOAO%20DE%20SOUZA%2C%20633%20-%20URUSSANGUINHA%2C%20ARARANGUA%20-%20SC%2C%20Brasil&amp;zoom=16allowfullscreen"
+              src="https://www.google.com/maps/embed/v1/place?key=AIzaSyBloQgYAwgxRmK4wPpBIlyI-u5dxL7DaJc&amp;q=RUA%20ANASTACIO%20JOAO%20DE%20SOUZA%2C%20633%20-%20URUSSANGUINHA%2C%20ARARANGUA%20-%20SC%2C%20Brasil&amp;zoom=16"
               width="100%"
               height="100%"
               style={{ border: 0 }}
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
+              title="Localização"
             ></iframe>
           </div>
         </div>
-      </div>
+      </section>
     </div>
   );
 }

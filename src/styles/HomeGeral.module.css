@@ -1,14 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;400;700;900&display=swap');
 
-@keyframes piscar {
-  0%, 100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.45;
-  }
-}
-
 .container {
   display: flex;
   flex-direction: column;
@@ -144,6 +135,7 @@
   width: 100%;
   height: auto; 
   max-height: 100vh; 
+  object-fit: cover;
 }
 
 .overlay {
@@ -288,6 +280,7 @@
   width: 95%; 
   height: 95%;
   filter: drop-shadow(4px 4px 20px #b6b3b3);
+  object-fit: cover;
 }
 
 .cmtrabespecif{
