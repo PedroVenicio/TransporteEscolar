@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 8.0.36, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.34, for Win64 (x86_64)
 --
 -- Host: 127.0.0.1    Database: transporteescolar
 -- ------------------------------------------------------
--- Server version	8.0.37
+-- Server version	5.5.20-log
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -23,13 +23,13 @@ DROP TABLE IF EXISTS `votacao`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `votacao` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `opcao` int NOT NULL,
-  `userId` int NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `opcao` int(11) NOT NULL,
+  `userId` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `userId` (`userId`),
   CONSTRAINT `votacao_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `usuario` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -38,7 +38,7 @@ CREATE TABLE `votacao` (
 
 LOCK TABLES `votacao` WRITE;
 /*!40000 ALTER TABLE `votacao` DISABLE KEYS */;
-INSERT INTO `votacao` VALUES (1,1,10),(2,4,10),(3,1,10),(4,3,10),(5,1,10),(6,1,10),(7,1,12),(8,3,10),(9,3,10),(10,3,12),(11,4,12),(12,4,12),(13,2,12),(14,2,12),(15,3,12),(16,1,12),(19,2,12),(20,3,12),(21,3,12),(22,3,12),(23,1,12),(24,4,12),(25,3,12),(26,1,12),(27,1,12),(28,1,10);
+INSERT INTO `votacao` VALUES (36,1,7),(37,1,10),(38,1,12);
 /*!40000 ALTER TABLE `votacao` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -51,4 +51,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-09-16 12:12:53
+-- Dump completed on 2024-10-22 17:14:17

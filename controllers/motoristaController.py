@@ -3,13 +3,12 @@ from models.motorista import Motorista
 from database.db import db
 from flask_jwt_extended import jwt_required
 
-@jwt_required()
 def motorista_controller():
         if request.method == 'POST':
             try:
                 data = request.get_json()
                 print(data)
-                motorista = Motorista(data['nome'], data['endereco'], data['bairro'], data['cidade'], data['login'], data['senha'], data['cpf'], data['telefone'], data['email'])
+                motorista = Motorista(data['nome'], data['endereco'], data['bairro'], data['cidade'], data['login'], data['senha'], data['cpf'], data['telefone'], data['email'], data['foto'])
                 db.session.add(motorista)
                 db.session.commit()
                 return 'motorista cadastrado com sucesso', 200
@@ -40,6 +39,7 @@ def motorista_controller():
                 put_motorista.cpf = data.get('cpf', put_motorista.cpf)
                 put_motorista.telefone = data.get('telefone', put_motorista.telefone)
                 put_motorista.email = data.get('email', put_motorista.email)
+                put_motorista.foto = data.get('foto', put_motorista.foto)
                 db.session.commit()
                 return 'motorista atualizado com sucesso', 200
             except Exception as e:

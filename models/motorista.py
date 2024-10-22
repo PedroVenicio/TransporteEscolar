@@ -12,7 +12,8 @@ class Motorista(db.Model):
             'senha': self.senha,
             'cpf': self.cpf,
             'telefone': self.telefone,
-            'email': self.email
+            'email': self.email,
+            'foto': self.foto
         }
     
     id = db.Column(db.Integer, primary_key = True, nullable=False, unique=True)
@@ -25,8 +26,9 @@ class Motorista(db.Model):
     cpf = db.Column(db.Integer, nullable=False)
     telefone = db.Column(db.Integer, nullable=False)
     email = db.Column(db.String(100), nullable=False)
+    foto = db.Column(db.String(1000), nullable=False)
 
-    def __init__(self, nome, endereco, bairro, cidade, login, senha, cpf, telefone, email):
+    def __init__(self, nome, endereco, bairro, cidade, login, senha, cpf, telefone, email, foto):
         self.nome = nome
         self.endereco = endereco
         self.bairro = bairro
@@ -36,4 +38,5 @@ class Motorista(db.Model):
         self.cpf = cpf
         self.telefone = telefone
         self.email = email
+        self.foto = foto
         
