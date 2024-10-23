@@ -15,7 +15,7 @@ function Usuario() {
     const [cpf, setCpf] = useState('');
     const [telefone, setTelefone] = useState('');
     const [email, setEmail] = useState('');
-    const [foto, setFoto] = useState(null); // Campo para foto (inicialmente nulo)
+    const [foto, setFoto] = useState('');
 
     // Inputs editar
     const [id, setId] = useState('');
@@ -30,7 +30,6 @@ function Usuario() {
     const [alterCpf, setAlterCpf] = useState('');
     const [alterTelefone, setAlterTelefone] = useState('');
     const [alterEmail, setAlterEmail] = useState('');
-    const [alterFoto, setAlterFoto] = useState(null); // Campo para foto (inicialmente nulo)
 
     // Pesquisa
     const [get, setGet] = useState([]);
@@ -53,7 +52,6 @@ function Usuario() {
         setAlterEmail(usuario.email);
         setAlterLogin(usuario.login);
         setAlterSenha(usuario.senha);
-        setAlterFoto(usuario.foto); // Carrega a foto no modal
         setOpen(true);
     }
 
@@ -64,31 +62,38 @@ function Usuario() {
             try {
                 const login = nome + '.' + (ultimoId + 1);
                 const senha = cpf.substring(6, 0);
-                const formData = new FormData(); // Cria um FormData
 
-                // Adiciona os campos ao FormData
-                formData.append('nome', nome);
-                formData.append('horarioida', horarioida);
-                formData.append('horariovolta', horariovolta);
-                formData.append('endereco', endereco);
-                formData.append('bairro', bairro);
-                formData.append('cidade', cidade);
-                formData.append('login', login);
-                formData.append('senha', senha);
-                formData.append('cpf', cpf);
-                formData.append('telefone', telefone);
-                formData.append('email', email);
-                formData.append('foto', foto); // Adiciona o arquivo da foto
-
-                axios.post('http://localhost:3000/usuario', formData, {
-                    headers: {
-                        'Content-Type': 'multipart/form-data'
+                console.log(foto)
+            
+                axios.post('http://localhost:3000/usuario',
+                    {
+                        nome: nome,
+                        horarioida: horarioida,
+                        horariovolta: horariovolta,
+                        endereco: endereco,
+                        bairro: bairro,
+                        cidade: cidade,
+                        login: login,
+                        senha: senha,
+                        cpf: cpf,
+                        telefone: telefone,
+                        email: email,
+                        foto: foto
                     }
-                });
-
+                )
                 alert('Usuário cadastrado');
-                resetFields();
+                setNome('');
+                setHorarioida('');
+                setHorariovolta('');
+                setEndereco('');
+                setBairro('');
+                setCidade('');
+                setCpf('');
+                setTelefone('');
+                setEmail('');
+                setFoto(null);
                 getUsuarios();
+
             } catch (error) {
                 console.log(error);
                 alert('Erro ao cadastrar (dados inválidos)');
@@ -96,19 +101,6 @@ function Usuario() {
         } else {
             alert('Insira dados nos campos em branco');
         }
-    }
-
-    function resetFields() {
-        setNome('');
-        setHorarioida('');
-        setHorariovolta('');
-        setEndereco('');
-        setBairro('');
-        setCidade('');
-        setCpf('');
-        setTelefone('');
-        setEmail('');
-        setFoto(null); // Reseta o campo foto
     }
 
     async function getUsuarios() {
@@ -146,7 +138,7 @@ function Usuario() {
                     cpf: alterCpf,
                     telefone: alterTelefone,
                     email: alterEmail,
-                    foto: alterFoto // Atualiza a foto
+                    foto: foto
                 });
 
                 alert('Usuário alterado');
@@ -173,6 +165,33 @@ function Usuario() {
         ? get.filter(filtro => filtro.nome.toLowerCase().includes(pesquisa.toLowerCase()))
         : [];
 
+    function handleFile(event) {
+        const file = event.target.files[0]
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onloadend = () => {
+            const base64string = reader.result
+            setFoto(base64string);
+        };
+    }
+
+    function b64toimg(base64){
+        const base64data = base64.split(',')[1];
+        const binaryString = window.atob(base64data);
+        
+        const len = binaryString.length;
+        const bytes = new Uint8Array(len);
+
+        for (let i = 0; i < len; i++) {
+            bytes[i] = binaryString.charCodeAt(i);
+        }
+
+        const blob = new Blob([bytes], { type: 'image/png' });
+        const url = URL.createObjectURL(blob);
+        return <img src={url} alt="Usuario" />;
+    }
+
+
     return (
         <div className={styles.container}>
             <h1>Cadastro de Usuário</h1>
@@ -185,17 +204,7 @@ function Usuario() {
             <input className={styles.input} type='text' value={cpf} placeholder='CPF' onChange={event => setCpf(event.target.value)} />
             <input className={styles.input} type='text' value={telefone} placeholder='Telefone' onChange={event => setTelefone(event.target.value)} />
             <input className={styles.input} type='text' value={email} placeholder='Email' onChange={event => setEmail(event.target.value)} />
-            <input 
-                className={styles.input} 
-                type='file' 
-                accept="image/*" 
-                onChange={event => {
-                    const file = event.target.files[0];
-                    if (file) {
-                        setFoto(file); // Armazena o arquivo
-                    }
-                }} 
-            /> {/* Campo para escolher arquivo da máquina */}
+            <input className={styles.input} type='file' onChange={handleFile} /> 
             <button onClick={postUsuarios}>Cadastrar</button>
 
             <div>
@@ -205,6 +214,7 @@ function Usuario() {
 
             {filtrar.length > 0 ? filtrar.map((usuario) => (
                 <div key={usuario.id} className={styles.usuario}>
+                    {b64toimg(usuario.foto)}
                     <p>{usuario.nome}</p>
                     <div>
                         <button onClick={() => handleOpen(usuario)}>Alterar</button>
@@ -213,6 +223,7 @@ function Usuario() {
                 </div>
             )) : get.map((usuario) => (
                 <div key={usuario.id} className={styles.usuario}>
+                    {b64toimg(usuario.foto)}
                     <p>{usuario.nome}</p>
                     <div>
                         <button onClick={() => handleOpen(usuario)}>Alterar</button>
@@ -233,16 +244,7 @@ function Usuario() {
                     <input type="text" value={alterCpf} onChange={event => setAlterCpf(event.target.value)} placeholder="CPF" />
                     <input type="text" value={alterTelefone} onChange={event => setAlterTelefone(event.target.value)} placeholder="Telefone" />
                     <input type="text" value={alterEmail} onChange={event => setAlterEmail(event.target.value)} placeholder="Email" />
-                    <input 
-                        type="file" 
-                        accept="image/*" 
-                        onChange={event => {
-                            const file = event.target.files[0];
-                            if (file) {
-                                setAlterFoto(file); // Armazena o arquivo alterado
-                            }
-                        }} 
-                    /> {/* Campo para escolher arquivo da máquina */}
+                    <input type="file" onChange={handleFile} />
                     <button onClick={putUsuarios}>Alterar</button>
                 </Box>
             </Modal>

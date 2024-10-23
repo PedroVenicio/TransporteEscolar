@@ -8,6 +8,10 @@ function Van() {
     const [modelo, setModelo] = useState('');
     const [capacidade, setCapacidade] = useState('');
     const [placa, setPlaca] = useState('');
+    const [foto1, setFoto1] = useState('');
+    const [foto2, setFoto2] = useState('');
+    const [foto3, setFoto3] = useState('');
+    const [foto4, setFoto4] = useState('');
 
     const [get, setGet] = useState([])
     const [pesquisa, setPesquisa] = useState('');
@@ -39,6 +43,10 @@ function Van() {
                         modelo: modelo,
                         capacidade: capacidade,
                         placa: placa,
+                        foto1: foto1,
+                        foto2: foto2,
+                        foto3: foto3,
+                        foto4: foto4
                     }
                 )
                 alert('Van cadastrada');
