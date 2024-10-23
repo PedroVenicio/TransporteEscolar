@@ -1,6 +1,7 @@
 from flask import request
 from models.usuario import Usuario
 from database.db import db
+from flask_jwt_extended import create_access_token, jwt_required, JWTManager
 
 def usuario_controller():
         if request.method == 'POST':
@@ -40,6 +41,7 @@ def usuario_controller():
                 put_usuario.cpf = data.get('cpf', put_usuario.cpf)
                 put_usuario.telefone = data.get('telefone', put_usuario.telefone)
                 put_usuario.email = data.get('email', put_usuario.email)
+                put_usuario.voto = data.get('voto', put_usuario.voto)
                 db.session.commit()
                 return 'usuario atualizado com sucesso', 200
             except Exception as e:

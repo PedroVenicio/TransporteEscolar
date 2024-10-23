@@ -14,7 +14,8 @@ class Usuario(db.Model):
             'senha': self.senha,
             'cpf': self.cpf,
             'telefone': self.telefone,
-            'email': self.email
+            'email': self.email,
+            'voto': self.voto
         }
     
     id = db.Column(db.Integer, primary_key = True, nullable=False, unique=True)
@@ -29,9 +30,10 @@ class Usuario(db.Model):
     cpf = db.Column(db.Integer, nullable=False)
     telefone = db.Column(db.Integer, nullable=False)
     email = db.Column(db.String(100), nullable=False)
+    voto = db.Column(db.Boolean)
 
 
-    def __init__(self, nome, horarioida, horariovolta, endereco, bairro, cidade, login, senha, cpf, telefone, email):
+    def __init__(self, nome, horarioida, horariovolta, endereco, bairro, cidade, login, senha, cpf, telefone, email, voto):
         self.nome = nome
         self.horarioida = horarioida
         self.horariovolta = horariovolta
@@ -43,3 +45,7 @@ class Usuario(db.Model):
         self.cpf = cpf
         self.telefone = telefone
         self.email = email
+        self.voto = voto
+
+    def verify_senha(self, senha):
+        return self.senha == senha

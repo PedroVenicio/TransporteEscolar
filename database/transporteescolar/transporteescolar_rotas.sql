@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 8.0.36, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.34, for Win64 (x86_64)
 --
 -- Host: 127.0.0.1    Database: transporteescolar
 -- ------------------------------------------------------
--- Server version	8.0.37
+-- Server version	5.5.20-log
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -23,15 +23,15 @@ DROP TABLE IF EXISTS `rotas`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `rotas` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `rota_ida_id` int NOT NULL,
-  `rota_volta_id` int NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `rota_ida_id` int(11) NOT NULL,
+  `rota_volta_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `rota_ida_id` (`rota_ida_id`),
   KEY `rota_volta_id` (`rota_volta_id`),
   CONSTRAINT `rotas_ibfk_1` FOREIGN KEY (`rota_ida_id`) REFERENCES `rota_ida` (`id`),
   CONSTRAINT `rotas_ibfk_2` FOREIGN KEY (`rota_volta_id`) REFERENCES `rota_volta` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -52,4 +52,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-09-08 21:45:10
+-- Dump completed on 2024-10-22 17:14:17

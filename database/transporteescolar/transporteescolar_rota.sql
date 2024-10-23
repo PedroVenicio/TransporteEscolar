@@ -16,38 +16,31 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `usuario`
+-- Table structure for table `rota`
 --
 
-DROP TABLE IF EXISTS `usuario`;
+DROP TABLE IF EXISTS `rota`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `usuario` (
+CREATE TABLE `rota` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `nome` varchar(50) NOT NULL,
-  `horarioida` int(11) NOT NULL,
-  `horariovolta` int(11) NOT NULL,
-  `endereco` varchar(50) NOT NULL,
-  `bairro` varchar(50) NOT NULL,
-  `cidade` varchar(50) NOT NULL,
-  `login` varchar(50) NOT NULL,
-  `senha` varchar(50) NOT NULL,
-  `cpf` bigint(20) NOT NULL,
-  `telefone` int(11) NOT NULL,
-  `email` varchar(50) NOT NULL,
-  `voto` tinyint(4) DEFAULT '0',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
+  `rota_ida_id` int(11) NOT NULL,
+  `rota_volta_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `rota_ida_id` (`rota_ida_id`),
+  KEY `rota_volta_id` (`rota_volta_id`),
+  CONSTRAINT `rota_ibfk_1` FOREIGN KEY (`rota_ida_id`) REFERENCES `rota_ida` (`id`),
+  CONSTRAINT `rota_ibfk_2` FOREIGN KEY (`rota_volta_id`) REFERENCES `rota_volta` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `usuario`
+-- Dumping data for table `rota`
 --
 
-LOCK TABLES `usuario` WRITE;
-/*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
-INSERT INTO `usuario` VALUES (7,'Bruno',5,19,'rua da prefeitura','centro','criciuma','Bruno.5','123321',12332177779,218739609,'bruno@gmail.com',1),(10,'Eduardo',5,19,'Rua corinthians','Nao operario','Ararangua','Eduardo.8','141423',14142348765,99999999,'eduardo@gmail.com',0),(12,'Pedro',12,19,'Rua dionisio milioli','prospera','criciuma','Pedro.11','130115',13011530955,998381100,'pedrovenicio@gmail.com',1);
-/*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
+LOCK TABLES `rota` WRITE;
+/*!40000 ALTER TABLE `rota` DISABLE KEYS */;
+/*!40000 ALTER TABLE `rota` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 

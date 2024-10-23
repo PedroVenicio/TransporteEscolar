@@ -2,6 +2,7 @@ from flask import request
 from models.rota import Rota_ida, Rota_volta
 from database.db import db
 
+
 def rota_ida_controller():
         if request.method == 'POST':
             try:
@@ -97,4 +98,3 @@ def rota_volta_controller():
                 return 'rota_volta deletada com sucesso', 200
             except Exception as e:
                 return {'error': 'Erro ao deletar rota_volta. Erro{}'.format(e)}, 400
-            

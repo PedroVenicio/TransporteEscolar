@@ -1,14 +1,28 @@
 from flask import request
 from models.votacao import Votacao
+from models.usuario import Usuario
 from database.db import db
+from flask_jwt_extended import jwt_required
 
+votos = ['vou e volto', 'vou, mas não volto', 'não vou, mas volto', 'não vou e não volto']
+
+@jwt_required()
 def votacao_controller():
         if request.method == 'POST':
             try:
-                data = request.get_json()
-                print(data)
-                votacao = Votacao(data['opcao'])
-                db.session.add(votacao)
+                votacao = request.get_json()
+                print(votacao)
+                idUser = votacao['userId']
+                for i in votos:
+                    if i == votacao['opcao']:
+                        opcao = votos.index(i) + 1
+                        data = {"opcao": opcao, "userId": idUser}
+                voto = Votacao(data['opcao'], data['userId'])
+                db.session.add(voto)
+
+                put_statsVotacao_id = data['userId']
+                put_statsVotacao = Usuario.query.get(put_statsVotacao_id)
+                put_statsVotacao.voto = data.get('voto', 1)
                 db.session.commit()
                 return 'votacao cadastrada com sucesso', 200
             except Exception as e:
@@ -30,6 +44,7 @@ def votacao_controller():
                 if put_votacao is None:
                     return {'error': 'votacao não encontrada'}, 404
                 put_votacao.opcao = data.get('opcao', put_votacao.opcao)
+                put_votacao.userId = data.get('userId', put_votacao.userId)
                 db.session.commit()
                 return 'votacao atualizada com sucesso', 200
             except Exception as e:

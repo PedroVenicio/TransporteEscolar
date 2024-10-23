@@ -4,16 +4,20 @@ meta {
   seq: 2
 }
 
-get {
-  url: http://localhost:3000/votacao
+post {
+  url: http://localhost:3000/login
   body: json
   auth: none
 }
 
+headers {
+  Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTcyNjQ1Mzg4OCwianRpIjoiYzljOGM1NTUtYzgxZi00MDJjLTkwMTctMDFjYzU4YzE4ZGRiIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6MTIsIm5iZiI6MTcyNjQ1Mzg4OCwiY3NyZiI6ImY3N2E3ZmVjLWZmN2YtNDIyMC1iMDFkLThiMDMxZWVlNmQzMSIsImV4cCI6MTcyNjQ1NDc4OCwidXNlcklkIjoxMn0.pppYq-qr8uMc5tAZbXH7R4oBPiTyyEA_AsXOYagY_0Y
+}
+
 body:json {
   {
-    "id": 1,
-    "opcao": 2
+    "login": "Pedro.11",
+    "senha": "130115"
   }
   
 }
