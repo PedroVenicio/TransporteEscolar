@@ -28,7 +28,7 @@ CREATE TABLE `rota_ida` (
   `hora` int(11) NOT NULL,
   `alunos` text NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=469 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=473 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -37,7 +37,7 @@ CREATE TABLE `rota_ida` (
 
 LOCK TABLES `rota_ida` WRITE;
 /*!40000 ALTER TABLE `rota_ida` DISABLE KEYS */;
-INSERT INTO `rota_ida` VALUES (468,'2024-10-09',5,'7, 10, ');
+INSERT INTO `rota_ida` VALUES (468,'2024-10-09',5,'7, 10, '),(469,'2024-10-22',5,'7, 10, '),(470,'2024-10-22',5,'7, 10, '),(471,'2024-10-23',5,'7, 10, '),(472,'2024-10-23',5,'7, 10, ');
 /*!40000 ALTER TABLE `rota_ida` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -50,4 +50,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-10-22 17:14:17
+-- Dump completed on 2024-10-23 17:17:26

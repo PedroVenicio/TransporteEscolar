@@ -28,6 +28,10 @@ CREATE TABLE `van` (
   `modelo` varchar(50) NOT NULL,
   `capacidade` int(11) NOT NULL,
   `placa` varchar(50) NOT NULL,
+  `foto1` longtext NOT NULL,
+  `foto2` longtext NOT NULL,
+  `foto3` longtext NOT NULL,
+  `foto4` longtext NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -38,7 +42,7 @@ CREATE TABLE `van` (
 
 LOCK TABLES `van` WRITE;
 /*!40000 ALTER TABLE `van` DISABLE KEYS */;
-INSERT INTO `van` VALUES (2,'Volvo','CX40',60,'BXC1214'),(3,'Wolksvagem','ABC123',100,'BMW1010');
+INSERT INTO `van` VALUES (2,'Volvo','CX40',60,'BXC1214','','','',''),(3,'Wolksvagem','ABC123',100,'BMW1010','','','','');
 /*!40000 ALTER TABLE `van` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -51,4 +55,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-10-22 17:14:16
+-- Dump completed on 2024-10-23 17:17:25
