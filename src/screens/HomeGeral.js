@@ -26,8 +26,8 @@ function HomeGeral() {
     navigate('/login');
   };
 
-  function FrotaeEquipeAction() {
-    navigate('/FrotaeEquipe');
+  function FrotaAction() {
+    navigate('/Frota');
   };
 
   function scrollToSection(id) {
@@ -52,7 +52,7 @@ function HomeGeral() {
       <div className={styles.cabecalho}>
         <img src={logo} className={styles.logo} alt="Logo" />
         <div className={styles.direcionar}>
-          <span onClick={() => scrollToSection('FrotaEquipe')}>Frota e equipe</span>
+          <span onClick={() => scrollToSection('Frota')}>Frota </span>
           <span onClick={() => scrollToSection('servicos')}>Serviços</span>
           <span onClick={() => scrollToSection('trabalhamos')}>Como trabalhamos</span>
           <span onClick={() => scrollToSection('localizacao')}>Localização</span>
@@ -93,13 +93,13 @@ function HomeGeral() {
         </button>
       </div>
 
-      <div id="FrotaEquipe" className={styles.corpo}>
+      <div id="Frota" className={styles.corpo}>
         <div className={styles.imagemContainer}>
           <img src={onibus1} className={styles.imagem} alt="Onibus" />
           <div className={styles.overlay}>
             <div className={styles.overlayContent}>
-              <p>Conheça nossa frota e equipe!</p>
-              <button className={styles.botao} onClick={FrotaeEquipeAction}>Clique!</button>
+              <p>Conheça nossa frota!</p>
+              <button className={styles.botao} onClick={FrotaAction}>Clique!</button>
             </div>
           </div>
         </div>
@@ -116,7 +116,7 @@ function HomeGeral() {
               <p>Transporte universitário</p>
             </div>
             <div className={styles.descritivoServico}>
-              <p style={{ textAlign: 'justify' }}>
+              <p style={{ textAlign: 'center' }}>
                 Oferecemos transporte confiável e seguro para estudantes, garantindo que cheguem ao seu destino a tempo e em conforto.
               </p>
             </div>
@@ -128,7 +128,7 @@ function HomeGeral() {
               <p>Transporte escolar</p>
             </div>
             <div className={styles.descritivoServico}>
-              <p style={{ textAlign: 'justify' }}>
+              <p style={{ textAlign: 'center' }}>
                 Garantimos um transporte seguro e pontual para crianças e adolescentes, com motoristas qualificados e veículos em ótimas condições.
               </p>
             </div>
@@ -140,7 +140,7 @@ function HomeGeral() {
               <p>Fretamento empresarial</p>
             </div>
             <div className={styles.descritivoServico}>
-              <p style={{ textAlign: 'justify' }}>
+              <p style={{ textAlign: 'center' }}>
                 Oferecemos soluções de fretamento para empresas, adaptando-nos às necessidades de transporte dos seus colaboradores.
               </p>
             </div>
@@ -152,7 +152,7 @@ function HomeGeral() {
               <p>Turismo</p>
             </div>
             <div className={styles.descritivoServico}>
-              <p style={{ textAlign: 'justify' }}>
+              <p style={{ textAlign: 'center' }}>
                 Proporcionamos experiências únicas com nosso serviço de transporte turístico, levando você aos melhores destinos com conforto e segurança.
               </p>
             </div>
