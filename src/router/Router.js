@@ -5,14 +5,14 @@ import Login from '../screens/Login';
 import Usuario from '../screens/Usuario';
 import Motorista from '../screens/Motorista';
 import Van from '../screens/Van';
-import FrotaeEquipe from "../screens/FrotaeEquipe";
+import Frota from "../screens/Frota";
 
 function Router() {
     return(
         <BrowserRouter>
             <Routes>
                 <Route index element={<HomeGeral />} />
-                <Route path="/FrotaeEquipe" element={<FrotaeEquipe/>}/>
+                <Route path="/Frota" element={<Frota/>}/>
                 <Route path="/Home"   element={<Home />} />
                 <Route path="/HomeGeral"   element={<HomeGeral />} />
                 <Route path="/login"  element={<Login />} />

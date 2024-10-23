@@ -247,7 +247,7 @@
 
 .descritivoServico {
   text-align: center;
-  width: 90%;
+  width: 75%;
   height: 60%;
   color: #000000;
   font-family: 'Roboto', sans-serif;
@@ -300,11 +300,14 @@
   height: 55%;
   background-color: rgb(255, 255, 255);
   margin-left: 5%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .imgicon{
-  width: 100%;
-  height: 100%;
+  width: 85%;
+  height: 90%;
   filter: drop-shadow(4px 4px 20px #ffffff);
   transition: transform 0.3s ease, filter 0.3s ease; 
 }
@@ -317,6 +320,8 @@
 .divtxt{
   width: 70%; 
   height: 70%;
+  display: flex;
+  flex-direction: column;
 }
 
 .TTtxt{

@@ -24,9 +24,9 @@ function Home() {
 
     return (
         <div className={styles.container}>
-            <div className={styles.txt}>
-            <h1>Escolha o que </h1>
-            <h1>deseja gerenciar!</h1>
+            <div className={styles.txtdiv}>
+            <txt>Escolha o que </txt>
+            <txt>deseja gerenciar!</txt>
             </div>
             <button onClick={userCadAction} className={styles.button}>
                 Usuário
