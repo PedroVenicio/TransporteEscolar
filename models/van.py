@@ -8,6 +8,10 @@ class Van(db.Model):
             'modelo': self.modelo,
             'capacidade': self.capacidade,
             'placa': self.placa,
+            'foto1': self.foto1,
+            'foto2': self.foto2,
+            'foto3': self.foto3,
+            'foto4': self.foto4
         }
     
     id = db.Column(db.Integer, primary_key = True, nullable=False, unique=True)

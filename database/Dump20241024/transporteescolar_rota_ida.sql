@@ -16,34 +16,29 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `van`
+-- Table structure for table `rota_ida`
 --
 
-DROP TABLE IF EXISTS `van`;
+DROP TABLE IF EXISTS `rota_ida`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `van` (
+CREATE TABLE `rota_ida` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `marca` varchar(50) NOT NULL,
-  `modelo` varchar(50) NOT NULL,
-  `capacidade` int(11) NOT NULL,
-  `placa` varchar(50) NOT NULL,
-  `foto1` longtext NOT NULL,
-  `foto2` longtext NOT NULL,
-  `foto3` longtext NOT NULL,
-  `foto4` longtext NOT NULL,
+  `data` date NOT NULL,
+  `hora` int(11) NOT NULL,
+  `alunos` text NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=475 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `van`
+-- Dumping data for table `rota_ida`
 --
 
-LOCK TABLES `van` WRITE;
-/*!40000 ALTER TABLE `van` DISABLE KEYS */;
-INSERT INTO `van` VALUES (2,'Volvo','CX40',60,'BXC1214','','','',''),(3,'Wolksvagem','ABC123',100,'BMW1010','','','','');
-/*!40000 ALTER TABLE `van` ENABLE KEYS */;
+LOCK TABLES `rota_ida` WRITE;
+/*!40000 ALTER TABLE `rota_ida` DISABLE KEYS */;
+INSERT INTO `rota_ida` VALUES (468,'2024-10-09',5,'7, 10, '),(469,'2024-10-22',5,'7, 10, '),(470,'2024-10-22',5,'7, 10, '),(471,'2024-10-23',5,'7, 10, '),(472,'2024-10-23',5,'7, 10, '),(473,'2024-10-24',5,'7, 10, '),(474,'2024-10-24',5,'7, 10, ');
+/*!40000 ALTER TABLE `rota_ida` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -55,4 +50,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-10-23 17:17:25
+-- Dump completed on 2024-10-24 17:25:29

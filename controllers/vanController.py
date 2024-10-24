@@ -7,7 +7,7 @@ def van_controller():
             try:
                 data = request.get_json()
                 print(data)
-                van = Van(data['marca'], data['modelo'], data['capacidade'], data['placa'])
+                van = Van(data['marca'], data['modelo'], data['capacidade'], data['placa'], data['foto1'], data['foto2'], data['foto3'], data['foto4'])
                 db.session.add(van)
                 db.session.commit()
                 return 'van cadastrada com sucesso', 200
@@ -33,6 +33,10 @@ def van_controller():
                 put_van.modelo = data.get('modelo', put_van.modelo)
                 put_van.capacidade = data.get('capacidade', put_van.capacidade)
                 put_van.placa = data.get('placa', put_van.placa)
+                put_van.foto1 = data.get('foto1', put_van.foto1)
+                put_van.foto2 = data.get('foto2', put_van.foto2)
+                put_van.foto3 = data.get('foto3', put_van.foto3)
+                put_van.foto4 = data.get('foto4', put_van.foto4)
                 db.session.commit()
                 return 'van atualizada com sucesso', 200
             except Exception as e:

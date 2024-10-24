@@ -16,29 +16,31 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `rota_ida`
+-- Table structure for table `rotas`
 --
 
-DROP TABLE IF EXISTS `rota_ida`;
+DROP TABLE IF EXISTS `rotas`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `rota_ida` (
+CREATE TABLE `rotas` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `data` date NOT NULL,
-  `hora` int(11) NOT NULL,
-  `alunos` text NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=473 DEFAULT CHARSET=latin1;
+  `rota_ida_id` int(11) NOT NULL,
+  `rota_volta_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `rota_ida_id` (`rota_ida_id`),
+  KEY `rota_volta_id` (`rota_volta_id`),
+  CONSTRAINT `rotas_ibfk_1` FOREIGN KEY (`rota_ida_id`) REFERENCES `rota_ida` (`id`),
+  CONSTRAINT `rotas_ibfk_2` FOREIGN KEY (`rota_volta_id`) REFERENCES `rota_volta` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `rota_ida`
+-- Dumping data for table `rotas`
 --
 
-LOCK TABLES `rota_ida` WRITE;
-/*!40000 ALTER TABLE `rota_ida` DISABLE KEYS */;
-INSERT INTO `rota_ida` VALUES (468,'2024-10-09',5,'7, 10, '),(469,'2024-10-22',5,'7, 10, '),(470,'2024-10-22',5,'7, 10, '),(471,'2024-10-23',5,'7, 10, '),(472,'2024-10-23',5,'7, 10, ');
-/*!40000 ALTER TABLE `rota_ida` ENABLE KEYS */;
+LOCK TABLES `rotas` WRITE;
+/*!40000 ALTER TABLE `rotas` DISABLE KEYS */;
+/*!40000 ALTER TABLE `rotas` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -50,4 +52,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-10-23 17:17:26
+-- Dump completed on 2024-10-24 17:25:29
