@@ -15,7 +15,6 @@ function Van() {
 
     const [get, setGet] = useState([])
     const [pesquisa, setPesquisa] = useState('');
-    const [ultimoId, setUltimoId] = useState('');
 
     const [id, setId] = useState('');
     const [alterMarca, setAlterMarca] = useState('');
@@ -54,6 +53,10 @@ function Van() {
                 setModelo('');
                 setCapacidade('');
                 setPlaca('');
+                setFoto1('');
+                setFoto2('');
+                setFoto3('');
+                setFoto4('');
                 getVans();
             }
             catch (error) {
@@ -74,15 +77,9 @@ function Van() {
             if (vans && vans.length > 0) {
                 setGet(vans);
                 console.log(vans);
-
-                const ids = vans.map(vans => vans.id);
-                const ultimoIds = ids.at(-1);
-                setUltimoId(ultimoIds);
-                console.log('ultimo Id: ', ultimoIds)
             }
             else{
                 setGet([]);
-                setUltimoId('')
                 console.log('Nenhuma van encontrada')
             }
         }
@@ -100,6 +97,10 @@ function Van() {
                         marca: marca,
                         modelo: modelo,
                         placa: placa,
+                        foto1: foto1,
+                        foto2: foto2,
+                        foto3: foto3,
+                        foto4: foto4
                     }
                 )
                 alert('Van alterada')
@@ -133,6 +134,43 @@ function Van() {
         ? get.filter(filtro => filtro.placa.toLowerCase().includes(pesquisa.toLowerCase()))
         : [];
 
+    function handleFile(event, foto) {
+        const file = event.target.files[0]
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onloadend = () => {
+            const base64string = reader.result
+            if (foto === 1){
+                setFoto1(base64string);
+            }
+            else if (foto === 2){
+                setFoto2(base64string);
+            }
+            else if (foto === 3){
+                setFoto3(base64string);
+            }
+            else if (foto === 4){
+                setFoto4(base64string);
+            }
+        };
+    }
+
+    function b64toimg(base64){
+        const base64data = base64.split(',')[1];
+        const binaryString = window.atob(base64data);
+        
+        const len = binaryString.length;
+        const bytes = new Uint8Array(len);
+
+        for (let i = 0; i < len; i++) {
+            bytes[i] = binaryString.charCodeAt(i);
+        }
+
+        const blob = new Blob([bytes], { type: 'image/png' });
+        const url = URL.createObjectURL(blob);
+        return <img src={url} alt="van" />;
+    }
+
     return (
         <div>
             <div>
@@ -141,6 +179,10 @@ function Van() {
                 <input type='text' value={modelo} placeholder='modelo' onChange={event => setModelo(event.target.value)} />
                 <input type='text' value={capacidade} placeholder='capacidade' onChange={event => setCapacidade(event.target.value)} />
                 <input type='text' value={placa} placeholder='placa' onChange={event => setPlaca(event.target.value)} />
+                <input id='foto1' type='file' onChange={(event) => handleFile(event, 1)} />
+                <input id='foto2' type='file' onChange={(event) => handleFile(event, 2)} />
+                <input id='foto3' type='file' onChange={(event) => handleFile(event, 3)} />
+                <input id='foto4' type='file' onChange={(event) => handleFile(event, 4)} />
                 <button onClick={postVan}>
                     cadastrar
                 </button>
@@ -153,6 +195,10 @@ function Van() {
                         filtrar.map((filtro) => (
                             <div key={filtro.id}>
                                 {filtro.placa}
+                                {b64toimg(filtro.foto1)}
+                                {b64toimg(filtro.foto2)}
+                                {b64toimg(filtro.foto3)}
+                                {b64toimg(filtro.foto4)}
                                 <button onClick={() => handleOpen(filtro)}>alterar</button>
                                 <button onClick={() => deleteVan(filtro.id)}>deletar</button>
                             </div>
@@ -161,6 +207,10 @@ function Van() {
                         get.map((van) => (
                             <div key={van.id}>
                                 {van.placa}
+                                {b64toimg(van.foto1)}
+                                {b64toimg(van.foto2)}
+                                {b64toimg(van.foto3)}
+                                {b64toimg(van.foto4)}
                                 <button onClick={() => handleOpen(van)}>alterar</button>
                                 <button onClick={() => deleteVan(van.id)}>deletar</button>
                             </div>
@@ -175,6 +225,10 @@ function Van() {
                             <input type='text' value={alterModelo} placeholder='Modelo' onChange={event => setAlterModelo(event.target.value)} />
                             <input type='text' value={alterCapacidade} placeholder='Capacidade' onChange={event => setAlterCapacidade(event.target.value)} />
                             <input type='text' value={alterPlaca} placeholder='Placa' onChange={event => setAlterPlaca(event.target.value)} />
+                            <input id='foto1' type='file' onChange={(event) => handleFile(event, 1)} />
+                            <input id='foto2' type='file' onChange={(event) => handleFile(event, 2)} />
+                            <input id='foto3' type='file' onChange={(event) => handleFile(event, 3)} />
+                            <input id='foto4' type='file' onChange={(event) => handleFile(event, 4)} />
                             <button onClick={putVans}>alterar</button>
                         </Box>
                     </Modal>
