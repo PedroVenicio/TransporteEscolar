@@ -16,6 +16,7 @@ function Usuario() {
     const [telefone, setTelefone] = useState('');
     const [email, setEmail] = useState('');
     const [foto, setFoto] = useState('');
+    const [isAdm, setIsAdm] = useState(false);
 
     // Inputs editar
     const [id, setId] = useState('');
@@ -30,6 +31,7 @@ function Usuario() {
     const [alterCpf, setAlterCpf] = useState('');
     const [alterTelefone, setAlterTelefone] = useState('');
     const [alterEmail, setAlterEmail] = useState('');
+    const [alterIsAdm, setAlterIsAdm] = useState(false);
 
     // Pesquisa
     const [get, setGet] = useState([]);
@@ -52,6 +54,8 @@ function Usuario() {
         setAlterEmail(usuario.email);
         setAlterLogin(usuario.login);
         setAlterSenha(usuario.senha);
+        setAlterIsAdm(usuario.adm);
+        setFoto(usuario.foto);
         setOpen(true);
     }
 
@@ -62,9 +66,7 @@ function Usuario() {
             try {
                 const login = nome + '.' + (ultimoId + 1);
                 const senha = cpf.substring(6, 0);
-
-                console.log(foto)
-            
+                console.log(isAdm)
                 axios.post('http://localhost:3000/usuario',
                     {
                         nome: nome,
@@ -78,7 +80,9 @@ function Usuario() {
                         cpf: cpf,
                         telefone: telefone,
                         email: email,
-                        foto: foto
+                        foto: foto,
+                        adm: isAdm,
+                        voto: 0
                     }
                 )
                 alert('Usuário cadastrado');
@@ -138,10 +142,11 @@ function Usuario() {
                     cpf: alterCpf,
                     telefone: alterTelefone,
                     email: alterEmail,
-                    foto: foto
+                    foto: foto,
+                    adm: alterIsAdm
                 });
-
                 alert('Usuário alterado');
+                getUsuarios();
             } catch (error) {
                 console.log(error);
                 alert('Erro ao editar (dados inválidos)');
@@ -204,6 +209,7 @@ function Usuario() {
             <input className={styles.input} type='text' value={cpf} placeholder='CPF' onChange={event => setCpf(event.target.value)} />
             <input className={styles.input} type='text' value={telefone} placeholder='Telefone' onChange={event => setTelefone(event.target.value)} />
             <input className={styles.input} type='text' value={email} placeholder='Email' onChange={event => setEmail(event.target.value)} />
+            Usuario administrador <input type='checkbox' checked={isAdm} onChange={() => setIsAdm(!isAdm)} />
             <input className={styles.input} type='file' onChange={handleFile} /> 
             <button onClick={postUsuarios}>Cadastrar</button>
 
@@ -244,6 +250,7 @@ function Usuario() {
                     <input type="text" value={alterCpf} onChange={event => setAlterCpf(event.target.value)} placeholder="CPF" />
                     <input type="text" value={alterTelefone} onChange={event => setAlterTelefone(event.target.value)} placeholder="Telefone" />
                     <input type="text" value={alterEmail} onChange={event => setAlterEmail(event.target.value)} placeholder="Email" />
+                    Usuario administrador <input type='checkbox' checked={alterIsAdm} onChange={() => setAlterIsAdm(!alterIsAdm)} />
                     <input type="file" onChange={handleFile} />
                     <button onClick={putUsuarios}>Alterar</button>
                 </Box>

@@ -30,6 +30,10 @@ function Van() {
         setAlterModelo(van.modelo);
         setAlterCapacidade(van.capacidade);
         setAlterPlaca(van.placa);
+        setFoto1(van.foto1);
+        setFoto2(van.foto2);
+        setFoto3(van.foto3);
+        setFoto4(van.foto4);
         setOpen(true);
     }
 
@@ -94,9 +98,10 @@ function Van() {
                 axios.put('http://localhost:3000/van',
                     {
                         id: id,
-                        marca: marca,
-                        modelo: modelo,
-                        placa: placa,
+                        marca: alterMarca,
+                        modelo: alterModelo,
+                        capacidade: alterCapacidade,
+                        placa: alterPlaca,
                         foto1: foto1,
                         foto2: foto2,
                         foto3: foto3,
@@ -104,6 +109,7 @@ function Van() {
                     }
                 )
                 alert('Van alterada')
+                getVans();
             }
             catch(error){
                 console.log(error);
