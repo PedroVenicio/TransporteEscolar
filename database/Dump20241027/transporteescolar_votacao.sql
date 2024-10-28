@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 8.0.34, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.36, for Win64 (x86_64)
 --
 -- Host: 127.0.0.1    Database: transporteescolar
 -- ------------------------------------------------------
--- Server version	5.5.20-log
+-- Server version	8.0.37
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -16,28 +16,30 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `excessao`
+-- Table structure for table `votacao`
 --
 
-DROP TABLE IF EXISTS `excessao`;
+DROP TABLE IF EXISTS `votacao`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `excessao` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `descricao` varchar(100) NOT NULL,
-  `status` tinyint(1) NOT NULL,
-  `opcao` int(11) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+CREATE TABLE `votacao` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `opcao` int NOT NULL,
+  `userId` int NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `userId` (`userId`),
+  CONSTRAINT `votacao_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `usuario` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `excessao`
+-- Dumping data for table `votacao`
 --
 
-LOCK TABLES `excessao` WRITE;
-/*!40000 ALTER TABLE `excessao` DISABLE KEYS */;
-/*!40000 ALTER TABLE `excessao` ENABLE KEYS */;
+LOCK TABLES `votacao` WRITE;
+/*!40000 ALTER TABLE `votacao` DISABLE KEYS */;
+INSERT INTO `votacao` VALUES (36,1,7),(37,1,10),(38,1,12);
+/*!40000 ALTER TABLE `votacao` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -49,4 +51,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-10-24 17:25:29
+-- Dump completed on 2024-10-27 22:06:43
