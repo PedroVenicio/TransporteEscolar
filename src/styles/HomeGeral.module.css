@@ -1,6 +1,4 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;400;700;900&display=swap');
-
-
 .container {
   display: flex;
   flex-direction: column;
@@ -159,16 +157,12 @@
   font-family: 'Roboto', sans-serif;
   font-weight: 900;
   font-size: 45px;
-  padding: 20px;
-  max-width: 80%;
   margin-left: 50px;
+  width: 32%;
+  text-align: left;
 }
 
-.overlayContent txt {
-  margin-bottom: 20px; 
-}
-
-.overlayContent button {
+.botaoov  {
   display: inline-block;
   padding: .75rem 1.25rem;
   width: 10rem;
@@ -183,7 +177,6 @@
   z-index: 1;
   background-color: #860204; 
   border: none; 
-  margin-right: 10px;
   cursor: pointer;
 }
 

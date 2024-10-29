@@ -211,7 +211,7 @@ function Usuario() {
             <input className={styles.input} type='text' value={email} placeholder='Email' onChange={event => setEmail(event.target.value)} />
             Usuario administrador <input type='checkbox' checked={isAdm} onChange={() => setIsAdm(!isAdm)} />
             <input className={styles.input} type='file' onChange={handleFile} /> 
-            <button onClick={postUsuarios}>Cadastrar</button>
+            <button className={styles.btn} onClick={postUsuarios}>Cadastrar</button>
 
             <div>
                 <h1>Pesquisar Usuário</h1>

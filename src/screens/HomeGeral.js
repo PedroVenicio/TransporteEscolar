@@ -98,8 +98,8 @@ function HomeGeral() {
           <img src={onibus1} className={styles.imagem} alt="Onibus" />
           <div className={styles.overlay}>
             <div className={styles.overlayContent}>
-              <p>Conheça nossa frota!</p>
-              <button className={styles.botao} onClick={FrotaAction}>Clique!</button>
+              <txt>Conheça nossa frota!</txt>
+              <button className={styles.botaoov} onClick={FrotaAction}>Clique!</button>
             </div>
           </div>
         </div>

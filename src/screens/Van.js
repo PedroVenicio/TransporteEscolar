@@ -2,8 +2,18 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
+import styles from '../styles/Van.module.css';
+import logo from '../ft/logo.png';
+import { useNavigate } from 'react-router-dom';
 
 function Van() {
+
+    const navigate = useNavigate();
+
+    function voltarAction() {
+        navigate('/HomeGeral');
+    }
+
     const [marca, setMarca] = useState('');
     const [modelo, setModelo] = useState('');
     const [capacidade, setCapacidade] = useState('');
@@ -39,7 +49,7 @@ function Van() {
 
     function postVan() {
         if (marca !== '' && modelo !== '' && capacidade !== '' && placa !== '') {
-            try{
+            try {
                 axios.post('http://localhost:3000/van',
                     {
                         marca: marca,
@@ -74,15 +84,15 @@ function Van() {
     }
 
     async function getVans() {
-        try{
+        try {
             const response = await axios.get('http://localhost:3000/van');
             const vans = response.data.vans;
-            
+
             if (vans && vans.length > 0) {
                 setGet(vans);
                 console.log(vans);
             }
-            else{
+            else {
                 setGet([]);
                 console.log('Nenhuma van encontrada')
             }
@@ -94,7 +104,7 @@ function Van() {
 
     function putVans() {
         if (alterMarca !== '' && alterModelo !== '' && alterCapacidade !== '' && alterPlaca !== '') {
-            try{
+            try {
                 axios.put('http://localhost:3000/van',
                     {
                         id: id,
@@ -111,18 +121,18 @@ function Van() {
                 alert('Van alterada')
                 getVans();
             }
-            catch(error){
+            catch (error) {
                 console.log(error);
                 alert('Erro ao editar (dados inválidos)')
             }
         }
-        else{
+        else {
             alert('Não deixe campos vazios')
         }
     }
 
     async function deleteVan(id) {
-        await axios.delete('http://localhost:3000/van',{
+        await axios.delete('http://localhost:3000/van', {
             data:
             {
                 id: id,
@@ -146,25 +156,25 @@ function Van() {
         reader.readAsDataURL(file);
         reader.onloadend = () => {
             const base64string = reader.result
-            if (foto === 1){
+            if (foto === 1) {
                 setFoto1(base64string);
             }
-            else if (foto === 2){
+            else if (foto === 2) {
                 setFoto2(base64string);
             }
-            else if (foto === 3){
+            else if (foto === 3) {
                 setFoto3(base64string);
             }
-            else if (foto === 4){
+            else if (foto === 4) {
                 setFoto4(base64string);
             }
         };
     }
 
-    function b64toimg(base64){
+    function b64toimg(base64) {
         const base64data = base64.split(',')[1];
         const binaryString = window.atob(base64data);
-        
+
         const len = binaryString.length;
         const bytes = new Uint8Array(len);
 
@@ -178,9 +188,19 @@ function Van() {
     }
 
     return (
-        <div>
-            <div>
-                <h1>cadastro van</h1>
+        <div className={styles.container}>
+            <div className={styles.cabecalhoft}>
+                <img src={logo} className={styles.logo} alt="Logo" />
+                <button className={styles.botao} onClick={voltarAction}>
+                    Voltar
+                </button>
+            </div>
+            <div className={styles.meio}>
+                <div className={styles.botaocadastro}>
+                    <button className={styles.cadbot} >
+                        CADASTRAR
+                    </button>
+                </div>{/* vai virar modal 
                 <input type='text' value={marca} placeholder='marca' onChange={event => setMarca(event.target.value)} />
                 <input type='text' value={modelo} placeholder='modelo' onChange={event => setModelo(event.target.value)} />
                 <input type='text' value={capacidade} placeholder='capacidade' onChange={event => setCapacidade(event.target.value)} />
@@ -191,13 +211,28 @@ function Van() {
                 <input id='foto4' type='file' onChange={(event) => handleFile(event, 4)} />
                 <button onClick={postVan}>
                     cadastrar
-                </button>
-            </div>
-            <div>
-                <h1>pesquisar van</h1>
-                <input type='text' value={pesquisa} placeholder='pesquisa' onChange={event => setPesquisa(event.target.value)} />
+                </button> */}
+                <input type='text' className={styles.pesquisa} value={pesquisa} placeholder='pesquisa' onChange={event => setPesquisa(event.target.value)} />
                 <div>
-                    {pesquisa.length > 0 ? (
+                    <Modal
+                        open={open}
+                        onClose={handleClose}
+                    >
+                        <Box>
+                            <input type='text' value={alterMarca} placeholder='Marca' onChange={event => setAlterMarca(event.target.value)} />
+                            <input type='text' value={alterModelo} placeholder='Modelo' onChange={event => setAlterModelo(event.target.value)} />
+                            <input type='text' value={alterCapacidade} placeholder='Capacidade' onChange={event => setAlterCapacidade(event.target.value)} />
+                            <input type='text' value={alterPlaca} placeholder='Placa' onChange={event => setAlterPlaca(event.target.value)} />
+                            <input id='foto1' type='file' onChange={(event) => handleFile(event, 1)} />
+                            <input id='foto2' type='file' onChange={(event) => handleFile(event, 2)} />
+                            <input id='foto3' type='file' onChange={(event) => handleFile(event, 3)} />
+                            <input id='foto4' type='file' onChange={(event) => handleFile(event, 4)} />
+                            <button onClick={putVans}>alterar</button>
+                        </Box>
+                    </Modal>
+                </div>
+                <div className={styles.resultados}>
+                {pesquisa.length > 0 ? (
                         filtrar.map((filtro) => (
                             <div key={filtro.id}>
                                 {filtro.placa}
@@ -222,22 +257,6 @@ function Van() {
                             </div>
                         ))
                     )}
-                    <Modal
-                        open={open}
-                        onClose={handleClose}
-                    >
-                        <Box>
-                            <input type='text' value={alterMarca} placeholder='Marca' onChange={event => setAlterMarca(event.target.value)} />
-                            <input type='text' value={alterModelo} placeholder='Modelo' onChange={event => setAlterModelo(event.target.value)} />
-                            <input type='text' value={alterCapacidade} placeholder='Capacidade' onChange={event => setAlterCapacidade(event.target.value)} />
-                            <input type='text' value={alterPlaca} placeholder='Placa' onChange={event => setAlterPlaca(event.target.value)} />
-                            <input id='foto1' type='file' onChange={(event) => handleFile(event, 1)} />
-                            <input id='foto2' type='file' onChange={(event) => handleFile(event, 2)} />
-                            <input id='foto3' type='file' onChange={(event) => handleFile(event, 3)} />
-                            <input id='foto4' type='file' onChange={(event) => handleFile(event, 4)} />
-                            <button onClick={putVans}>alterar</button>
-                        </Box>
-                    </Modal>
                 </div>
             </div>
         </div>
