@@ -16,7 +16,7 @@ class App():
     def __init__(self):
         self.app = Flask(__name__)
         CORS(self.app)
-        self.app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:0000@localhost/transporteescolar'
+        self.app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:''@localhost/transporteescolar'
         self.app.config['JWT_SECRET_KEY'] = 'tossir'
         db.init_app(self.app)
         default_routes(self.app)
