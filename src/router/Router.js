@@ -3,7 +3,6 @@ import Home from '../screens/Home';
 import HomeGeral from '../screens/HomeGeral';
 import Login from '../screens/Login';
 import Usuario from '../screens/Usuario';
-import Motorista from '../screens/Motorista';
 import Van from '../screens/Van';
 import Frota from "../screens/Frota";
 
@@ -17,7 +16,6 @@ function Router() {
                 <Route path="/HomeGeral"   element={<HomeGeral />} />
                 <Route path="/login"  element={<Login />} />
                 <Route path="/Usuario"  element={<Usuario />} />
-                <Route path="/Motorista" element={<Motorista />} />
                 <Route path="/Van" element={<Van />} />
             </Routes>
         </BrowserRouter>
