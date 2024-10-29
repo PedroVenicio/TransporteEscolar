@@ -1,57 +1,96 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;400;700;900&display=swap');
 .container {
-  font-family: 'Roboto', sans-serif;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  background: linear-gradient(96deg, #220101, #ad0b0b);
-  height: 100vh;
-  overflow: hidden;
-  position: relative;
+  flex-direction: column;
 }
 
-.txtdiv {
-  font-size: 3rem; 
-  margin-left: 15px; 
-  letter-spacing: 0.3rem;
-  font-family: 'Roboto', sans-serif;
-  text-align: left;
-  color: #ffffff; 
-}
-
-.button {
-  width: 12%;
-  padding: 15px 30px; 
-  margin: 20px;
-  border: none; 
-  background-color: #ffffff; 
-  color: #860204; 
-  font-size: 1.1rem;
-  font-weight: 600;
-  cursor: pointer;
-  border-radius: 18px; 
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
-  transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
-}
-
-.button:hover {
-  background-color: #ff0000; 
-  color: white;
-  transform: translateY(-3px); 
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3); 
-}
-
-.button:active {
-  background-color: #ff0000; 
-  transform: translateY(0); 
-}
-
-.footer {
-  margin-top: 20px;
-  font-size: 0.9rem;
-  color: #7f8c8d;
+.cabecalhoft {
+  display: flex;
+  height: 12vh;
+  width: 100%;
+  align-content: center;
   text-align: center;
-  position: absolute; 
-  bottom: 20px; 
-  width: 100%; 
+  align-items: center;
+  justify-content: space-between; 
+}
+
+.logo {
+  height: 30vh;
+}
+
+.botao {
+display: inline-block;
+padding: .75rem 1.25rem;
+border-radius: 10rem;
+color: #fff;
+font-size: 1rem;
+font-weight: 700;
+letter-spacing: .20rem;
+transition: all .3s;
+position: relative;
+overflow: hidden;
+z-index: 1;
+background-color: #860204; 
+border: none; 
+margin-right: 20px;
+cursor: pointer;
+}
+
+.botao:after {
+content: '';
+position: absolute;
+bottom: 0;
+left: 0;
+width: 100%;
+height: 100%;
+background-color: black; 
+border-radius: 10rem;
+z-index: -1;
+transition: all .3s;
+transform: scaleX(0);
+transform-origin: bottom left;
+}
+
+.botao:hover:after {
+transform: scaleX(1);
+}
+
+.meio{
+  background-color: #860204;
+  width: 100%;
+  height: 88vh;
+}
+
+.central{
+  background-color: #fff;
+  width: 18.5%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.botaouser{
+  width: 100%;
+  height: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.botaovan{
+width: 100%;
+height: 50%;
+display: flex;
+align-items: center;
+justify-content: center;
+}
+
+.botaouserdg, .botaovandg {
+display: inline-block;
+width: 85%;
+height: 45%;
+color: #fff;
+font-size: 2.5rem;
+font-weight: 700;
+font-family: 'Roboto', sans-serif;  
+background-color: #860204; 
 }

@@ -1,45 +1,46 @@
 import React from 'react';
 import styles from '../styles/HomeAdm.module.css';
 import { useNavigate } from 'react-router-dom';
+import logo from "../ft/logo.png";
 
 function Home() {
 
     const navigate = useNavigate();
 
-    function backAction() {
+    function voltarAction() {
         navigate('/HomeGeral');
-    };
+    }
 
     function userCadAction() {
         navigate('/usuario');
     };
 
-    function motoristaCadAction() {
-        navigate('/motorista');
-    };
-
     function vanCadAction() {
         navigate('/van');
-    };
+    };  
 
     return (
         <div className={styles.container}>
-            <div className={styles.txtdiv}>
-            <txt>Escolha o que </txt>
-            <txt>deseja gerenciar!</txt>
+            <div className={styles.cabecalhoft}>
+                <img src={logo} className={styles.logo} alt="Logo" />
+                <button className={styles.botao} onClick={voltarAction}>
+                    Voltar
+                </button>
             </div>
-            <button onClick={userCadAction} className={styles.button}>
-                Usuário
-            </button>
-            <button onClick={motoristaCadAction} className={styles.button}>
-                Motorista
-            </button>
-            <button onClick={vanCadAction} className={styles.button}>
-                Automóveis
-            </button>
-            <button onClick={backAction} className={styles.button}>
-                Voltar
-            </button>
+            <div className={styles.meio}>
+                <div className={styles.central}>
+                    <div className={styles.botaouser}>
+                        <button className={styles.botaouserdg} onClick={userCadAction}>
+                            Usuários
+                        </button>
+                    </div>
+                    <div className={styles.botaovan}>
+                        <button className={styles.botaovandg} onClick={vanCadAction}>
+                            Veículos
+                        </button>
+                    </div>
+                </div>
+            </div>
         </div>
     );
 }
