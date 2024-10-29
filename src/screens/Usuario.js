@@ -54,7 +54,7 @@ function Usuario() {
         setAlterEmail(usuario.email);
         setAlterLogin(usuario.login);
         setAlterSenha(usuario.senha);
-        setAlterIsAdm(usuario.adm);
+        setAlterIsAdm(usuario.adm === true);
         setFoto(usuario.foto);
         setOpen(true);
     }
@@ -62,16 +62,19 @@ function Usuario() {
     const handleClose = () => setOpen(false);
 
     function postUsuarios() {
-        if (nome && horarioida && horariovolta && endereco && bairro && cidade && cpf && telefone && email) {
+        const ida = document.getElementById('horarioida')
+        const volta = document.getElementById('horariovolta')
+
+        if (nome && ida && volta && endereco && bairro && cidade && cpf && telefone && email && foto) {
             try {
                 const login = nome + '.' + (ultimoId + 1);
                 const senha = cpf.substring(6, 0);
-                console.log(isAdm)
+                
                 axios.post('http://localhost:3000/usuario',
                     {
                         nome: nome,
-                        horarioida: horarioida,
-                        horariovolta: horariovolta,
+                        horarioida: isAdm === true ? '' : horarioida,
+                        horariovolta: isAdm === true ? '' : horariovolta,
                         endereco: endereco,
                         bairro: bairro,
                         cidade: cidade,
@@ -95,14 +98,24 @@ function Usuario() {
                 setCpf('');
                 setTelefone('');
                 setEmail('');
-                setFoto(null);
+                setFoto('');
+                setIsAdm(false);
                 getUsuarios();
+                const fileInput = document.getElementById('arquivo');
+                fileInput.value = '';
 
             } catch (error) {
+                const fileInput = document.getElementById('arquivo');
+                fileInput.value = '';
+                setIsAdm(false);
                 console.log(error);
                 alert('Erro ao cadastrar (dados inválidos)');
             }
         } else {
+            const fileInput = document.getElementById('arquivo');
+            fileInput.value = '';
+            setFoto('');
+            setIsAdm(false);
             alert('Insira dados nos campos em branco');
         }
     }
@@ -146,12 +159,17 @@ function Usuario() {
                     adm: alterIsAdm
                 });
                 alert('Usuário alterado');
+                console.log(alterIsAdm)
+                const fileInput = document.getElementById('arquivoEdit');
+                fileInput.value = '';
                 getUsuarios();
             } catch (error) {
                 console.log(error);
                 alert('Erro ao editar (dados inválidos)');
             }
         } else {
+            const fileInput = document.getElementById('arquivoEdit');
+            fileInput.value = '';
             alert('Não deixe campos vazios');
         }
     }
@@ -201,8 +219,8 @@ function Usuario() {
         <div className={styles.container}>
             <h1>Cadastro de Usuário</h1>
             <input className={styles.input} type='text' value={nome} placeholder='Nome' onChange={event => setNome(event.target.value)} />
-            <input className={styles.input} type='text' value={horarioida} placeholder='Horário Ida' onChange={event => setHorarioida(event.target.value)} />
-            <input className={styles.input} type='text' value={horariovolta} placeholder='Horário Volta' onChange={event => setHorariovolta(event.target.value)} />
+            <input className={styles.input} id='horarioida' type='text' value={isAdm === true ? 'null' : horarioida} placeholder='Horário Ida' disabled={isAdm} onChange={event => setHorarioida(event.target.value)} />
+            <input className={styles.input} id='horariovolta' type='text' value={isAdm === true? 'null' : horariovolta} placeholder='Horário Volta' disabled={isAdm} onChange={event => setHorariovolta(event.target.value)} />
             <input className={styles.input} type='text' value={endereco} placeholder='Endereço' onChange={event => setEndereco(event.target.value)} />
             <input className={styles.input} type='text' value={bairro} placeholder='Bairro' onChange={event => setBairro(event.target.value)} />
             <input className={styles.input} type='text' value={cidade} placeholder='Cidade' onChange={event => setCidade(event.target.value)} />
@@ -210,8 +228,8 @@ function Usuario() {
             <input className={styles.input} type='text' value={telefone} placeholder='Telefone' onChange={event => setTelefone(event.target.value)} />
             <input className={styles.input} type='text' value={email} placeholder='Email' onChange={event => setEmail(event.target.value)} />
             Usuario administrador <input type='checkbox' checked={isAdm} onChange={() => setIsAdm(!isAdm)} />
-            <input className={styles.input} type='file' onChange={handleFile} /> 
-            <button className={styles.btn} onClick={postUsuarios}>Cadastrar</button>
+            <input id='arquivo' className={styles.input} type='file' onChange={handleFile} /> 
+            <button onClick={postUsuarios}>Cadastrar</button>
 
             <div>
                 <h1>Pesquisar Usuário</h1>
@@ -242,8 +260,8 @@ function Usuario() {
                 <Box sx={{ padding: 2 }}>
                     <h1>Alterar Usuário</h1>
                     <input type="text" value={alterNome} onChange={event => setAlterNome(event.target.value)} placeholder="Nome" />
-                    <input type="text" value={alterHorarioida} onChange={event => setAlterHorarioida(event.target.value)} placeholder="Horário Ida" />
-                    <input type="text" value={alterHorariovolta} onChange={event => setAlterHorariovolta(event.target.value)} placeholder="Horário Volta" />
+                    <input type="text" value={alterHorarioida} disabled={alterIsAdm} onChange={event => setAlterHorarioida(event.target.value)} placeholder="Horário Ida" />
+                    <input type="text" value={alterHorariovolta} disabled={alterIsAdm} onChange={event => setAlterHorariovolta(event.target.value)} placeholder="Horário Volta" />
                     <input type="text" value={alterEndereco} onChange={event => setAlterEndereco(event.target.value)} placeholder="Endereço" />
                     <input type="text" value={alterBairro} onChange={event => setAlterBairro(event.target.value)} placeholder="Bairro" />
                     <input type="text" value={alterCidade} onChange={event => setAlterCidade(event.target.value)} placeholder="Cidade" />
@@ -251,7 +269,7 @@ function Usuario() {
                     <input type="text" value={alterTelefone} onChange={event => setAlterTelefone(event.target.value)} placeholder="Telefone" />
                     <input type="text" value={alterEmail} onChange={event => setAlterEmail(event.target.value)} placeholder="Email" />
                     Usuario administrador <input type='checkbox' checked={alterIsAdm} onChange={() => setAlterIsAdm(!alterIsAdm)} />
-                    <input type="file" onChange={handleFile} />
+                    <input id='arquivoEdit' type="file" onChange={handleFile} />
                     <button onClick={putUsuarios}>Alterar</button>
                 </Box>
             </Modal>
