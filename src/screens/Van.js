@@ -7,12 +7,7 @@ import logo from '../ft/logo.png';
 import { useNavigate } from 'react-router-dom';
 
 function Van() {
-
     const navigate = useNavigate();
-
-    function voltarAction() {
-        navigate('/HomeGeral');
-    }
 
     const [marca, setMarca] = useState('');
     const [modelo, setModelo] = useState('');
@@ -22,8 +17,7 @@ function Van() {
     const [foto2, setFoto2] = useState('');
     const [foto3, setFoto3] = useState('');
     const [foto4, setFoto4] = useState('');
-
-    const [get, setGet] = useState([])
+    const [get, setGet] = useState([]);
     const [pesquisa, setPesquisa] = useState('');
 
     const [id, setId] = useState('');
@@ -31,9 +25,14 @@ function Van() {
     const [alterModelo, setAlterModelo] = useState('');
     const [alterCapacidade, setAlterCapacidade] = useState('');
     const [alterPlaca, setAlterPlaca] = useState('');
-
     const [open, setOpen] = useState(false);
+
     const handleClose = () => setOpen(false);
+
+    function voltarAction() {
+        navigate('/HomeGeral');
+    }
+
     function handleOpen(van) {
         setId(van.id);
         setAlterMarca(van.marca);
@@ -48,140 +47,78 @@ function Van() {
     }
 
     function postVan() {
-        if (marca !== '' && modelo !== '' && capacidade !== '' && placa !== '') {
-            try {
-                axios.post('http://localhost:3000/van',
-                    {
-                        marca: marca,
-                        modelo: modelo,
-                        capacidade: capacidade,
-                        placa: placa,
-                        foto1: foto1,
-                        foto2: foto2,
-                        foto3: foto3,
-                        foto4: foto4
-                    }
-                )
-                alert('Van cadastrada');
-                setMarca('');
-                setModelo('');
-                setCapacidade('');
-                setPlaca('');
-                setFoto1('');
-                setFoto2('');
-                setFoto3('');
-                setFoto4('');
-                getVans();
-            }
-            catch (error) {
-                console.log(error)
-                alert('Não foi possível cadastrar (dados inválidos)')
-            }
-        }
-        else {
-            alert('Insira dados nos campos em branco')
+        if (marca && modelo && capacidade && placa) {
+            axios.post('http://localhost:3000/van', { marca, modelo, capacidade, placa, foto1, foto2, foto3, foto4 })
+                .then(() => {
+                    alert('Van cadastrada');
+                    setMarca(''); setModelo(''); setCapacidade(''); setPlaca(''); setFoto1(''); setFoto2(''); setFoto3(''); setFoto4('');
+                    getVans();
+                })
+                .catch(error => {
+                    console.log(error);
+                    alert('Não foi possível cadastrar (dados inválidos)');
+                });
+        } else {
+            alert('Insira dados nos campos em branco');
         }
     }
 
     async function getVans() {
         try {
             const response = await axios.get('http://localhost:3000/van');
-            const vans = response.data.vans;
-
-            if (vans && vans.length > 0) {
-                setGet(vans);
-                console.log(vans);
-            }
-            else {
-                setGet([]);
-                console.log('Nenhuma van encontrada')
-            }
-        }
-        catch (error) {
-            console.log('Erro ao obter vans: ', error)
+            setGet(response.data.vans || []);
+        } catch (error) {
+            console.log('Erro ao obter vans: ', error);
         }
     }
 
     function putVans() {
-        if (alterMarca !== '' && alterModelo !== '' && alterCapacidade !== '' && alterPlaca !== '') {
-            try {
-                axios.put('http://localhost:3000/van',
-                    {
-                        id: id,
-                        marca: alterMarca,
-                        modelo: alterModelo,
-                        capacidade: alterCapacidade,
-                        placa: alterPlaca,
-                        foto1: foto1,
-                        foto2: foto2,
-                        foto3: foto3,
-                        foto4: foto4
-                    }
-                )
-                alert('Van alterada')
-                getVans();
-            }
-            catch (error) {
-                console.log(error);
-                alert('Erro ao editar (dados inválidos)')
-            }
-        }
-        else {
-            alert('Não deixe campos vazios')
+        if (alterMarca && alterModelo && alterCapacidade && alterPlaca) {
+            axios.put('http://localhost:3000/van', { id, marca: alterMarca, modelo: alterModelo, capacidade: alterCapacidade, placa: alterPlaca, foto1, foto2, foto3, foto4 })
+                .then(() => {
+                    alert('Van alterada');
+                    getVans();
+                })
+                .catch(error => {
+                    console.log(error);
+                    alert('Erro ao editar (dados inválidos)');
+                });
+        } else {
+            alert('Não deixe campos vazios');
         }
     }
 
     async function deleteVan(id) {
-        await axios.delete('http://localhost:3000/van', {
-            data:
-            {
-                id: id,
-            }
-        })
-        alert('Van deletada')
+        await axios.delete('http://localhost:3000/van', { data: { id } });
+        alert('Van deletada');
         getVans();
     }
 
     useEffect(() => {
-        getVans()
+        getVans();
     }, []);
 
-    const filtrar = pesquisa.length > 0
-        ? get.filter(filtro => filtro.placa.toLowerCase().includes(pesquisa.toLowerCase()))
-        : [];
+    const filtrar = pesquisa.length > 0 ? get.filter(filtro => filtro.placa.toLowerCase().includes(pesquisa.toLowerCase())) : get;
 
     function handleFile(event, foto) {
-        const file = event.target.files[0]
+        const file = event.target.files[0];
         const reader = new FileReader();
-        reader.readAsDataURL(file);
         reader.onloadend = () => {
-            const base64string = reader.result
-            if (foto === 1) {
-                setFoto1(base64string);
-            }
-            else if (foto === 2) {
-                setFoto2(base64string);
-            }
-            else if (foto === 3) {
-                setFoto3(base64string);
-            }
-            else if (foto === 4) {
-                setFoto4(base64string);
-            }
+            const base64string = reader.result;
+            if (foto === 1) setFoto1(base64string);
+            else if (foto === 2) setFoto2(base64string);
+            else if (foto === 3) setFoto3(base64string);
+            else if (foto === 4) setFoto4(base64string);
         };
+        reader.readAsDataURL(file);
     }
 
     function b64toimg(base64) {
         const base64data = base64.split(',')[1];
         const binaryString = window.atob(base64data);
-
         const len = binaryString.length;
         const bytes = new Uint8Array(len);
-
-        for (let i = 0; i < len; i++) {
-            bytes[i] = binaryString.charCodeAt(i);
-        }
-
+        for (let i = 0; i < len; i++) bytes[i] = binaryString.charCodeAt(i);
         const blob = new Blob([bytes], { type: 'image/png' });
         const url = URL.createObjectURL(blob);
         return <img src={url} alt="van" />;
@@ -191,76 +128,46 @@ function Van() {
         <div className={styles.container}>
             <div className={styles.cabecalhoft}>
                 <img src={logo} className={styles.logo} alt="Logo" />
-                <button className={styles.botao} onClick={voltarAction}>
-                    Voltar
-                </button>
+                <button className={styles.botao} onClick={voltarAction}>Voltar</button>
             </div>
             <div className={styles.meio}>
                 <div className={styles.botaocadastro}>
-                    <button className={styles.cadbot} >
-                        CADASTRAR
-                    </button>
-                </div>{/* vai virar modal 
-                <input type='text' value={marca} placeholder='marca' onChange={event => setMarca(event.target.value)} />
-                <input type='text' value={modelo} placeholder='modelo' onChange={event => setModelo(event.target.value)} />
-                <input type='text' value={capacidade} placeholder='capacidade' onChange={event => setCapacidade(event.target.value)} />
-                <input type='text' value={placa} placeholder='placa' onChange={event => setPlaca(event.target.value)} />
-                <input id='foto1' type='file' onChange={(event) => handleFile(event, 1)} />
-                <input id='foto2' type='file' onChange={(event) => handleFile(event, 2)} />
-                <input id='foto3' type='file' onChange={(event) => handleFile(event, 3)} />
-                <input id='foto4' type='file' onChange={(event) => handleFile(event, 4)} />
-                <button onClick={postVan}>
-                    cadastrar
-                </button> */}
-                <input type='text' className={styles.pesquisa} value={pesquisa} placeholder='pesquisa' onChange={event => setPesquisa(event.target.value)} />
-                <div>
-                    <Modal
-                        open={open}
-                        onClose={handleClose}
-                    >
-                        <Box>
-                            <input type='text' value={alterMarca} placeholder='Marca' onChange={event => setAlterMarca(event.target.value)} />
-                            <input type='text' value={alterModelo} placeholder='Modelo' onChange={event => setAlterModelo(event.target.value)} />
-                            <input type='text' value={alterCapacidade} placeholder='Capacidade' onChange={event => setAlterCapacidade(event.target.value)} />
-                            <input type='text' value={alterPlaca} placeholder='Placa' onChange={event => setAlterPlaca(event.target.value)} />
-                            <input id='foto1' type='file' onChange={(event) => handleFile(event, 1)} />
-                            <input id='foto2' type='file' onChange={(event) => handleFile(event, 2)} />
-                            <input id='foto3' type='file' onChange={(event) => handleFile(event, 3)} />
-                            <input id='foto4' type='file' onChange={(event) => handleFile(event, 4)} />
-                            <button onClick={putVans}>alterar</button>
+                    <button className={styles.cadbot} onClick={() => setOpen(true)}>Cadastrar</button>
+                    <Modal open={open} onClose={handleClose}>
+                        <Box className={styles.modalBox}>
+                            <input type='text' value={marca} placeholder='Marca' onChange={e => setMarca(e.target.value)} />
+                            <input type='text' value={modelo} placeholder='Modelo' onChange={e => setModelo(e.target.value)} />
+                            <input type='text' value={capacidade} placeholder='Capacidade' onChange={e => setCapacidade(e.target.value)} />
+                            <input type='text' value={placa} placeholder='Placa' onChange={e => setPlaca(e.target.value)} />
+                            <input type='file' onChange={(e) => handleFile(e, 1)} />
+                            <input type='file' onChange={(e) => handleFile(e, 2)} />
+                            <input type='file' onChange={(e) => handleFile(e, 3)} />
+                            <input type='file' onChange={(e) => handleFile(e, 4)} />
+                            <button onClick={postVan}>Cadastrar</button>
                         </Box>
                     </Modal>
                 </div>
-                <div className={styles.resultados}>
-                {pesquisa.length > 0 ? (
-                        filtrar.map((filtro) => (
-                            <div key={filtro.id}>
-                                {filtro.placa}
-                                {b64toimg(filtro.foto1)}
-                                {b64toimg(filtro.foto2)}
-                                {b64toimg(filtro.foto3)}
-                                {b64toimg(filtro.foto4)}
-                                <button onClick={() => handleOpen(filtro)}>alterar</button>
-                                <button onClick={() => deleteVan(filtro.id)}>deletar</button>
-                            </div>
-                        ))
-                    ) : (
-                        get.map((van) => (
-                            <div key={van.id}>
-                                {van.placa}
-                                {b64toimg(van.foto1)}
-                                {b64toimg(van.foto2)}
-                                {b64toimg(van.foto3)}
-                                {b64toimg(van.foto4)}
-                                <button onClick={() => handleOpen(van)}>alterar</button>
-                                <button onClick={() => deleteVan(van.id)}>deletar</button>
-                            </div>
-                        ))
-                    )}
+                <div className={styles.botaopesquisa}>
+                    <input type='text' className={styles.pesquisa} value={pesquisa} placeholder='Pesquisar:' onChange={e => setPesquisa(e.target.value)} />
+                    </div>
+                    <div className={styles.botaoresultado}>
+                        <div className={styles.resultados}>
+                            {filtrar.map((van) => (
+                                <div key={van.id}>
+                                    {van.placa}
+                                    {b64toimg(van.foto1)}
+                                    {b64toimg(van.foto2)}
+                                    {b64toimg(van.foto3)}
+                                    {b64toimg(van.foto4)}
+                                    <button onClick={() => handleOpen(van)}>Alterar</button>
+                                    <button onClick={() => deleteVan(van.id)}>Deletar</button>
+                                </div>
+                            ))}
+                        </div>
                 </div>
             </div>
         </div>
-    )
+    );
 }
 
 export default Van;
