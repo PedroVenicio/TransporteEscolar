@@ -26,8 +26,12 @@ function Van() {
     const [alterCapacidade, setAlterCapacidade] = useState('');
     const [alterPlaca, setAlterPlaca] = useState('');
     const [open, setOpen] = useState(false);
+    const [open1, setOpen1] = useState(false);
 
-    const handleClose = () => setOpen(false);
+    const handleClose = () => {
+        setOpen(false);
+        setOpen1(false);
+    }
 
     function voltarAction() {
         navigate('/HomeGeral');
@@ -98,7 +102,9 @@ function Van() {
         getVans();
     }, []);
 
-    const filtrar = pesquisa.length > 0 ? get.filter(filtro => filtro.placa.toLowerCase().includes(pesquisa.toLowerCase())) : get;
+    const filtrar = pesquisa.length > 0 ? get.filter(filtro => filtro.placa.toLowerCase().includes(pesquisa.toLowerCase()) ||
+        filtro.marca.toLowerCase().includes(pesquisa.toLowerCase()) ||
+        filtro.modelo.toLowerCase().includes(pesquisa.toLowerCase())) : get;
 
     function handleFile(event, foto) {
         const file = event.target.files[0];
@@ -132,8 +138,8 @@ function Van() {
             </div>
             <div className={styles.meio}>
                 <div className={styles.botaocadastro}>
-                    <button className={styles.cadbot} onClick={() => setOpen(true)}>Cadastrar</button>
-                    <Modal open={open} onClose={handleClose}>
+                    <button className={styles.cadbot} onClick={() => setOpen1(true)}>Cadastrar</button>
+                    <Modal open={open1} onClose={handleClose}>
                         <Box className={styles.modalBox}>
                             <input type='text' value={marca} placeholder='Marca' onChange={e => setMarca(e.target.value)} />
                             <input type='text' value={modelo} placeholder='Modelo' onChange={e => setModelo(e.target.value)} />
@@ -149,23 +155,39 @@ function Van() {
                 </div>
                 <div className={styles.botaopesquisa}>
                     <input type='text' className={styles.pesquisa} value={pesquisa} placeholder='Pesquisar:' onChange={e => setPesquisa(e.target.value)} />
+                </div>
+                <div className={styles.botaoresultado}>
+                    <div className={styles.resultados}>
+                        {filtrar.map((van) => (
+                            <div key={van.id}>
+                                {van.marca}
+                                {van.modelo}
+                                {van.placa}
+                                {van.capacidade}
+                                {b64toimg(van.foto1)}
+                                {b64toimg(van.foto2)}
+                                {b64toimg(van.foto3)}
+                                {b64toimg(van.foto4)}
+                                <button onClick={() => handleOpen(van)}>Alterar</button>
+                                <button onClick={() => deleteVan(van.id)}>Deletar</button>
+                            </div>
+                        ))}
                     </div>
-                    <div className={styles.botaoresultado}>
-                        <div className={styles.resultados}>
-                            {filtrar.map((van) => (
-                                <div key={van.id}>
-                                    {van.placa}
-                                    {b64toimg(van.foto1)}
-                                    {b64toimg(van.foto2)}
-                                    {b64toimg(van.foto3)}
-                                    {b64toimg(van.foto4)}
-                                    <button onClick={() => handleOpen(van)}>Alterar</button>
-                                    <button onClick={() => deleteVan(van.id)}>Deletar</button>
-                                </div>
-                            ))}
-                        </div>
                 </div>
             </div>
+            <Modal open={open} onClose={handleClose}>
+                <Box className={styles.modalBox}>
+                    <input type='text' value={alterMarca} placeholder='Marca' onChange={e => setAlterMarca(e.target.value)} />
+                    <input type='text' value={alterModelo} placeholder='Modelo' onChange={e => setAlterModelo(e.target.value)} />
+                    <input type='text' value={alterCapacidade} placeholder='Capacidade' onChange={e => setAlterCapacidade(e.target.value)} />
+                    <input type='text' value={alterPlaca} placeholder='Placa' onChange={e => setAlterPlaca(e.target.value)} />
+                    <input type='file' onChange={(e) => handleFile(e, 1)} />
+                    <input type='file' onChange={(e) => handleFile(e, 2)} />
+                    <input type='file' onChange={(e) => handleFile(e, 3)} />
+                    <input type='file' onChange={(e) => handleFile(e, 4)} />
+                    <button onClick={putVans}>Alterar</button>
+                </Box>
+            </Modal>
         </div>
     );
 }
