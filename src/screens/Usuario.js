@@ -32,14 +32,16 @@ function Usuario() {
     const [alterIsAdm, setAlterIsAdm] = useState(false);
 
     const [get, setGet] = useState([]);
+    const [getAdm, setGetAdm] = useState([]);
     const [getMotorista, setGetMotorista] = useState([]);
     const [pesquisa, setPesquisa] = useState('');
     const [ultimoId, setUltimoId] = useState('');
     const [ultimoIdMotorista, setUltimoIdMotorista] = useState('');
     const [open, setOpen] = useState(false);
     const [open1, setOpen1] = useState(false);
+    const [openDelete, setOpenDelete] = useState(false);
 
-    const handleOpen = (usuario) => {
+    const handleOpen = (usuario, motorista) => {
         setId(usuario.id);
         setAlterNome(usuario.nome);
         setAlterHorarioida(usuario.horarioida);
@@ -52,12 +54,14 @@ function Usuario() {
         setAlterEmail(usuario.email);
         setAlterIsAdm(usuario.adm);
         setFoto(usuario.foto);
+        setIsMotorista(motorista);
         setOpen(true);
     };
 
     const handleClose = () => {
         setOpen(false);
         setOpen1(false);
+        setOpenDelete(false);
     }
 
     function postUsuarios() {
@@ -116,6 +120,7 @@ function Usuario() {
             setFoto('');
             setIsAdm(false);
             setIsMotorista(false);
+            handleClose();
             getUsuarios();
             const fileInput = document.getElementById('arquivo');
             fileInput.value = '';
@@ -132,7 +137,8 @@ function Usuario() {
         try {
             const response = await axios.get('http://localhost:3000/usuario');
             const usuarios = response.data.usuarios;
-            setGet(usuarios || []);
+            setGet(usuarios.filter(user => user.adm === false) || []);
+            setGetAdm(usuarios.filter(user => user.adm === true))
             setUltimoId(usuarios?.at(-1)?.id || '');
 
             const responseMotoristas = await axios.get('http://localhost:3000/motorista');
@@ -147,37 +153,76 @@ function Usuario() {
     };
 
     const putUsuarios = () => {
-        if (alterNome && alterHorarioida && alterHorariovolta && alterEndereco && alterBairro && alterCidade && alterCpf && alterTelefone && alterEmail) {
-            try {
-                axios.put('http://localhost:3000/usuario', {
-                    id, nome: alterNome, horarioida: alterHorarioida, horariovolta: alterHorariovolta, endereco: alterEndereco,
-                    bairro: alterBairro, cidade: alterCidade, cpf: alterCpf, telefone: alterTelefone, email: alterEmail, adm: alterIsAdm
-                })
-                alert('Usuário alterado');
-                const fileInput = document.getElementById('arquivoEdit');
-                fileInput.value = '';
-                getUsuarios();
-            } catch (error) {
-                alert('Erro ao editar (dados inválidos)');
-            };
+
+        const ida = document.getElementById('alterhorarioida');
+        const volta = document.getElementById('alterhorariovolta');
+
+        if (alterNome && ida && volta && alterEndereco && alterBairro && alterCidade && alterCpf && alterTelefone && alterEmail) {
+            if (isMotorista === false) {
+                try {
+                    axios.put('http://localhost:3000/usuario', {
+                        id, nome: alterNome, horarioida: alterHorarioida, horariovolta: alterHorariovolta, endereco: alterEndereco,
+                        bairro: alterBairro, cidade: alterCidade, cpf: alterCpf, telefone: alterTelefone, email: alterEmail, adm: alterIsAdm, foto
+                    })
+                    alert('Usuário alterado');
+                    const fileInput = document.getElementById('arquivoEdit');
+                    fileInput.value = '';
+                    getUsuarios();
+                } catch (error) {
+                    alert('Erro ao editar (dados inválidos)');
+                };
+            }
+            else {
+                try {
+                    axios.put('http://localhost:3000/motorista', {
+                        id, nome: alterNome, endereco: alterEndereco, bairro: alterBairro, cidade: alterCidade, cpf: alterCpf, telefone: alterTelefone, email: alterEmail, foto
+                    })
+                    alert('Usuário alterado');
+                    const fileInput = document.getElementById('arquivoEdit');
+                    fileInput.value = '';
+                    getUsuarios();
+                } catch (error) {
+                    alert('Erro ao editar (dados inválidos)');
+                };
+            }
         } else {
             const fileInput = document.getElementById('arquivoEdit');
             fileInput.value = '';
             alert('Não deixe campos vazios');
         }
+        setIsMotorista(false);
+        handleClose();
     };
 
+    function deleteModal(id, motorista) {
+        setId(id)
+        setIsMotorista(motorista)
+        setOpenDelete(true);
+    }
+
     async function deleteUsuario(id) {
-        await axios.delete('http://localhost:3000/usuario', { data: { id } });
+        isMotorista === false ? await axios.delete('http://localhost:3000/usuario', { data: { id } }) : await axios.delete('http://localhost:3000/motorista', { data: { id } });
         alert('Usuário deletado');
+        setOpenDelete(false);
+        setIsMotorista(false);
         getUsuarios();
+
     };
 
     useEffect(() => { getUsuarios(); }, []);
 
     const filtrar = pesquisa.length > 0 ? get.filter(filtro => filtro.nome.toLowerCase().includes(pesquisa.toLowerCase()) ||
         filtro.cidade.toLowerCase().includes(pesquisa.toLowerCase()) ||
-        filtro.cpf.toString().toLowerCase().includes(pesquisa.toLowerCase())) : get;
+        filtro.cpf.toString().includes(pesquisa)) : get;
+
+    const filtrarAdm = pesquisa.length > 0 ? getAdm.filter(filtro => filtro.nome.toLowerCase().includes(pesquisa.toLowerCase()) ||
+        filtro.cidade.toLowerCase().includes(pesquisa.toLowerCase()) ||
+        filtro.cpf.toString().includes(pesquisa)) : getAdm;
+
+    const filtrarMotorista = pesquisa.length > 0 ? getMotorista.filter(filtro => filtro.nome.toLowerCase().includes(pesquisa.toLowerCase()) ||
+        filtro.cidade.toLowerCase().includes(pesquisa.toLowerCase()) ||
+        filtro.cpf.toString().includes(pesquisa)) : getMotorista;
+
 
     const handleFile = (event) => {
         const file = event.target.files[0];
@@ -232,14 +277,14 @@ function Usuario() {
                             <p>{usuario.telefone}</p>
                             <p>{usuario.email}</p>
                             <div>
-                                <button onClick={() => handleOpen(usuario)}>Alterar</button>
-                                <button onClick={() => deleteUsuario(usuario.id)}>Deletar</button>
+                                <button onClick={() => handleOpen(usuario, false)}>Alterar</button>
+                                <button onClick={() => deleteModal(usuario.id, false)}>Deletar</button>
                             </div>
                         </div>
                     ))}
                 </div>
                 <div className={styles.resultados}>
-                    {getMotorista.map((motorista) => (
+                    {filtrarMotorista.map((motorista) => (
                         <div key={motorista.id} className={styles.motorista}>
                             {motorista.foto && b64toimg(motorista.foto)}
                             <p>{motorista.nome}</p>
@@ -249,27 +294,52 @@ function Usuario() {
                             <p>{motorista.telefone}</p>
                             <p>{motorista.email}</p>
                             <div>
-                                <button /* onClick={() => handleOpen(motorista)} */>Alterar</button>
-                                <button /* onClick={() => deleteUsuario(usuario.id)} os botao tem q muda umas coisa pra funciona*/>Deletar</button> 
+                                <button onClick={() => handleOpen(motorista, true)}>Alterar</button>
+                                <button onClick={() => deleteModal(motorista.id, true)}>Deletar</button>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+                <div className={styles.resultados}>
+                    {filtrarAdm.map((usuario) => (
+                        <div key={usuario.id} className={styles.usuario}>
+                            {usuario.foto && b64toimg(usuario.foto)}
+                            <p>{usuario.nome}</p>
+                            <p>{usuario.endereco}</p>
+                            <p>{usuario.login}</p>
+                            <p>{usuario.cpf}</p>
+                            <p>{usuario.telefone}</p>
+                            <p>{usuario.email}</p>
+                            <div>
+                                <button onClick={() => handleOpen(usuario, false)}>Alterar</button>
+                                <button onClick={() => deleteModal(usuario.id, false)}>Deletar</button>
                             </div>
                         </div>
                     ))}
                 </div>
             </div>
-            <Modal open={open} onClose={handleClose}> 
+            <Modal open={open} onClose={handleClose}>
                 <Box className={styles.modalBox}>
                     <input type="text" value={alterNome} onChange={event => setAlterNome(event.target.value)} placeholder="Nome" />
-                    <input type="text" value={alterHorarioida} disabled={alterIsAdm} onChange={event => setAlterHorarioida(event.target.value)} placeholder="Horário Ida" />
-                    <input type="text" value={alterHorariovolta} disabled={alterIsAdm} onChange={event => setAlterHorariovolta(event.target.value)} placeholder="Horário Volta" />
+                    <input type="text" value={alterHorarioida} id='alterhorarioida' disabled={alterIsAdm || isMotorista} onChange={event => setAlterHorarioida(event.target.value)} placeholder="Horário Ida" />
+                    <input type="text" value={alterHorariovolta} id='alterhorariovolta' disabled={alterIsAdm || isMotorista} onChange={event => setAlterHorariovolta(event.target.value)} placeholder="Horário Volta" />
                     <input type="text" value={alterEndereco} onChange={event => setAlterEndereco(event.target.value)} placeholder="Endereço" />
                     <input type="text" value={alterBairro} onChange={event => setAlterBairro(event.target.value)} placeholder="Bairro" />
                     <input type="text" value={alterCidade} onChange={event => setAlterCidade(event.target.value)} placeholder="Cidade" />
                     <input type="text" value={alterCpf} onChange={event => setAlterCpf(event.target.value)} placeholder="CPF" />
                     <input type="text" value={alterTelefone} onChange={event => setAlterTelefone(event.target.value)} placeholder="Telefone" />
                     <input type="text" value={alterEmail} onChange={event => setAlterEmail(event.target.value)} placeholder="Email" />
-                    Usuario administrador <input type='checkbox' checked={alterIsAdm} onChange={() => setAlterIsAdm(!alterIsAdm)} />
+                    Usuario administrador <input type='checkbox' disabled={isMotorista} checked={alterIsAdm} onChange={() => setAlterIsAdm(!alterIsAdm)} />
                     <input id='arquivoEdit' type="file" onChange={handleFile} />
                     <button onClick={putUsuarios}>Alterar</button>
+                </Box>
+            </Modal>
+
+            <Modal open={openDelete} onClose={handleClose}>
+                <Box className={styles.modalBox}>
+                    Deseja deletar o usuário?
+                    <button onClick={() => deleteUsuario(id)}>Sim</button>
+                    <button onClick={handleClose}>Não</button>
                 </Box>
             </Modal>
         </div>

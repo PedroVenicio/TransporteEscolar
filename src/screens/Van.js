@@ -27,10 +27,12 @@ function Van() {
     const [alterPlaca, setAlterPlaca] = useState('');
     const [open, setOpen] = useState(false);
     const [open1, setOpen1] = useState(false);
+    const [openDelete, setOpenDelete] = useState(false);
 
     const handleClose = () => {
         setOpen(false);
         setOpen1(false);
+        setOpenDelete(false);
     }
 
     function voltarAction() {
@@ -92,9 +94,15 @@ function Van() {
         }
     }
 
+    function deleteModal(id) {
+        setId(id)
+        setOpenDelete(true);
+    }
+
     async function deleteVan(id) {
         await axios.delete('http://localhost:3000/van', { data: { id } });
         alert('Van deletada');
+        setOpenDelete(false);
         getVans();
     }
 
@@ -169,7 +177,7 @@ function Van() {
                                 {b64toimg(van.foto3)}
                                 {b64toimg(van.foto4)}
                                 <button onClick={() => handleOpen(van)}>Alterar</button>
-                                <button onClick={() => deleteVan(van.id)}>Deletar</button>
+                                <button onClick={() => deleteModal(van.id)}>Deletar</button>
                             </div>
                         ))}
                     </div>
@@ -186,6 +194,14 @@ function Van() {
                     <input type='file' onChange={(e) => handleFile(e, 3)} />
                     <input type='file' onChange={(e) => handleFile(e, 4)} />
                     <button onClick={putVans}>Alterar</button>
+                </Box>
+            </Modal>
+
+            <Modal open={openDelete} onClose={handleClose}>
+                <Box className={styles.modalBox}>
+                    Deseja deletar a van?
+                    <button onClick={() => deleteVan(id)}>Sim</button>
+                    <button onClick={handleClose}>Não</button>
                 </Box>
             </Modal>
         </div>
