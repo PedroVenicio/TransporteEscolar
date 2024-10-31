@@ -32,8 +32,10 @@ function Usuario() {
     const [alterIsAdm, setAlterIsAdm] = useState(false);
 
     const [get, setGet] = useState([]);
+    const [getMotorista, setGetMotorista] = useState([]);
     const [pesquisa, setPesquisa] = useState('');
     const [ultimoId, setUltimoId] = useState('');
+    const [ultimoIdMotorista, setUltimoIdMotorista] = useState('');
     const [open, setOpen] = useState(false);
     const [open1, setOpen1] = useState(false);
 
@@ -64,41 +66,59 @@ function Usuario() {
         const volta = document.getElementById('horariovolta');
 
         if (nome && ida && volta && endereco && bairro && cidade && cpf && telefone && email) {
-            try {
+            if (isMotorista === true) {
+                try {
+                    const login = nome + '.' + (ultimoIdMotorista + 1);
+                    const senha = cpf.substring(6, 0);
+                    axios.post('http://localhost:3000/motorista', {
+                        nome, endereco, bairro, cidade, login, senha, cpf, telefone, email, foto, adm: isAdm, voto: 0
+                    })
 
-                const login = nome + '.' + (ultimoId + 1);
-                const senha = cpf.substring(6, 0);
-
-                axios.post('http://localhost:3000/usuario', {
-                    nome,
-                    horarioida: isAdm === true ? 0 : horarioida,
-                    horariovolta: isAdm === true ? 0 : horariovolta,
-                    endereco, bairro, cidade, login, senha, cpf, telefone, email, foto, adm: isAdm, voto: 0
-                })
-
-                alert('Usuário cadastrado');
-                setNome('');
-                setHorarioida('');
-                setHorariovolta('');
-                setEndereco('');
-                setBairro('');
-                setCidade('');
-                setCpf('');
-                setTelefone('');
-                setEmail('');
-                setFoto('');
-                setIsAdm(false);
-                getUsuarios();
-                const fileInput = document.getElementById('arquivo');
-                fileInput.value = '';
-
-            } catch (error) {
-                const fileInput = document.getElementById('arquivo');
-                fileInput.value = '';
-                setIsAdm(false);
-                console.log(error);
-                alert('Erro ao cadastrar (dados inválidos)');
+                } catch (error) {
+                    const fileInput = document.getElementById('arquivo');
+                    fileInput.value = '';
+                    setIsAdm(false);
+                    console.log(error);
+                    alert('Erro ao cadastrar (dados inválidos)');
+                }
             }
+            else {
+                try {
+
+                    const login = nome + '.' + (ultimoId + 1);
+                    const senha = cpf.substring(6, 0);
+
+                    axios.post('http://localhost:3000/usuario', {
+                        nome,
+                        horarioida: isAdm === true ? 0 : horarioida,
+                        horariovolta: isAdm === true ? 0 : horariovolta,
+                        endereco, bairro, cidade, login, senha, cpf, telefone, email, foto, adm: isAdm, voto: 0
+                    })
+
+                } catch (error) {
+                    const fileInput = document.getElementById('arquivo');
+                    fileInput.value = '';
+                    setIsAdm(false);
+                    console.log(error);
+                    alert('Erro ao cadastrar (dados inválidos)');
+                }
+            }
+            alert('Usuário cadastrado');
+            setNome('');
+            setHorarioida('');
+            setHorariovolta('');
+            setEndereco('');
+            setBairro('');
+            setCidade('');
+            setCpf('');
+            setTelefone('');
+            setEmail('');
+            setFoto('');
+            setIsAdm(false);
+            setIsMotorista(false);
+            getUsuarios();
+            const fileInput = document.getElementById('arquivo');
+            fileInput.value = '';
         } else {
             const fileInput = document.getElementById('arquivo');
             fileInput.value = '';
@@ -114,6 +134,13 @@ function Usuario() {
             const usuarios = response.data.usuarios;
             setGet(usuarios || []);
             setUltimoId(usuarios?.at(-1)?.id || '');
+
+            const responseMotoristas = await axios.get('http://localhost:3000/motorista');
+            const motoristas = responseMotoristas.data.motoristas;
+            setGetMotorista(motoristas || []);
+            console.log(getMotorista)
+            setUltimoIdMotorista(motoristas?.at(-1)?.id || '');
+
         } catch {
             console.log('Erro ao obter usuários');
         }
@@ -148,9 +175,9 @@ function Usuario() {
 
     useEffect(() => { getUsuarios(); }, []);
 
-    const filtrar = pesquisa.length > 0 ? get.filter(f => f.nome.toLowerCase().includes(pesquisa.toLowerCase()) ||
-        f.cidade.toLowerCase().includes(pesquisa.toLowerCase()) ||
-        f.cpf.toString().toLowerCase().includes(pesquisa.toLowerCase())) : get;
+    const filtrar = pesquisa.length > 0 ? get.filter(filtro => filtro.nome.toLowerCase().includes(pesquisa.toLowerCase()) ||
+        filtro.cidade.toLowerCase().includes(pesquisa.toLowerCase()) ||
+        filtro.cpf.toString().toLowerCase().includes(pesquisa.toLowerCase())) : get;
 
     const handleFile = (event) => {
         const file = event.target.files[0];
@@ -177,15 +204,16 @@ function Usuario() {
                 <Modal open={open1} onClose={handleClose}>
                     <Box className={styles.modalBox}>
                         <input className={styles.input} type='text' value={nome} placeholder='Nome' onChange={event => setNome(event.target.value)} />
-                        <input className={styles.input} id='horarioida' type='text' value={isAdm === true ? 'null' : horarioida} placeholder='Horário Ida' disabled={isAdm} onChange={event => setHorarioida(event.target.value)} />
-                        <input className={styles.input} id='horariovolta' type='text' value={isAdm === true ? 'null' : horariovolta} placeholder='Horário Volta' disabled={isAdm} onChange={event => setHorariovolta(event.target.value)} />
+                        <input className={styles.input} id='horarioida' type='text' value={isAdm || isMotorista === true ? 'null' : horarioida} placeholder='Horário Ida' disabled={isAdm || isMotorista} onChange={event => setHorarioida(event.target.value)} />
+                        <input className={styles.input} id='horariovolta' type='text' value={isAdm || isMotorista === true ? 'null' : horariovolta} placeholder='Horário Volta' disabled={isAdm || isMotorista} onChange={event => setHorariovolta(event.target.value)} />
                         <input className={styles.input} type='text' value={endereco} placeholder='Endereço' onChange={event => setEndereco(event.target.value)} />
                         <input className={styles.input} type='text' value={bairro} placeholder='Bairro' onChange={event => setBairro(event.target.value)} />
                         <input className={styles.input} type='text' value={cidade} placeholder='Cidade' onChange={event => setCidade(event.target.value)} />
                         <input className={styles.input} type='text' value={cpf} placeholder='CPF' onChange={event => setCpf(event.target.value)} />
                         <input className={styles.input} type='text' value={telefone} placeholder='Telefone' onChange={event => setTelefone(event.target.value)} />
                         <input className={styles.input} type='text' value={email} placeholder='Email' onChange={event => setEmail(event.target.value)} />
-                        Usuario administrador <input type='checkbox' checked={isAdm} onChange={() => setIsAdm(!isAdm)} />
+                        Usuario administrador <input type='checkbox' disabled={isMotorista} checked={isAdm} onChange={() => setIsAdm(!isAdm)} />
+                        Motorista <input type='checkbox' disabled={isAdm} checked={isMotorista} onChange={() => setIsMotorista(!isMotorista)} />
                         <input id='arquivo' className={styles.input} type='file' onChange={handleFile} />
                         <button onClick={postUsuarios}>Cadastrar</button>
                     </Box>
@@ -210,8 +238,25 @@ function Usuario() {
                         </div>
                     ))}
                 </div>
+                <div className={styles.resultados}>
+                    {getMotorista.map((motorista) => (
+                        <div key={motorista.id} className={styles.motorista}>
+                            {motorista.foto && b64toimg(motorista.foto)}
+                            <p>{motorista.nome}</p>
+                            <p>{motorista.endereco}</p>
+                            <p>{motorista.login}</p>
+                            <p>{motorista.cpf}</p>
+                            <p>{motorista.telefone}</p>
+                            <p>{motorista.email}</p>
+                            <div>
+                                <button /* onClick={() => handleOpen(motorista)} */>Alterar</button>
+                                <button /* onClick={() => deleteUsuario(usuario.id)} os botao tem q muda umas coisa pra funciona*/>Deletar</button> 
+                            </div>
+                        </div>
+                    ))}
+                </div>
             </div>
-            <Modal open={open} onClose={handleClose}>
+            <Modal open={open} onClose={handleClose}> 
                 <Box className={styles.modalBox}>
                     <input type="text" value={alterNome} onChange={event => setAlterNome(event.target.value)} placeholder="Nome" />
                     <input type="text" value={alterHorarioida} disabled={alterIsAdm} onChange={event => setAlterHorarioida(event.target.value)} placeholder="Horário Ida" />
