@@ -5,6 +5,9 @@ import Box from '@mui/material/Box';
 import styles from '../styles/Van.module.css';
 import logo from '../ft/logo.png';
 import { useNavigate } from 'react-router-dom';
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 function Van() {
     const navigate = useNavigate();
@@ -77,6 +80,14 @@ function Van() {
             console.log('Erro ao obter vans: ', error);
         }
     }
+
+    const settings = {
+        dots: true,
+        infinite: true,
+        speed: 500,
+        slidesToShow: 1,
+        slidesToScroll: 1
+    };
 
     function putVans() {
         if (alterMarca && alterModelo && alterCapacidade && alterPlaca) {
@@ -172,10 +183,22 @@ function Van() {
                                 {van.modelo}
                                 {van.placa}
                                 {van.capacidade}
-                                {b64toimg(van.foto1)}
-                                {b64toimg(van.foto2)}
-                                {b64toimg(van.foto3)}
-                                {b64toimg(van.foto4)}
+                                <div className={styles.carroselteste}>
+                                <Slider {...settings}>
+                                    <div>
+                                        {b64toimg(van.foto1)}
+                                    </div>
+                                    <div>
+                                        {b64toimg(van.foto2)}
+                                    </div>
+                                    <div>
+                                        {b64toimg(van.foto3)}
+                                    </div>
+                                    <div>
+                                        {b64toimg(van.foto4)}
+                                    </div>
+                                </Slider>
+                                </div>
                                 <button onClick={() => handleOpen(van)}>Alterar</button>
                                 <button onClick={() => deleteModal(van.id)}>Deletar</button>
                             </div>

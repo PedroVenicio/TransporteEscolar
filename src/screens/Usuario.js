@@ -263,59 +263,63 @@ function Usuario() {
                         <button onClick={postUsuarios}>Cadastrar</button>
                     </Box>
                 </Modal>
-                <input className={styles.pesquisa} type='text' placeholder='Pesquisar' onChange={(e) => setPesquisa(e.target.value)} />
-                <div className={styles.resultados}>
-                    {filtrar.map((usuario) => (
-                        <div key={usuario.id} className={styles.usuario}>
-                            {usuario.foto && b64toimg(usuario.foto)}
-                            <p>{usuario.nome}</p>
-                            <p>{usuario.horarioida}</p>
-                            <p>{usuario.horariovolta}</p>
-                            <p>{usuario.endereco}</p>
-                            <p>{usuario.login}</p>
-                            <p>{usuario.cpf}</p>
-                            <p>{usuario.telefone}</p>
-                            <p>{usuario.email}</p>
-                            <div>
-                                <button onClick={() => handleOpen(usuario, false)}>Alterar</button>
-                                <button onClick={() => deleteModal(usuario.id, false)}>Deletar</button>
-                            </div>
-                        </div>
-                    ))}
+                <div className={styles.divpesquisa}>
+                    <input className={styles.pesquisa} type='text' placeholder='Pesquisar' onChange={(e) => setPesquisa(e.target.value)} />
                 </div>
-                <div className={styles.resultados}>
-                    {filtrarMotorista.map((motorista) => (
-                        <div key={motorista.id} className={styles.motorista}>
-                            {motorista.foto && b64toimg(motorista.foto)}
-                            <p>{motorista.nome}</p>
-                            <p>{motorista.endereco}</p>
-                            <p>{motorista.login}</p>
-                            <p>{motorista.cpf}</p>
-                            <p>{motorista.telefone}</p>
-                            <p>{motorista.email}</p>
-                            <div>
-                                <button onClick={() => handleOpen(motorista, true)}>Alterar</button>
-                                <button onClick={() => deleteModal(motorista.id, true)}>Deletar</button>
+                <div className={styles.divresultados}>
+                    <div className={styles.resultados}>
+                        {filtrar.map((usuario) => (
+                            <div key={usuario.id} className={styles.usuario}>
+                                {usuario.foto && b64toimg(usuario.foto)}
+                                <p>{usuario.nome}</p>
+                                <p>{usuario.horarioida}</p>
+                                <p>{usuario.horariovolta}</p>
+                                <p>{usuario.endereco}</p>
+                                <p>{usuario.login}</p>
+                                <p>{usuario.cpf}</p>
+                                <p>{usuario.telefone}</p>
+                                <p>{usuario.email}</p>
+                                <div>
+                                    <button onClick={() => handleOpen(usuario, false)}>Alterar</button>
+                                    <button onClick={() => deleteModal(usuario.id, false)}>Deletar</button>
+                                </div>
                             </div>
-                        </div>
-                    ))}
-                </div>
-                <div className={styles.resultados}>
-                    {filtrarAdm.map((usuario) => (
-                        <div key={usuario.id} className={styles.usuario}>
-                            {usuario.foto && b64toimg(usuario.foto)}
-                            <p>{usuario.nome}</p>
-                            <p>{usuario.endereco}</p>
-                            <p>{usuario.login}</p>
-                            <p>{usuario.cpf}</p>
-                            <p>{usuario.telefone}</p>
-                            <p>{usuario.email}</p>
-                            <div>
-                                <button onClick={() => handleOpen(usuario, false)}>Alterar</button>
-                                <button onClick={() => deleteModal(usuario.id, false)}>Deletar</button>
+                        ))}
+                    </div>
+                    <div className={styles.resultados}>
+                        {filtrarMotorista.map((motorista) => (
+                            <div key={motorista.id} className={styles.motorista}>
+                                {motorista.foto && b64toimg(motorista.foto)}
+                                <p>{motorista.nome}</p>
+                                <p>{motorista.endereco}</p>
+                                <p>{motorista.login}</p>
+                                <p>{motorista.cpf}</p>
+                                <p>{motorista.telefone}</p>
+                                <p>{motorista.email}</p>
+                                <div>
+                                    <button onClick={() => handleOpen(motorista, true)}>Alterar</button>
+                                    <button onClick={() => deleteModal(motorista.id, true)}>Deletar</button>
+                                </div>
                             </div>
-                        </div>
-                    ))}
+                        ))}
+                    </div>
+                    <div className={styles.resultados}>
+                        {filtrarAdm.map((usuario) => (
+                            <div key={usuario.id} className={styles.usuario}>
+                                {usuario.foto && b64toimg(usuario.foto)}
+                                <p>{usuario.nome}</p>
+                                <p>{usuario.endereco}</p>
+                                <p>{usuario.login}</p>
+                                <p>{usuario.cpf}</p>
+                                <p>{usuario.telefone}</p>
+                                <p>{usuario.email}</p>
+                                <div>
+                                    <button onClick={() => handleOpen(usuario, false)}>Alterar</button>
+                                    <button onClick={() => deleteModal(usuario.id, false)}>Deletar</button>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
                 </div>
             </div>
             <Modal open={open} onClose={handleClose}>

@@ -2,6 +2,7 @@ import React from 'react';
 import styles from '../styles/HomeAdm.module.css';
 import { useNavigate } from 'react-router-dom';
 import logo from "../ft/logo.png";
+import Van from './Van';
 
 function Home() {
 
@@ -40,6 +41,7 @@ function Home() {
                         </button>
                     </div>
                 </div>
+                
             </div>
         </div>
     );
