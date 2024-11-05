@@ -22,14 +22,33 @@ def criarRotas(app):
 
                 cincoAM = []
                 meioDia = []
+                cincoPM = []
+
+                onzeAM = []
+                setePM = []
+                dezPM = []
                 passageirosIda = ""
                 passageirosVolta = ""
+
+                """ matutino
+                ida: 5:50
+                volta: 11:40
+
+                verpertino
+                ida: 11:50
+                volta: 19:00
+
+                noturno
+                ida: 17:30
+                volta: 22:15 """
 
                 for i in listUsuario:
                     if i['horarioida'] == 5:
                         cincoAM.append(i['id'])
                     if i['horarioida'] == 12:
                         meioDia.append(i['id'])
+                    if i['horarioida'] == 17:
+                        cincoPM.append(i['id'])
 
                 if hora == 225500: #17:15 = 1715 
                     for i in listVotacao:
@@ -38,6 +57,9 @@ def criarRotas(app):
                                 if ids == i['userId']: #fazer uma def com esse bloco de codigo para otimizar
                                     string = str(i['userId'])
                                     passageirosIda += string + ", "
+                            for ids in onzeAM:
+                                if ids == i['userId']:
+                                    string = str(i['userId'])
                                     passageirosVolta += string + ", "
                         
                         elif i['opcao'] == 2:
