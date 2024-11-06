@@ -27,8 +27,11 @@ def criarRotas(app):
                 onzeAM = []
                 setePM = []
                 dezPM = []
+
                 passageirosIda = ""
-                passageirosVolta = ""
+                passageirosVolta11 = ""
+                passageirosVolta19 = ""
+                passageirosVolta22 = ""
 
                 """ matutino
                 ida: 5:50
@@ -50,18 +53,35 @@ def criarRotas(app):
                     if i['horarioida'] == 17:
                         cincoPM.append(i['id'])
 
-                if hora == 225500: #17:15 = 1715 
+                    if i['horariovolta'] == 11:
+                        onzeAM.append(i['id'])
+                    if i['horariovolta'] == 19:
+                        setePM.append(i['id'])
+                    if i['horariovolta'] == 22:
+                        dezPM.append(i['id'])
+
+                if hora == 225500: #55000 = 5:50:00
                     for i in listVotacao:
                         if i['opcao'] == 1:
                             for ids in cincoAM:
                                 if ids == i['userId']: #fazer uma def com esse bloco de codigo para otimizar
                                     string = str(i['userId'])
                                     passageirosIda += string + ", "
-                            for ids in onzeAM:
+                            for ids in onzeAM and cincoAM:
                                 if ids == i['userId']:
                                     string = str(i['userId'])
-                                    passageirosVolta += string + ", "
-                        
+                                    passageirosVolta11 += string + ", "
+                            
+                            for ids in setePM and cincoAM:
+                                if ids == i['userId']:
+                                    string = str(i['userId'])
+                                    passageirosVolta19 += string + ", "
+                            
+                            for ids in dezPM and cincoAM:
+                                if ids == i['userId']:
+                                    string = str(i['userId'])
+                                    passageirosVolta22 += string + ", "
+
                         elif i['opcao'] == 2:
                             for ids in cincoAM:
                                 if ids == i['userId']:
@@ -69,10 +89,21 @@ def criarRotas(app):
                                     passageirosIda += string + ", "
                         
                         elif i['opcao'] == 3:
-                            for ids in cincoAM:
+                            for ids in onzeAM and cincoAM:
                                 if ids == i['userId']:
                                     string = str(i['userId'])
-                                    passageirosVolta += string + ", "
+                                    passageirosVolta11 += string + ", "
+                            
+                            for ids in setePM and cincoAM:
+                                if ids == i['userId']:
+                                    string = str(i['userId'])
+                                    passageirosVolta19 += string + ", "
+                            
+                            for ids in dezPM and cincoAM:
+                                if ids == i['userId']:
+                                    string = str(i['userId'])
+                                    passageirosVolta22 += string + ", "
+
                     rotaIda = {
                         "data": dia,
                         "hora": 5,
@@ -81,8 +112,8 @@ def criarRotas(app):
 
                     rotaVolta = {
                         "data": dia,
-                        "hora": 12,
-                        "alunos": passageirosVolta
+                        "hora": 11,
+                        "alunos": passageirosVolta11
                     }
                     try:
                         addIda = Rota_ida(rotaIda['data'], rotaIda['hora'], rotaIda['alunos'])
@@ -94,4 +125,115 @@ def criarRotas(app):
                         print(e)
                         return 'Rota nao cadastrada: {}'.format(str(e)), 405
                     time.sleep(5)
+                
+                if hora == 115000: #115000 = 11:50:00
+                    for i in listVotacao:
+                        if i['opcao'] == 1:
+                            for ids in meioDia:
+                                if ids == i['userId']: #fazer uma def com esse bloco de codigo para otimizar
+                                    string = str(i['userId'])
+                                    passageirosIda += string + ", "
+
+                            for ids in setePM and meioDia:
+                                if ids == i['userId']:
+                                    string = str(i['userId'])
+                                    passageirosVolta19 += string + ", "
+
+                            for ids in dezPM and meioDia:
+                                if ids == i['userId']:
+                                    string = str(i['userId'])
+                                    passageirosVolta22 += string + ", "
+
+                        elif i['opcao'] == 2:
+                            for ids in meioDia :
+                                if ids == i['userId']:
+                                    string = str(i['userId'])
+                                    passageirosIda += string + ", "
+                        
+                        elif i['opcao'] == 3:
+                            for ids in setePM and meioDia:
+                                if ids == i['userId']:
+                                    string = str(i['userId'])
+                                    passageirosVolta19 += string + ", "
+
+                            for ids in dezPM and meioDia:
+                                if ids == i['userId']:
+                                    string = str(i['userId'])
+                                    passageirosVolta22 += string + ", "
+
+                    rotaIda = {
+                        "data": dia,
+                        "hora": 1150,
+                        "alunos": passageirosIda
+                    }
+
+                    rotaVolta = {
+                        "data": dia,
+                        "hora": 19,
+                        "alunos": passageirosVolta19
+                    }
+                    try:
+                        addIda = Rota_ida(rotaIda['data'], rotaIda['hora'], rotaIda['alunos'])
+                        addVolta = Rota_volta(rotaVolta['data'], rotaVolta['hora'], rotaVolta['alunos'])
+                        db.session.add(addIda)
+                        db.session.add(addVolta)
+                        db.session.commit()
+                    except Exception as e:
+                        print(e)
+                        return 'Rota nao cadastrada: {}'.format(str(e)), 405
+                    time.sleep(5)
+
+
+                if hora == 173000: #173000 = 17:30:00
+                    for i in listVotacao:
+                        if i['opcao'] == 1:
+                            for ids in cincoPM:
+                                if ids == i['userId']: #fazer uma def com esse bloco de codigo para otimizar
+                                    string = str(i['userId'])
+                                    passageirosIda += string + ", "
+
+                            for ids in dezPM and cincoPM:
+                                if ids == i['userId']:
+                                    string = str(i['userId'])
+                                    passageirosVolta22 += string + ", "
+
+                        elif i['opcao'] == 2:
+                            for ids in cincoPM:
+                                if ids == i['userId']:
+                                    string = str(i['userId'])
+                                    passageirosIda += string + ", "
+                        
+                        elif i['opcao'] == 3:
+                            for ids in setePM and cincoPM:
+                                if ids == i['userId']:
+                                    string = str(i['userId'])
+                                    passageirosVolta19 += string + ", "
+
+                            for ids in dezPM and cincoPM:
+                                if ids == i['userId']:
+                                    string = str(i['userId'])
+                                    passageirosVolta22 += string + ", "
+
+                    rotaIda = {
+                        "data": dia,
+                        "hora": 1730,
+                        "alunos": passageirosIda
+                    }
+
+                    rotaVolta = {
+                        "data": dia,
+                        "hora": 22,
+                        "alunos": passageirosVolta22
+                    }
+                    try:
+                        addIda = Rota_ida(rotaIda['data'], rotaIda['hora'], rotaIda['alunos'])
+                        addVolta = Rota_volta(rotaVolta['data'], rotaVolta['hora'], rotaVolta['alunos'])
+                        db.session.add(addIda)
+                        db.session.add(addVolta)
+                        db.session.commit()
+                    except Exception as e:
+                        print(e)
+                        return 'Rota nao cadastrada: {}'.format(str(e)), 405
+                    time.sleep(5)
+                
                 
