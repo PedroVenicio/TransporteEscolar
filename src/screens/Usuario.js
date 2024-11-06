@@ -238,10 +238,6 @@ function Usuario() {
 
     return (
         <div className={styles.container}>
-            <div className={styles.cabecalhoft}>
-                <img src={logo} className={styles.logo} alt="Logo" />
-                <button className={styles.botao} onClick={() => window.history.back()}>Voltar</button>
-            </div>
             <div className={styles.meio}>
                 <div className={styles.botaocadastro}>
                     <button className={styles.cadbot} onClick={() => setOpen1(true)}>Cadastrar</button>
