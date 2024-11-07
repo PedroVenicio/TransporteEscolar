@@ -240,7 +240,7 @@ function Usuario() {
         <div className={styles.container}>
             <div className={styles.meio}>
                 <div className={styles.botaocadastro}>
-                    <button className={styles.cadbot} onClick={() => setOpen1(true)}>Cadastrar</button>
+                    <button className={styles.cadbot} onClick={() => setOpen1(true)}>Cadastrar Usuário</button>
                 </div>
                 <Modal open={open1} onClose={handleClose}>
                     <Box className={styles.modalBox}>

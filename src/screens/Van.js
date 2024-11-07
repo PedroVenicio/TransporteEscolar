@@ -153,7 +153,7 @@ function Van() {
         <div className={styles.container}>
             <div className={styles.meio}>
                 <div className={styles.botaocadastro}>
-                    <button className={styles.cadbot} onClick={() => setOpen1(true)}>Cadastrar</button>
+                    <button className={styles.cadbot} onClick={() => setOpen1(true)}>Cadastrar Veículo</button>
                     <Modal open={open1} onClose={handleClose}>
                         <Box className={styles.modalBox}>
                             <input type='text' value={marca} placeholder='Marca' onChange={e => setMarca(e.target.value)} />
@@ -173,32 +173,34 @@ function Van() {
                 </div>
                 <div className={styles.botaoresultado}>
                     <div className={styles.resultados}>
-                        {filtrar.map((van) => (
-                            <div key={van.id}>
-                                {van.marca}
-                                {van.modelo}
-                                {van.placa}
-                                {van.capacidade}
-                                <div className={styles.carroselteste}>
-                                <Slider {...settings}>
-                                    <div>
-                                        {b64toimg(van.foto1)}
+                        <div>
+                            {filtrar.map((van) => (
+                                <div key={van.id}>
+                                    {van.marca}
+                                    {van.modelo}
+                                    {van.placa}
+                                    {van.capacidade}
+                                    <div className={styles.carroselteste}>
+                                        <Slider {...settings}>
+                                            <div>
+                                                {b64toimg(van.foto1)}
+                                            </div>
+                                            <div>
+                                                {b64toimg(van.foto2)}
+                                            </div>
+                                            <div>
+                                                {b64toimg(van.foto3)}
+                                            </div>
+                                            <div>
+                                                {b64toimg(van.foto4)}
+                                            </div>
+                                        </Slider>
                                     </div>
-                                    <div>
-                                        {b64toimg(van.foto2)}
-                                    </div>
-                                    <div>
-                                        {b64toimg(van.foto3)}
-                                    </div>
-                                    <div>
-                                        {b64toimg(van.foto4)}
-                                    </div>
-                                </Slider>
+                                    <button onClick={() => handleOpen(van)}>Alterar</button>
+                                    <button onClick={() => deleteModal(van.id)}>Deletar</button>
                                 </div>
-                                <button onClick={() => handleOpen(van)}>Alterar</button>
-                                <button onClick={() => deleteModal(van.id)}>Deletar</button>
-                            </div>
-                        ))}
+                            ))}
+                        </div>  
                     </div>
                 </div>
             </div>
