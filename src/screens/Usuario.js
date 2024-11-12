@@ -260,7 +260,7 @@ function Usuario() {
                     </Box>
                 </Modal>
                 <div className={styles.divpesquisa}>
-                    <input className={styles.pesquisa} type='text' placeholder='Pesquisar' onChange={(e) => setPesquisa(e.target.value)} />
+                    <input type='text' className={styles.pesquisa} value={pesquisa} placeholder='Pesquisar:' onChange={e => setPesquisa(e.target.value)} />
                 </div>
                 <div className={styles.divresultados}>
                     <div className={styles.resultados}>

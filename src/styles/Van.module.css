@@ -85,7 +85,7 @@ body::-webkit-scrollbar {
   font-size: 1.5rem;
   font-family: 'Roboto', sans-serif;
   font-weight: 900;
-  letter-spacing: .60rem;
+  letter-spacing: 2px;
   border-radius: 16px;
   border: none;
   background-color: #fff;
@@ -134,8 +134,8 @@ body::-webkit-scrollbar {
   justify-items: center;
   margin-top: 10px;
   margin-bottom: 20px;
-  max-height: 80vh;
   overflow-y: scroll;
+  max-height: 80vh;
 }
 
 .botaoresultado::-webkit-scrollbar {
@@ -151,8 +151,70 @@ body::-webkit-scrollbar {
   margin-top: 25px;
 }
 
-.carroselteste {
-  width: 50%;
-  height: 80%;
-  background-color: yellow;
+.containerveiculos {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  justify-content: center;
+  height: auto; 
+  width: 100%;
+  height: 250px;
+  margin-bottom: 15px;
+  padding-bottom: 20px;
+}
+
+.infoVeiculos {
+  display: flex;
+  flex-direction: column;
+  text-align: justify;
+  font-size: 28px;
+  color:#000000 ;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 500;
+  width: 35%;
+  height: 60%;
+  margin-left: 2.5%;
+}
+
+.carrosel{
+  height: 72%;
+  width: 38%; 
+}
+
+.carrosel img {
+  width: 420px;  
+  height: 180px;
+  object-fit:cover ;
+}
+
+.botoes {
+  height: 90%;
+  width: 22%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  justify-content: space-around;
+}
+
+.botoescss {
+  width: 45%;
+  height: 25%;
+  color: #860204;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 700;
+  font-size: large;
+  border-radius: 6px;
+  background-color: #fff;
+  border: none;
+  cursor: pointer;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  letter-spacing: 2px;
+  filter: drop-shadow(1px 1px 3px #000000);
+  transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+.botoescss:hover {
+  transform: scale(1.1); 
 }

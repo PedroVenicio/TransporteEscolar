@@ -3,14 +3,11 @@ import axios from 'axios';
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 import styles from '../styles/Van.module.css';
-import logo from '../ft/logo.png';
-import { useNavigate } from 'react-router-dom';
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
 function Van() {
-    const navigate = useNavigate();
 
     const [marca, setMarca] = useState('');
     const [modelo, setModelo] = useState('');
@@ -36,10 +33,6 @@ function Van() {
         setOpen(false);
         setOpen1(false);
         setOpenDelete(false);
-    }
-
-    function voltarAction() {
-        navigate('/HomeGeral');
     }
 
     function handleOpen(van) {
@@ -168,21 +161,23 @@ function Van() {
                         </Box>
                     </Modal>
                 </div>
-                <div className={styles.botaopesquisa}>
+                <div className={styles.divpesquisa}>
                     <input type='text' className={styles.pesquisa} value={pesquisa} placeholder='Pesquisar:' onChange={e => setPesquisa(e.target.value)} />
                 </div>
                 <div className={styles.botaoresultado}>
                     <div className={styles.resultados}>
                         <div>
                             {filtrar.map((van) => (
-                                <div key={van.id}>
-                                    {van.marca}
-                                    {van.modelo}
-                                    {van.placa}
-                                    {van.capacidade}
-                                    <div className={styles.carroselteste}>
+                                <div key={van.id} className={styles.containerveiculos}>
+                                    <div className={styles.infoVeiculos}>
+                                        <txt>Marca: {van.marca}</txt>
+                                        <txt>Modelo: {van.modelo}</txt>
+                                        <txt>Placa: {van.placa}</txt>
+                                        <txt>Capacidade: {van.capacidade}</txt>
+                                    </div>
+                                    <div className={styles.carrosel}>
                                         <Slider {...settings}>
-                                            <div>
+                                        <div>
                                                 {b64toimg(van.foto1)}
                                             </div>
                                             <div>
@@ -196,11 +191,13 @@ function Van() {
                                             </div>
                                         </Slider>
                                     </div>
-                                    <button onClick={() => handleOpen(van)}>Alterar</button>
-                                    <button onClick={() => deleteModal(van.id)}>Deletar</button>
+                                    <div className={styles.botoes}>
+                                        <button className={styles.botoescss} onClick={() => handleOpen(van)}>Alterar</button>
+                                        <button className={styles.botoescss} onClick={() => deleteModal(van.id)}>Excluir</button>
+                                    </div>
                                 </div>
                             ))}
-                        </div>  
+                        </div>
                     </div>
                 </div>
             </div>

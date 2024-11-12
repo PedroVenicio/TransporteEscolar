@@ -1,19 +1,42 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from '../styles/Frota.module.css';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import logo from "../ft/logo.png";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-import ford from "../ft/ford.jpg";
-import mercedes from "../ft/mercedes.jpg";
-import volvo from "../ft/volvo.jpg";
-import Fiat from "../ft/Fiat.jpg";
-
 function Frota() {
     const navigate = useNavigate();
     const [myCar, setMyCar] = useState("Ford");
+    const [get, setGet] = useState([]);
+
+    async function getVans() {
+        try {
+            const response = await axios.get('http://localhost:3000/van');
+            setGet(response.data.vans || []);
+        } catch (error) {
+            console.log('Erro ao obter vans: ', error);
+        }
+    }
+
+    useEffect(() => {
+        getVans();
+    }, []);
+
+    const filtrar = get.filter(filtro => filtro.marca.toLowerCase().includes(myCar.toLowerCase()));
+
+    function b64toimg(base64) {
+        const base64data = base64.split(',')[1];
+        const binaryString = window.atob(base64data);
+        const len = binaryString.length;
+        const bytes = new Uint8Array(len);
+        for (let i = 0; i < len; i++) bytes[i] = binaryString.charCodeAt(i);
+        const blob = new Blob([bytes], { type: 'image/png' });
+        const url = URL.createObjectURL(blob);
+        return <img src={url} alt="van" />;
+    }
 
     function voltarAction() {
         navigate('/HomeGeral');
@@ -47,70 +70,34 @@ function Frota() {
                         </div>
                         <div className={styles.selectdiv}>
                             <select value={myCar} onChange={handleChange}>
-                                <option value="Ford">Ford</option>
-                                <option value="Volvo">Volvo</option>
-                                <option value="Mercedes">Mercedes</option>
-                                <option value="Fiat">Fiat</option>
+                                {get.map((van) => (
+                                    <option value={van.marca}>{van.marca}</option>
+                                ))}
+
                             </select>
                         </div>
                     </div>
                     <div className={styles.carroseldiv}>
-                        <div className={styles.carrosel}>
-                            {myCar === "Ford" && (
+                        {filtrar.map((van) => (
+                            <div className={styles.containerveiculos}>
+                            <div key={van.id} className={styles.carrosel}>
                                 <Slider {...settings}>
                                     <div>
-                                        <img src={ford} alt="Ford Car 1" className={styles.image} />
+                                        {b64toimg(van.foto1)}
                                     </div>
                                     <div>
-                                        <img src={ford} alt="Ford Car 2" className={styles.image} />
+                                        {b64toimg(van.foto2)}
                                     </div>
                                     <div>
-                                        <img src={ford} alt="Ford Car 3" className={styles.image} />
+                                        {b64toimg(van.foto3)}
+                                    </div>
+                                    <div>
+                                        {b64toimg(van.foto4)}
                                     </div>
                                 </Slider>
-                            )}
-
-                            {myCar === "Mercedes" && (
-                                <Slider {...settings}>
-                                    <div>
-                                        <img src={mercedes} alt="Mercedes Car 1" className={styles.image} />
-                                    </div>
-                                    <div>
-                                        <img src={mercedes} alt="Mercedes Car 2" className={styles.image} />
-                                    </div>
-                                    <div>
-                                        <img src={mercedes} alt="Mercedes Car 3" className={styles.image} />
-                                    </div>
-                                </Slider>
-                            )}
-
-                            {myCar === "Volvo" && (
-                                <Slider {...settings}>
-                                    <div>
-                                        <img src={volvo} alt="volvo Car 1" className={styles.image} />
-                                    </div>
-                                    <div>
-                                        <img src={volvo} alt="volvo Car 2" className={styles.image} />
-                                    </div>
-                                    <div>
-                                        <img src={volvo} alt="volvo Car 3" className={styles.image} />
-                                    </div>
-                                </Slider>
-                            )}
-                            {myCar === "Fiat" && (
-                                <Slider {...settings}>
-                                    <div>
-                                        <img src={Fiat} alt="Fiat Car 1" className={styles.image} />
-                                    </div>
-                                    <div>
-                                        <img src={Fiat} alt="Fiat Car 2" className={styles.image} />
-                                    </div>
-                                    <div>
-                                        <img src={Fiat} alt="Fiat Car 3" className={styles.image} />
-                                    </div>
-                                </Slider>
-                            )}
-                        </div>
+                            </div>
+                            </div>
+                        ))}
                     </div>
                 </div>
             </div>

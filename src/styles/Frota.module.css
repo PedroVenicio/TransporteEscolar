@@ -120,21 +120,31 @@
 
 .carroseldiv{
   height: 90%;
-  width: 45%;
-  align-items: center;
-  background-color: #860204;
-  justify-content: center;
-  text-align: center;
+  width: 50%;
   display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  background-color: #860204;
+}
+
+.containerveiculos {
+  width: 90%;
+  height: 90%; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .carrosel{
-  height: 50%;
-  width: 90%; 
+  width: 90%;
+  height: 65%; 
+  background-color:#b4f10c ;
+  align-items: center;
+  justify-content: center;
 }
-
 .carrosel img {
-  width: 510px; 
-  height: 270px; 
+  width: 510px;  
+  height: 270px;
   object-fit:cover ;
 }
