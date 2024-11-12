@@ -18,22 +18,22 @@ export default function Votacao({ navigation }) {
 
   const [hVotacao, setHvotacao] = useState(null);
   const [refreshKey, setRefreshKey] = useState(null);
-  
+
   const [userId, setUserId] = useState();
-  
+
   async function postVotacao() {
     try {
       const token = await AsyncStorage.getItem('token');
-      axios.post('http://192.168.0.223:3000/votacao',
-          {
-            opcao: selectedVotos,
-            userId: userId,
+      axios.post('http://10.119.0.19:3000/votacao',
+        {
+          opcao: selectedVotos,
+          userId: userId,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
           },
-          {
-            headers: {
-              Authorization: `Bearer ${token}`
-            },
-          }
+        }
       )
       alert('Voto cadastrado.')
       setHvotacao(horario())
@@ -49,12 +49,12 @@ export default function Votacao({ navigation }) {
 
   useEffect(() => {
     async function fetchUser() {
-      try{
+      try {
         const token = await AsyncStorage.getItem('token');
         const decodedToken = jwtDecode(token)
         setUserId(decodedToken.userId);
       }
-      catch (error){
+      catch (error) {
         console.log('erro: ', error)
       }
     }
@@ -69,8 +69,8 @@ export default function Votacao({ navigation }) {
 
   useFocusEffect(
     useCallback(() => {
-    getVotoStatus();
-  },[refreshKey])
+      getVotoStatus();
+    }, [refreshKey])
   )
 
   function refresh() {
@@ -79,31 +79,31 @@ export default function Votacao({ navigation }) {
   }
 
   function verifyVoto() {
-    if (selectedVotos == null){
+    if (selectedVotos == null) {
       alert('Você não selecionou a opção');
     }
-    else{
+    else {
       setModalVisible(true);
     }
   }
 
   async function getVotoStatus() {
     const lastMin = horario()
-      if (hVotacao < lastMin){
-        try{
-          axios.put('http://192.168.0.223:3000/usuario', 
-            {
-              id: userId,
-              voto: 0
-            }
-          )
-        }
-        catch(error) {
-          console.log('erro:', error)
-        }
+    if (hVotacao < lastMin) {
+      try {
+        axios.put('http://10.119.0.19:3000/usuario',
+          {
+            id: userId,
+            voto: 0
+          }
+        )
       }
-    try{
-      const response = await axios.get('http://192.168.0.223:3000/usuario')
+      catch (error) {
+        console.log('erro:', error)
+      }
+    }
+    try {
+      const response = await axios.get('http://10.119.0.19:3000/usuario') //10.119.0.19
       const usuario = response.data.usuarios.filter(filtro => {
         return filtro.id == userId;
       });
