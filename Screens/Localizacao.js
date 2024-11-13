@@ -1,7 +1,8 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, StyleSheet, TextInput, Text, Image, TouchableOpacity, Modal } from 'react-native';
 import axios from 'axios';
 import RNPickerSelect from 'react-native-picker-select';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { jwtDecode } from 'jwt-decode';
 
 
@@ -10,13 +11,15 @@ export default function Localizacao({ navigation }) {
   const [opcaoIda, setOpcaoIda] = useState(0);
   const [opcaoVolta, setOpcaoVolta] = useState(0);
   const [modalVisible, setModalVisible] = useState(false);
-  const [userId, setUserId] = useState('')
+  const [userId, setUserId] = useState('');
+
+  const [descricao, setDescricao] = useState('');
 
   useEffect(() => {
     async function fetchUser() {
       try {
         const token = await AsyncStorage.getItem('token');
-        const decodedToken = jwtDecode(token)
+        const decodedToken = jwtDecode(token);
         setUserId(decodedToken.userId);
       }
       catch (error) {
@@ -26,8 +29,38 @@ export default function Localizacao({ navigation }) {
     fetchUser();
   }, [])
 
-  function enviar(){
-    console.log('oi');
+  async function enviar() {
+    if (descricao && (opcaoIda !== 'nulo' || opcaoVolta !== 'nulo')) {
+      try {
+        const token = await AsyncStorage.getItem('token');
+        axios.post('http://10.119.0.19:3000/excessao',
+          {
+            descricao: descricao,
+            status: 0,
+            opcaoIda: opcaoIda == 'nulo' ? 0 : opcaoIda,
+            opcaoVolta: opcaoVolta == 'nulo' ? 0 : opcaoVolta,
+            userId: userId
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`
+            },
+          }
+        )
+        setOpcaoIda('nulo');
+        setOpcaoVolta('nulo');
+        setDescricao(null);
+        setModalVisible(false);
+        alert('Exceção requisitada')
+      }
+      catch (error) {
+        console.log(error)
+        alert('Erro ao registrar exceção')
+      }
+    }
+    else {
+      alert("Preencha a descrição e ao menos um horário")
+    }
   }
 
   return (
@@ -35,7 +68,7 @@ export default function Localizacao({ navigation }) {
       <RNPickerSelect
         placeholder={{
           label: 'Selecione o horário de ida',
-          value: null
+          value: 'nulo'
         }}
         onValueChange={(value) => setOpcaoIda(value)}
         items={[
@@ -43,12 +76,13 @@ export default function Localizacao({ navigation }) {
           { label: '11:50', value: '2' },
           { label: '17:30', value: '3' },
         ]}
+        value={opcaoIda}
       />
 
       <RNPickerSelect
         placeholder={{
           label: 'Selecione o horário de volta',
-          value: null
+          value: 'nulo'
         }}
         onValueChange={(value) => setOpcaoVolta(value)}
         items={[
@@ -56,9 +90,12 @@ export default function Localizacao({ navigation }) {
           { label: '19:00', value: '5' },
           { label: '22:15', value: '6' },
         ]}
+        value={opcaoVolta}
       />
       <TextInput
         placeholder="Descreva o motivo da excessão"
+        value={descricao}
+        onChangeText={setDescricao}
       />
 
       <TouchableOpacity onPress={() => setModalVisible(true)}>
@@ -72,7 +109,7 @@ export default function Localizacao({ navigation }) {
           setModalVisible(!modalVisible);
         }}>
         <View>
-          <Text>Confirmar voto:</Text>
+          <Text>Confirmar envio?</Text>
           <TouchableOpacity onPress={enviar}>
             <Text>Sim</Text>
           </TouchableOpacity>
@@ -82,7 +119,7 @@ export default function Localizacao({ navigation }) {
         </View>
       </Modal>
     </View>
-    
+
   );
 }
 
