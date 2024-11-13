@@ -16,29 +16,28 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `rota_ida`
+-- Table structure for table `rota_volta`
 --
 
-DROP TABLE IF EXISTS `rota_ida`;
+DROP TABLE IF EXISTS `rota_volta`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `rota_ida` (
+CREATE TABLE `rota_volta` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `data` date NOT NULL,
   `hora` int(11) NOT NULL,
   `alunos` text NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=479 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `rota_ida`
+-- Dumping data for table `rota_volta`
 --
 
-LOCK TABLES `rota_ida` WRITE;
-/*!40000 ALTER TABLE `rota_ida` DISABLE KEYS */;
-INSERT INTO `rota_ida` VALUES (468,'2024-10-09',5,'7, 10, '),(469,'2024-10-22',5,'7, 10, '),(470,'2024-10-22',5,'7, 10, '),(471,'2024-10-23',5,'7, 10, '),(472,'2024-10-23',5,'7, 10, '),(473,'2024-10-24',5,'7, 10, '),(474,'2024-10-24',5,'7, 10, '),(475,'2024-10-26',5,'7, 10, '),(476,'2024-10-26',5,'7, 10, '),(477,'2024-10-29',5,'7, 10, '),(478,'2024-10-29',5,'7, 10, ');
-/*!40000 ALTER TABLE `rota_ida` ENABLE KEYS */;
+LOCK TABLES `rota_volta` WRITE;
+/*!40000 ALTER TABLE `rota_volta` DISABLE KEYS */;
+/*!40000 ALTER TABLE `rota_volta` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -50,4 +49,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-10-29 17:26:55
+-- Dump completed on 2024-11-13 17:25:15

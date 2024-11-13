@@ -7,7 +7,7 @@ def excessao_controller():
             try:
                 data = request.get_json()
                 print(data)
-                excessao = Excessao(data['descricao'], data['opcao'], data['status'])
+                excessao = Excessao(data['descricao'], data['status'], data['opcaoIda'], data['opcaoVolta'], data['userId'])
                 db.session.add(excessao)
                 db.session.commit()
                 return 'excessao cadastrada com sucesso', 200
@@ -30,8 +30,10 @@ def excessao_controller():
                 if put_excessao is None:
                     return {'error': 'excessao não encontrada'}, 404
                 put_excessao.descricao = data.get('descricao', put_excessao.descricao)
-                put_excessao.opcao = data.get('opcao', put_excessao.opcao)
                 put_excessao.status = data.get('status', put_excessao.status)
+                put_excessao.opcaoIda = data.get('opcaoIda', put_excessao.opcaoIda)
+                put_excessao.opcaoVolta = data.get('opcaoVolta', put_excessao.opcaoVolta)
+                put_excessao.userId = data.get('userId', put_excessao.userId)
                 db.session.commit()
                 return 'excessao atualizada com sucesso', 200
             except Exception as e:

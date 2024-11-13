@@ -16,28 +16,30 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `rota_volta`
+-- Table structure for table `votacao`
 --
 
-DROP TABLE IF EXISTS `rota_volta`;
+DROP TABLE IF EXISTS `votacao`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `rota_volta` (
+CREATE TABLE `votacao` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `data` date NOT NULL,
-  `hora` int(11) NOT NULL,
-  `alunos` text NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `opcao` int(11) NOT NULL,
+  `userId` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `userId` (`userId`),
+  CONSTRAINT `votacao_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `usuario` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `rota_volta`
+-- Dumping data for table `votacao`
 --
 
-LOCK TABLES `rota_volta` WRITE;
-/*!40000 ALTER TABLE `rota_volta` DISABLE KEYS */;
-/*!40000 ALTER TABLE `rota_volta` ENABLE KEYS */;
+LOCK TABLES `votacao` WRITE;
+/*!40000 ALTER TABLE `votacao` DISABLE KEYS */;
+INSERT INTO `votacao` VALUES (36,1,7),(37,1,10);
+/*!40000 ALTER TABLE `votacao` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -49,4 +51,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-10-29 17:26:55
+-- Dump completed on 2024-11-13 17:25:15
