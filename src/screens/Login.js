@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from '../styles/Login.module.css';
-import logo from '../ft/logo.png';
+import logo3 from '../ft/logo3.png';
+
 
 export default function Login() {
   const navigate = useNavigate();
@@ -13,18 +14,9 @@ export default function Login() {
     console.log('Login attempted with:', email, password);
     navigate('/Home');
   }
-  function voltarAction() {
-    navigate('/HomeGeral');
-  }
 
   return (
     <div className={styles.container}>
-      <div className={styles.cabecalhoft}>
-        <img src={logo} className={styles.logo} alt="Logo" />
-        <button className={styles.botao} onClick={voltarAction}>
-          Voltar
-        </button>
-      </div>
       <div className={styles.meio}>
         <div className={styles.loginBox}>
           <div className={styles.text}>Realize seu login!</div>

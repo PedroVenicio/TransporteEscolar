@@ -13,10 +13,12 @@
   text-align: center;
   align-items: center;
   justify-content: space-between;
+  background-color: #860204;
 }
 
 .logo {
-  height: 30vh;
+  height: 80px;
+  margin-top: 10px;
 }
 
 .direcionar{
@@ -31,13 +33,13 @@
 
 .direcionar span {
   margin-right: 1rem; 
-  color: #860204;
+  color: #ffffff;
   cursor: pointer; 
   transition: color 0.3s ease;
 }
 
 .direcionar span:hover {
-  color: #000; 
+  color: #ff494c; 
 }
 
 .social {
@@ -63,7 +65,7 @@
   margin-right: 5px; 
   object-fit: contain;
   transition: transform 0.3s ease;
-  border-radius: 16px;
+  border-radius: 20px;
 }
 
 .facebook:hover, .instagram:hover, .threads:hover, .wpp:hover {
@@ -73,7 +75,7 @@
 .txtfaleconosco{
   font-family: 'Roboto', sans-serif;
   font-weight: 500;
-  color: #860204;
+  color: #ffffff;
   font-size: 14px;
   margin-top: 10px;
   margin-left: -14px;
@@ -82,8 +84,8 @@
 .botao {
   display: inline-block;
   padding: .75rem 1.25rem;
-  border-radius: 10rem;
-  color: #fff;
+  border-radius: 5px;
+  color: #860204;
   font-size: 1rem;
   font-weight: 700;
   letter-spacing: .20rem;
@@ -91,25 +93,10 @@
   position: relative;
   overflow: hidden;
   z-index: 1;
-  background-color: #860204; 
+  background-color: #ffffff; 
   border: none; 
   margin-right: 10px;
   cursor: pointer;
-}
-
-.botao:after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: black; 
-  border-radius: 10rem;
-  z-index: -1;
-  transition: all .3s;
-  transform: scaleX(0);
-  transform-origin: bottom left;
 }
 
 .botao:hover:after {
@@ -166,15 +153,16 @@
   display: inline-block;
   padding: .75rem 1.25rem;
   width: 10rem;
-  border-radius: 10rem;
+  border-radius: 5px;
   color: #fff;
   font-size: 1rem;
   font-weight: 700;
-  letter-spacing: .20rem;
+  letter-spacing: .05rem;
   transition: all .3s;
   position: relative;
   overflow: hidden;
   z-index: 1;
+  margin-top: 5px;
   background-color: #860204; 
   border: none; 
   cursor: pointer;
@@ -222,7 +210,7 @@
   height: 15%;
   filter: drop-shadow(4px 4px 20px #ffffff);
   transition: transform 0.3s ease, filter 0.3s ease; 
-  margin-top: 12px;
+  margin-top: 24px;
 }
 
 .van:hover {
@@ -299,15 +287,8 @@
 }
 
 .imgicon{
-  width: 85%;
-  height: 90%;
-  filter: drop-shadow(4px 4px 20px #ffffff);
-  transition: transform 0.3s ease, filter 0.3s ease; 
-}
-
-.imgicon:hover {
-  transform: scale(1.1); 
-  filter: drop-shadow(6px 6px 30px #860204);
+  width: 65%;
+  height: 80%;
 }
 
 .divtxt{
@@ -325,8 +306,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  color: #860204;
-  font-size: large;
+  color: #000000;
+  font-size: 20px;
 }
 
 .txt{
@@ -339,6 +320,7 @@
   align-items: center;
   color: #860204;
   font-size: large;
+  margin-top: -20px;
 }
 .qualidade{
   width: 100%; 

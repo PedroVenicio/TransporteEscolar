@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;400;700;900&display=swap');
+
 .container {
   display: flex;
   flex-direction: column;
@@ -11,66 +12,48 @@
   align-content: center;
   text-align: center;
   align-items: center;
-  justify-content: space-between; 
+  justify-content: space-between;
+  background-color: #860204;
 }
 
 .logo {
-  height: 30vh;
+  height: 80px;
 }
 
 .botao {
-display: inline-block;
-padding: .75rem 1.25rem;
-border-radius: 10rem;
-color: #fff;
-font-size: 1rem;
-font-weight: 700;
-letter-spacing: .20rem;
-transition: all .3s;
-position: relative;
-overflow: hidden;
-z-index: 1;
-background-color: #860204; 
-border: none; 
-margin-right: 20px;
-cursor: pointer;
+  display: inline-block;
+  padding: .75rem 1.25rem;
+  border-radius: 5px;
+  color: #860204;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: .20rem;
+  transition: all .3s;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+  background-color: #ffffff;
+  border: none;
+  margin-right: 10px;
+  cursor: pointer;
 }
 
-.botao:after {
-content: '';
-position: absolute;
-bottom: 0;
-left: 0;
-width: 100%;
-height: 100%;
-background-color: black; 
-border-radius: 10rem;
-z-index: -1;
-transition: all .3s;
-transform: scaleX(0);
-transform-origin: bottom left;
-}
-
-.botao:hover:after {
-transform: scaleX(1);
-}
-
-.meio{
-  background-color: #860204;
+.meio {
+  background-color: #fff;
   width: 100%;
   height: 88vh;
   display: flex;
 }
 
-.central{
-  background-color: #fff;
-  width: 18.5%;
+.central {
+  background-color: #860204;
+  width: 14%;
   height: 100%;
   display: flex;
   flex-direction: column;
 }
 
-.botaouser{
+.botaouser {
   width: 100%;
   height: 50%;
   display: flex;
@@ -78,31 +61,39 @@ transform: scaleX(1);
   justify-content: center;
 }
 
-.botaovan{
-width: 100%;
-height: 50%;
-display: flex;
-align-items: center;
-justify-content: center;
+.botaovan {
+  width: 100%;
+  height: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.botaouserdg, .botaovandg {
-display: inline-block;
-width: 85%;
-height: 45%;
-color: #fff;
-font-size: 2.5rem;
-border: none;
-font-weight: 700;
-font-family: 'Roboto', sans-serif;  
-background-color: #860204; 
+.botaouserdg,
+.botaovandg {
+  display: inline-block;
+  padding: .75rem 1.25rem;
+  border-radius: 5px;
+  color: #860204;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: .05rem;
+  transition: all .3s;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+  background-color: #ffffff;
+  border: none;
+  margin-right: 10px;
+  cursor: pointer;
+  height: 70px;
+  width: 125px;
 }
 
 .resultado {
   color: rgb(30, 10, 213);
   font-size: 2rem;
   text-align: center;
-  width: 81.5%;
+  width: 86%;
   height: 100%;
 }
-

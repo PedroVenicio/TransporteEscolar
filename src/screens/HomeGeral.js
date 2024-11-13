@@ -3,6 +3,8 @@ import Slider from 'react-slick';
 import styles from '../styles/HomeGeral.module.css';
 import { useNavigate } from 'react-router-dom';
 import logo from "../ft/logo.png";
+import logo2 from "../ft/logo2.png";
+import logo3 from "../ft/logo3.png";
 import onibus1 from "../ft/onibus1.png";
 import facebook from "../ft/facebook.png";
 import instagram from "../ft/instagram.png";
@@ -50,7 +52,7 @@ function HomeGeral() {
   return (
     <div className={styles.container}>
       <div className={styles.cabecalho}>
-        <img src={logo} className={styles.logo} alt="Logo" />
+        <img src={logo3} className={styles.logo} alt="Logo" />
         <div className={styles.direcionar}>
           <span onClick={() => scrollToSection('Frota')}>Frota </span>
           <span onClick={() => scrollToSection('servicos')}>Serviços</span>
@@ -107,54 +109,54 @@ function HomeGeral() {
 
       <div id="servicos" className={styles.Servicos}>
         <div className={styles.titulo}>
-          <p>Serviços</p>
+          <txt>Serviços</txt>
         </div>
         <div className={styles.centroServico}>
           <div className={styles.cardServico}>
             <img src={van} className={styles.van} alt="Van" />
             <div className={styles.TitServico}>
-              <p>Transporte universitário</p>
+              <txt>Transporte universitário</txt>
             </div>
             <div className={styles.descritivoServico}>
-              <p style={{ textAlign: 'center' }}>
+              <txt style={{ textAlign: 'center' }}>
                 Oferecemos transporte confiável e seguro para estudantes, garantindo que cheguem ao seu destino a tempo e em conforto.
-              </p>
+              </txt>
             </div>
           </div>
 
           <div className={styles.cardServico}>
             <img src={van} className={styles.van} alt="Van" />
             <div className={styles.TitServico}>
-              <p>Transporte escolar</p>
+              <txt>Transporte escolar</txt>
             </div>
             <div className={styles.descritivoServico}>
-              <p style={{ textAlign: 'center' }}>
+              <txt style={{ textAlign: 'center' }}>
                 Garantimos um transporte seguro e pontual para crianças e adolescentes, com motoristas qualificados e veículos em ótimas condições.
-              </p>
+              </txt>
             </div>
           </div>
 
           <div className={styles.cardServico}>
             <img src={van} className={styles.van} alt="Van" />
             <div className={styles.TitServico}>
-              <p>Fretamento empresarial</p>
+              <txt>Fretamento empresarial</txt>
             </div>
             <div className={styles.descritivoServico}>
-              <p style={{ textAlign: 'center' }}>
+              <txt style={{ textAlign: 'center' }}>
                 Oferecemos soluções de fretamento para empresas, adaptando-nos às necessidades de transporte dos seus colaboradores.
-              </p>
+              </txt>
             </div>
           </div>
 
           <div className={styles.cardServico}>
             <img src={van} className={styles.van} alt="Van" />
             <div className={styles.TitServico}>
-              <p>Turismo</p>
+              <txt>Turismo</txt>
             </div>
             <div className={styles.descritivoServico}>
-              <p style={{ textAlign: 'center' }}>
+              <txt style={{ textAlign: 'center' }}>
                 Proporcionamos experiências únicas com nosso serviço de transporte turístico, levando você aos melhores destinos com conforto e segurança.
-              </p>
+              </txt>
             </div>
           </div>
         </div>
@@ -162,7 +164,7 @@ function HomeGeral() {
 
       <div id="trabalhamos" className={styles.comotrabalhamos}>
         <div className={styles.titulo}>
-          <p>Como trabalhamos?</p>
+          <txt>Como trabalhamos?</txt>
         </div>
         <div className={styles.centroComotrab}>
           <div className={styles.imgonibus2}>

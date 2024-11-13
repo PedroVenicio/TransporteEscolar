@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import styles from '../styles/HomeAdm.module.css';
 import { useNavigate } from 'react-router-dom';
 import logo from "../ft/logo.png";
+import logo3 from "../ft/logo3.png";
 import Usuario from './Usuario'; 
 import Van from './Van'; 
 
@@ -24,7 +25,7 @@ function Home() {
     return (
         <div className={styles.container}>
             <div className={styles.cabecalhoft}>
-                <img src={logo} className={styles.logo} alt="Logo" />
+                <img src={logo3} className={styles.logo} alt="Logo" />
                 <button className={styles.botao} onClick={voltarAction}>
                     Voltar
                 </button>

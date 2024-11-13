@@ -198,23 +198,21 @@ body::-webkit-scrollbar {
 }
 
 .botoescss {
-  width: 45%;
-  height: 25%;
+    display: inline-block;
+  padding: .75rem 1.25rem;
+  border-radius: 5px;
   color: #860204;
-  font-family: 'Roboto', sans-serif;
+  font-size: 1rem;
   font-weight: 700;
-  font-size: large;
-  border-radius: 6px;
-  background-color: #fff;
+  letter-spacing: .05rem;
+  transition: all .3s;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+  background-color: #ffffff;
   border: none;
+  margin-right: 10px;
   cursor: pointer;
-  margin-top: 20px;
-  margin-bottom: 10px;
-  letter-spacing: 2px;
-  filter: drop-shadow(1px 1px 3px #000000);
-  transition: transform 0.3s ease, filter 0.3s ease;
-}
-
-.botoescss:hover {
-  transform: scale(1.1); 
+  height: 25%;
+  width: 45%;
 }
