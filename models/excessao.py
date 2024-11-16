@@ -10,7 +10,8 @@ class Excessao(db.Model):
             'status': self.status,
             'opcaoIda': self.opcaoIda,
             'opcaoVolta': self.opcaoVolta,
-            'userId': self.userId
+            'userId': self.userId,
+            'data': self.data
         }
     
     id = db.Column(db.Integer, primary_key = True, nullable=False, unique=True)
@@ -19,12 +20,14 @@ class Excessao(db.Model):
     opcaoIda = db.Column(db.Integer)
     opcaoVolta = db.Column(db.Integer)
     userId = db.Column(ForeignKey('usuario.id'))
+    data = db.Column(db.Date)
 
     usuario = relationship('Usuario', backref='excessao')
 
-    def __init__(self, descricao, status, opcaoIda, opcaoVolta, userId):
+    def __init__(self, descricao, status, opcaoIda, opcaoVolta, userId, data):
         self.descricao = descricao
         self.status = status
         self.opcaoIda = opcaoIda
         self.opcaoVolta = opcaoVolta
         self.userId = userId
+        self.data = data
