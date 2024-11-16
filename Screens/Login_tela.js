@@ -25,7 +25,7 @@ export default function Login({ navigation }) {
       }),
     ]).start(async() => {
       try{
-        const response = await axios.post('http://10.119.0.19:3000/login', //casa: 192.168.0.223 | satc: 10.119.0.19
+        const response = await axios.post('http://192.168.0.223:3000/login', //casa: 192.168.0.223 | satc: 10.119.0.19
         {
           login: login,
           senha: password

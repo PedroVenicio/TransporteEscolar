@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { View, StyleSheet, TextInput, Text, Image, TouchableOpacity, Modal } from 'react-native';
 import axios from 'axios';
 import RNPickerSelect from 'react-native-picker-select';
+import DatePicker from 'react-native-modern-datepicker';
+import {getToday, getFormatedDate} from 'react-native-modern-datepicker';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { jwtDecode } from 'jwt-decode';
 
@@ -12,8 +14,12 @@ export default function Localizacao({ navigation }) {
   const [opcaoVolta, setOpcaoVolta] = useState(0);
   const [modalVisible, setModalVisible] = useState(false);
   const [userId, setUserId] = useState('');
-
+  const [open, setOpen] = useState(false);
+  const [date, setDate] = useState(getToday());
   const [descricao, setDescricao] = useState('');
+
+  const today = new Date();
+  const startDate = getFormatedDate(today.setDate(today.getDate() + 1), 'YYYY/MM/DD');
 
   useEffect(() => {
     async function fetchUser() {
@@ -33,13 +39,14 @@ export default function Localizacao({ navigation }) {
     if (descricao && (opcaoIda !== 'nulo' || opcaoVolta !== 'nulo')) {
       try {
         const token = await AsyncStorage.getItem('token');
-        axios.post('http://10.119.0.19:3000/excessao',
+        axios.post('http://192.168.0.223:3000/excessao',
           {
             descricao: descricao,
             status: 0,
             opcaoIda: opcaoIda == 'nulo' ? 0 : opcaoIda,
             opcaoVolta: opcaoVolta == 'nulo' ? 0 : opcaoVolta,
-            userId: userId
+            userId: userId,
+            data: date
           },
           {
             headers: {
@@ -51,6 +58,7 @@ export default function Localizacao({ navigation }) {
         setOpcaoVolta('nulo');
         setDescricao(null);
         setModalVisible(false);
+        setDate(getToday());
         alert('Exceção requisitada')
       }
       catch (error) {
@@ -63,8 +71,44 @@ export default function Localizacao({ navigation }) {
     }
   }
 
+  function handleOpen() {
+    setOpen(!open)
+  }
+
+  function handleChange(propDate) {
+    setDate(propDate)
+  }
+
+
   return (
     <View style={styles.container}>
+
+      <TouchableOpacity onPress={handleOpen}>
+        <Text>Escolha a data da exceção</Text>
+      </TouchableOpacity>
+      <Text>Data escolhida: {date}</Text>
+
+      <Modal
+        visible={open}
+        animationType="slide"
+        transparent={true}
+        onRequestClose={() => {
+          setOpen(!open);
+        }}
+      >
+        <DatePicker
+          mode='calendar'
+          selected={date}
+          minimumDate={startDate}
+          onDateChange={handleChange}
+        />
+        <TouchableOpacity onPress={handleOpen}>
+          <Text>Escolher</Text>
+        </TouchableOpacity>
+
+      </Modal>
+
+
       <RNPickerSelect
         placeholder={{
           label: 'Selecione o horário de ida',
