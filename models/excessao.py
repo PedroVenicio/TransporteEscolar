@@ -16,7 +16,7 @@ class Excessao(db.Model):
     
     id = db.Column(db.Integer, primary_key = True, nullable=False, unique=True)
     descricao = db.Column(db.String(100), nullable=False)
-    status = db.Column(db.Boolean, nullable=False)
+    status = db.Column(db.Integer, nullable=False)
     opcaoIda = db.Column(db.Integer)
     opcaoVolta = db.Column(db.Integer)
     userId = db.Column(ForeignKey('usuario.id'))

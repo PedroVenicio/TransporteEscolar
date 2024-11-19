@@ -11,7 +11,7 @@ def Login():
     usuario = Usuario.query.filter_by(login=data['login']).first()
 
     if usuario and usuario.verify_senha(data['senha']):
-        additional_claims = {"userId": usuario.id}
+        additional_claims = {"userId": usuario.id, "adm": usuario.adm}
         access_token = create_access_token(identity=usuario.id, additional_claims=additional_claims)
         return jsonify(access_token=access_token), 200
     
