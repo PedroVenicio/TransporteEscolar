@@ -26,7 +26,7 @@ export default function Login({ navigation }) {
       }),
     ]).start(async () => {
       try {
-        const response = await axios.post('http://192.168.0.223:3000/login', //casa: 192.168.0.223 | satc: 10.119.0.19
+        const response = await axios.post('http://10.119.0.19:3000/login', //casa: 192.168.0.223 | satc: 10.119.0.19
           {
             login: login,
             senha: password
@@ -37,11 +37,14 @@ export default function Login({ navigation }) {
         await AsyncStorage.setItem('token', access_token)
 
         const decodedToken = jwtDecode(access_token)
-        if (decodedToken.adm === true) {
+        if (decodedToken.adm === true && decodedToken.motorista === false) {
           navigation.navigate('HomeAdm')
         }
-        else {
+        if (decodedToken.adm === false && decodedToken.motorista === false) {
           navigation.navigate('Home')
+        }
+        if (decodedToken.motorista === true && decodedToken.adm === false){
+          navigation.navigate('HomeMotorista')
         }
       }
       catch (error) {

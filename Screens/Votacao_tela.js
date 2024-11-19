@@ -24,7 +24,7 @@ export default function Votacao({ navigation }) {
   async function postVotacao() {
     try {
       const token = await AsyncStorage.getItem('token');
-      axios.post('http://192.168.0.223:3000/votacao',
+      axios.post('http://10.119.0.19:3000/votacao',
         {
           opcao: selectedVotos,
           userId: userId,
@@ -91,7 +91,7 @@ export default function Votacao({ navigation }) {
     const lastMin = horario()
     if (hVotacao < lastMin) {
       try {
-        axios.put('http://192.168.0.223:3000/usuario',
+        axios.put('http://10.119.0.19:3000/usuario',
           {
             id: userId,
             voto: 0
@@ -103,7 +103,7 @@ export default function Votacao({ navigation }) {
       }
     }
     try {
-      const response = await axios.get('http://192.168.0.223:3000/usuario')
+      const response = await axios.get('http://10.119.0.19:3000/usuario')
       const usuario = response.data.usuarios.filter(filtro => {
         return filtro.id == userId;
       });
