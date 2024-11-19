@@ -8,6 +8,7 @@ import Login from './Screens/Login_tela';
 import Votacao from './Screens/Votacao_tela';
 import Localizacao from './Screens/Localizacao';
 import Pagamento from './Screens/Pagamentos';
+import HomeAdm from './Screens/HomeAdm';
 
 function HomeTabs() {
   const Tab = createBottomTabNavigator();
@@ -51,6 +52,32 @@ function HomeTabs() {
   );
 }
 
+function HomeTabsAdm() {
+  const Tab = createBottomTabNavigator();
+  return (
+    <Tab.Navigator
+      initialRouteName='HomeTabs'
+      screenOptions={{
+        tabBarActiveTintColor: "red",
+        tabBarInactiveTintColor: "grey",
+        tabBarActiveBackgroundColor: "transparent",
+        tabBarInactiveBackgroundColor: "transparent",
+        headerStyle: { backgroundColor: "red" },
+        headerTitle: ' '
+      }}
+    >
+      <Tab.Screen
+        name='Home'
+        component={HomeAdm}
+        options={{
+          tabBarLabel: 'Home0',
+          tabBarIcon: ({ color }) => (<Fontisto name="bus" size={30} color={color} />)
+        }}
+      />
+    </Tab.Navigator>
+  );
+}
+
 export default function App() {
   const Stack = createStackNavigator();
 
@@ -65,7 +92,8 @@ export default function App() {
       >
         <Stack.Screen name='Login' component={Login} options={{ headerShown: false }} />
         <Stack.Screen name='Home' component={HomeTabs} options={{ headerShown: false }} />
+        <Stack.Screen name='HomeAdm' component={HomeTabsAdm} options={{ headerShown: false }} />
       </Stack.Navigator>
     </NavigationContainer>
-  );
+  );
 }

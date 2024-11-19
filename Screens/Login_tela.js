@@ -5,6 +5,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { BlurView } from 'expo-blur';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { jwtDecode } from 'jwt-decode';
 
 export default function Login({ navigation }) {
   const [login, setLogin] = useState('');
@@ -23,20 +24,27 @@ export default function Login({ navigation }) {
         duration: 150,
         useNativeDriver: true,
       }),
-    ]).start(async() => {
-      try{
+    ]).start(async () => {
+      try {
         const response = await axios.post('http://192.168.0.223:3000/login', //casa: 192.168.0.223 | satc: 10.119.0.19
-        {
-          login: login,
-          senha: password
-        });
-        
+          {
+            login: login,
+            senha: password
+          });
+
         const { access_token } = response.data;
 
         await AsyncStorage.setItem('token', access_token)
-        navigation.navigate('Home')
+
+        const decodedToken = jwtDecode(access_token)
+        if (decodedToken.adm === true) {
+          navigation.navigate('HomeAdm')
+        }
+        else {
+          navigation.navigate('Home')
+        }
       }
-      catch(error){
+      catch (error) {
         console.log('Erro ao logar: ', error)
         alert('Falha no login, tente novamente mais tarde.')
       }
@@ -46,7 +54,7 @@ export default function Login({ navigation }) {
   return (
     <View style={styles.container}>
       <LinearGradient
-        colors={['', '#EAEAEA','#EAEAEA','#EAEAEA', '']}
+        colors={['', '#EAEAEA', '#EAEAEA', '#EAEAEA', '']}
         style={styles.background}
       />
       <BlurView intensity={60} style={styles.blurContainer}>
@@ -159,7 +167,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: 20,
-    borderWidth: 0, 
+    borderWidth: 0,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 5 },
     shadowOpacity: 0.3,
@@ -175,5 +183,5 @@ const styles = StyleSheet.create({
   form: {
     width: '100%',
     alignItems: 'center',
-  },
+  },
 });
