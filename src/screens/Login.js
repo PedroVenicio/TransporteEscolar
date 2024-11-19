@@ -39,7 +39,7 @@ export default function Login() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
-              <label htmlFor="password">Password</label>
+              <label htmlFor="password">Senha</label>
             </div>
             <button type="submit" className={styles.LoginButton}>
               Login
