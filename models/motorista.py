@@ -39,4 +39,7 @@ class Motorista(db.Model):
         self.telefone = telefone
         self.email = email
         self.foto = foto
+
+    def verify_senha(self, senha):
+        return self.senha == senha
         
