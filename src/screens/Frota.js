@@ -26,7 +26,7 @@ function Frota() {
         getVans();
     }, []);
 
-    const filtrar = get.filter(filtro => filtro.marca.toLowerCase().includes(myCar.toLowerCase()));
+    const filtrar = get.filter(filtro => filtro.placa.toLowerCase()===(myCar.toLowerCase()));
 
     function b64toimg(base64) {
         const base64data = base64.split(',')[1];
@@ -72,7 +72,7 @@ function Frota() {
                         <div className={styles.selectdiv}>
                             <select value={myCar} onChange={handleChange}>
                                 {get.map((van) => (
-                                    <option value={van.marca}>{van.marca}</option>
+                                    <option value={van.placa}>{van.marca} {van.modelo}</option>
                                 ))}
 
                             </select>
