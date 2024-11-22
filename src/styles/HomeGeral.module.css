@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;400;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500;600;700;800;900&display=swap');
 .container {
   display: flex;
   flex-direction: column;
@@ -13,7 +13,7 @@
   text-align: center;
   align-items: center;
   justify-content: space-between;
-  background-color: #860204;
+  background-color: #7a1f1f;
 }
 
 .logo {
@@ -39,7 +39,7 @@
 }
 
 .direcionar span:hover {
-  color: #ff494c; 
+  color: #332626; 
 }
 
 .social {
@@ -84,23 +84,17 @@
 .botao {
   display: inline-block;
   padding: .75rem 1.25rem;
-  border-radius: 5px;
-  color: #860204;
-  font-size: 1rem;
+  border-radius: 3px;
+  color: #7a1f1f;
+  font-family: 'Roboto', sans-serif;
+  font-size: medium;
   font-weight: 700;
-  letter-spacing: .20rem;
-  transition: all .3s;
-  position: relative;
-  overflow: hidden;
+  letter-spacing: .10rem;
   z-index: 1;
   background-color: #ffffff; 
   border: none; 
-  margin-right: 10px;
+  margin-right: 20px;
   cursor: pointer;
-}
-
-.botao:hover:after {
-  transform: scaleX(1);
 }
 
 .corpo {
@@ -151,19 +145,16 @@
 
 .botaoov  {
   display: inline-block;
-  padding: .75rem 1.25rem;
-  width: 10rem;
-  border-radius: 5px;
-  color: #fff;
-  font-size: 1rem;
+  padding-bottom: 10px;
+  padding-top: 10px;
+  width: 120px;
+  border-radius: 3px;
+  color: #ffffff;
+  font-family: 'roboto', sans-serif;
+  font-size: medium;
   font-weight: 700;
-  letter-spacing: .05rem;
-  transition: all .3s;
-  position: relative;
-  overflow: hidden;
-  z-index: 1;
   margin-top: 5px;
-  background-color: #860204; 
+  background-color: #7a1f1f; 
   border: none; 
   cursor: pointer;
 }
@@ -182,7 +173,7 @@
   font-family: 'Roboto', sans-serif;
   font-weight: 900;
   font-size: 50px;
-  color: #860204;
+  color: #7a1f1f;
   margin: 50px;
 }
 
@@ -195,33 +186,26 @@
 }
 
 .cardServico {
-  width: 30%;
+  width: 25%;
   height: 90%;
   margin: 0 10px; 
   display: flex;
   align-items: center;
-  box-shadow: 1px 1px 10px #8b8787;
-  border-radius: 4%;
+  box-shadow: 1px 1px 10px #a8a3a3;
+  border-radius: 3%;
   flex-direction: column;
 }
 
 .van {
   width: 28%;
   height: 15%;
-  filter: drop-shadow(4px 4px 20px #ffffff);
-  transition: transform 0.3s ease, filter 0.3s ease; 
   margin-top: 24px;
 }
 
-.van:hover {
-  transform: scale(1.1); 
-  filter: drop-shadow(6px 6px 30px #ff0000);
-}
-
 .TitServico {
-  color: #860204;
+  color: #7a1f1f;
   font-family: 'Roboto', sans-serif;
-  font-weight: 700;
+  font-weight: 600;
   font-size: larger;
   margin: 10px;
 }
@@ -230,7 +214,7 @@
   text-align: center;
   width: 75%;
   height: 60%;
-  color: #000000;
+  color: #332626;
   font-family: 'Roboto', sans-serif;
   font-weight: 400;
   font-size: larger;
@@ -306,7 +290,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  color: #000000;
+  color: #7a1f1f;
   font-size: 20px;
 }
 
@@ -316,16 +300,18 @@
   font-family: 'Roboto', sans-serif;
   font-weight: 400;
   display: flex;
+  color: #332626;
   justify-content: center;
   align-items: center;
   font-size: large;
   margin-top: -20px;
 }
+
 .qualidade{
   width: 100%; 
   height: 50%;
-  background-color: rgb(205, 164, 50);
 }
+
 .localizacao {
   height: 100vh;
   width: 100%;
@@ -353,5 +339,4 @@
 .linkloc {
   height: 80%;
   width: 40%;
-  background-color: #000;
 }

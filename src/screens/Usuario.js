@@ -239,62 +239,79 @@ function Usuario() {
     return (
         <div className={styles.container}>
             <div className={styles.meio}>
-                <div className={styles.botaocadastro}>
-                    <button className={styles.cadbot} onClick={() => setOpen1(true)}>Cadastrar Usuário</button>
-                </div>
-                <Modal open={open1} onClose={handleClose}>
-                    <Box className={styles.modalBox}>
-                        <input className={styles.input} type='text' value={nome} placeholder='Nome' onChange={event => setNome(event.target.value)} />
-                        <input className={styles.input} id='horarioida' type='text' value={isAdm || isMotorista === true ? 'null' : horarioida} placeholder='Horário Ida' disabled={isAdm || isMotorista} onChange={event => setHorarioida(event.target.value)} />
-                        <input className={styles.input} id='horariovolta' type='text' value={isAdm || isMotorista === true ? 'null' : horariovolta} placeholder='Horário Volta' disabled={isAdm || isMotorista} onChange={event => setHorariovolta(event.target.value)} />
-                        <input className={styles.input} type='text' value={endereco} placeholder='Endereço' onChange={event => setEndereco(event.target.value)} />
-                        <input className={styles.input} type='text' value={bairro} placeholder='Bairro' onChange={event => setBairro(event.target.value)} />
-                        <input className={styles.input} type='text' value={cidade} placeholder='Cidade' onChange={event => setCidade(event.target.value)} />
-                        <input className={styles.input} type='text' value={cpf} placeholder='CPF' onChange={event => setCpf(event.target.value)} />
-                        <input className={styles.input} type='text' value={telefone} placeholder='Telefone' onChange={event => setTelefone(event.target.value)} />
-                        <input className={styles.input} type='text' value={email} placeholder='Email' onChange={event => setEmail(event.target.value)} />
-                        Usuario administrador <input type='checkbox' disabled={isMotorista} checked={isAdm} onChange={() => setIsAdm(!isAdm)} />
-                        Motorista <input type='checkbox' disabled={isAdm} checked={isMotorista} onChange={() => setIsMotorista(!isMotorista)} />
-                        <input id='arquivo' className={styles.input} type='file' onChange={handleFile} />
-                        <button onClick={postUsuarios}>Cadastrar</button>
-                    </Box>
-                </Modal>
                 <div className={styles.divpesquisa}>
                     <input type='text' className={styles.pesquisa} value={pesquisa} placeholder='Pesquisar:' onChange={e => setPesquisa(e.target.value)} />
+                    <button className={styles.cadbot} onClick={() => setOpen1(true)}>Cadastrar</button>
+                    <Modal open={open1} onClose={handleClose}>
+                        <Box className={styles.modalBox}>
+                            <span className={styles.closeButton} onClick={handleClose}>&times;</span>
+                            <h2>Cadastrar usuário!</h2>
+                            <div className={styles.fieldsContainer}>
+                                <input className={styles.input} type='text' value={nome} placeholder='Nome' onChange={event => setNome(event.target.value)} />
+                                <input className={styles.input} id='horarioida' type='text' value={isAdm || isMotorista === true ? 'null' : horarioida} placeholder='Horário Ida' disabled={isAdm || isMotorista} onChange={event => setHorarioida(event.target.value)} />
+                                <input className={styles.input} id='horariovolta' type='text' value={isAdm || isMotorista === true ? 'null' : horariovolta} placeholder='Horário Volta' disabled={isAdm || isMotorista} onChange={event => setHorariovolta(event.target.value)} />
+                                <input className={styles.input} type='text' value={endereco} placeholder='Endereço' onChange={event => setEndereco(event.target.value)} />
+                                <input className={styles.input} type='text' value={bairro} placeholder='Bairro' onChange={event => setBairro(event.target.value)} />
+                                <input className={styles.input} type='text' value={cidade} placeholder='Cidade' onChange={event => setCidade(event.target.value)} />
+                                <input className={styles.input} type='text' value={cpf} placeholder='CPF' onChange={event => setCpf(event.target.value)} />
+                                <input className={styles.input} type='text' value={telefone} placeholder='Telefone' onChange={event => setTelefone(event.target.value)} />
+                                <input className={styles.input} type='text' value={email} placeholder='Email' onChange={event => setEmail(event.target.value)} />
+                            </div>
+                            Usuario administrador <input type='checkbox' disabled={isMotorista} checked={isAdm} onChange={() => setIsAdm(!isAdm)} />
+                            Motorista <input type='checkbox' disabled={isAdm} checked={isMotorista} onChange={() => setIsMotorista(!isMotorista)} />
+                            <input id='arquivo' className={styles.input} type='file' onChange={handleFile} />
+                            <div className={styles.buttonsContainer}>
+                                <button className={styles.cancel} onClick={handleClose}>Cancelar</button>
+                                <button className={styles.confirm} onClick={postUsuarios}>Confirmar</button>
+                            </div>
+                        </Box>
+                    </Modal>
                 </div>
-                <div className={styles.divresultados}>
+                <div className={styles.botaoresultado}>
                     <div className={styles.resultados}>
                         {filtrar.map((usuario) => (
                             <div key={usuario.id} className={styles.usuario}>
-                                {usuario.foto && b64toimg(usuario.foto)}
-                                <p>{usuario.nome}</p>
-                                <p>{usuario.horarioida}</p>
-                                <p>{usuario.horariovolta}</p>
-                                <p>{usuario.endereco}</p>
-                                <p>{usuario.login}</p>
-                                <p>{usuario.cpf}</p>
-                                <p>{usuario.telefone}</p>
-                                <p>{usuario.email}</p>
-                                <div>
-                                    <button onClick={() => handleOpen(usuario, false)}>Alterar</button>
-                                    <button onClick={() => deleteModal(usuario.id, false)}>Deletar</button>
+                                <div className={styles.ftuser}>
+                                    <div className={styles.ftuser2}>
+                                        {usuario.foto && b64toimg(usuario.foto)}
+                                    </div>
+                                </div>
+                                <div className={styles.infouser}>
+                                    <txt>{usuario.nome}</txt>
+                                    <txt>{usuario.horarioida}</txt>
+                                    <txt>{usuario.horariovolta}</txt>
+                                    <txt>{usuario.endereco}</txt>
+                                    <txt>{usuario.login}</txt>
+                                    <txt>{usuario.cpf}</txt>
+                                    <txt>{usuario.telefone}</txt>
+                                    <txt>{usuario.email}</txt>
+                                </div>
+                                <div className={styles.botoes}>
+                                    <button className={styles.botoescss1} onClick={() => handleOpen(usuario, false)}>Alterar</button>
+                                    <button className={styles.botoescss2} onClick={() => deleteModal(usuario.id, false)}>Desativar</button>
                                 </div>
                             </div>
                         ))}
                     </div>
                     <div className={styles.resultados}>
                         {filtrarMotorista.map((motorista) => (
-                            <div key={motorista.id} className={styles.motorista}>
-                                {motorista.foto && b64toimg(motorista.foto)}
-                                <p>{motorista.nome}</p>
-                                <p>{motorista.endereco}</p>
-                                <p>{motorista.login}</p>
-                                <p>{motorista.cpf}</p>
-                                <p>{motorista.telefone}</p>
-                                <p>{motorista.email}</p>
-                                <div>
-                                    <button onClick={() => handleOpen(motorista, true)}>Alterar</button>
-                                    <button onClick={() => deleteModal(motorista.id, true)}>Deletar</button>
+                            <div key={motorista.id} className={styles.usuario}>
+                                <div className={styles.ftuser}>
+                                     <div className={styles.ftuser2}>
+                                        {motorista.foto && b64toimg(motorista.foto)}
+                                    </div> 
+                                </div>
+                                <div className={styles.infouser}>
+                                    <txt>{motorista.nome}</txt>
+                                    <txt>{motorista.endereco}</txt>
+                                    <txt>{motorista.login}</txt>
+                                    <txt>{motorista.cpf}</txt>
+                                    <txt>{motorista.telefone}</txt>
+                                    <txt>{motorista.email}</txt> 
+                                </div>
+                                <div className={styles.botoes}>
+                                    <button className={styles.botoescss1} onClick={() => handleOpen(motorista, false)}>Alterar</button>
+                                    <button className={styles.botoescss2} onClick={() => deleteModal(motorista.id, false)}>Desativar</button>
                                 </div>
                             </div>
                         ))}
@@ -302,16 +319,22 @@ function Usuario() {
                     <div className={styles.resultados}>
                         {filtrarAdm.map((usuario) => (
                             <div key={usuario.id} className={styles.usuario}>
-                                {usuario.foto && b64toimg(usuario.foto)}
-                                <p>{usuario.nome}</p>
-                                <p>{usuario.endereco}</p>
-                                <p>{usuario.login}</p>
-                                <p>{usuario.cpf}</p>
-                                <p>{usuario.telefone}</p>
-                                <p>{usuario.email}</p>
-                                <div>
-                                    <button onClick={() => handleOpen(usuario, false)}>Alterar</button>
-                                    <button onClick={() => deleteModal(usuario.id, false)}>Deletar</button>
+                                <div className={styles.ftuser}>
+                                    <div className={styles.ftuser2}>
+                                        {usuario.foto && b64toimg(usuario.foto)}
+                                    </div>
+                                </div>
+                                <div className={styles.infouser}>
+                                    <txt>{usuario.nome}</txt>
+                                    <txt>{usuario.endereco}</txt>
+                                    <txt>{usuario.login}</txt>
+                                    <txt>{usuario.cpf}</txt>
+                                    <txt>{usuario.telefone}</txt>
+                                    <txt>{usuario.email}</txt>
+                                </div>
+                                <div className={styles.botoes}>
+                                    <button className={styles.botoescss1} onClick={() => handleOpen(usuario, false)}>Alterar</button>
+                                    <button className={styles.botoescss2} onClick={() => deleteModal(usuario.id, false)}>Desativar</button>
                                 </div>
                             </div>
                         ))}
@@ -337,9 +360,11 @@ function Usuario() {
 
             <Modal open={openDelete} onClose={handleClose}>
                 <Box className={styles.modalBox}>
-                    Deseja deletar o usuário?
-                    <button onClick={() => deleteUsuario(id)}>Sim</button>
-                    <button onClick={handleClose}>Não</button>
+                    Deseja desativar o usuário?
+                    <div className={styles.buttonsContainer}>
+                        <button className={styles.cancel} onClick={handleClose}>Não</button>
+                        <button className={styles.confirm} onClick={() => deleteUsuario(id)}>Sim</button>
+                    </div>
                 </Box>
             </Modal>
         </div>

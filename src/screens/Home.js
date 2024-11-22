@@ -3,8 +3,8 @@ import styles from '../styles/HomeAdm.module.css';
 import { useNavigate } from 'react-router-dom';
 import logo from "../ft/logo.png";
 import logo3 from "../ft/logo3.png";
-import Usuario from './Usuario'; 
-import Van from './Van'; 
+import Usuario from './Usuario';
+import Van from './Van';
 
 function Home() {
     const navigate = useNavigate();
@@ -24,22 +24,25 @@ function Home() {
 
     return (
         <div className={styles.container}>
-            <div className={styles.cabecalhoft}>
-                <img src={logo3} className={styles.logo} alt="Logo" />
-                <button className={styles.botao} onClick={voltarAction}>
-                    Voltar
-                </button>
-            </div>
             <div className={styles.meio}>
                 <div className={styles.central}>
-                    <div className={styles.botaouser}>
-                        <button className={styles.botaouserdg} onClick={crudUser}>
+                <img src={logo3} className={styles.logo} alt="Logo" />
+                <div className={styles.txtcadastro}>
+                    Cadastros!
+                </div>
+                    <div className={styles.botao}>
+                        <button className={styles.botaodg} onClick={crudUser}>
                             Usuários
                         </button>
                     </div>
-                    <div className={styles.botaovan}>
-                        <button className={styles.botaovandg} onClick={crudVan}>
+                    <div className={styles.botao}>
+                        <button className={styles.botaodg} onClick={crudVan}>
                             Veículos
+                        </button>
+                    </div>
+                    <div className={styles.botao}>
+                        <button className={styles.botaodg} onClick={voltarAction}>
+                            Voltar
                         </button>
                     </div>
                 </div>

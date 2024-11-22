@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;400;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500;600;700;800;900&display=swap');
 
 .container {
   display: flex;
@@ -13,29 +13,28 @@
   text-align: center;
   align-items: center;
   justify-content: space-between;
-  background-color: #860204;
+  background-color: #7A1F1F;
 }
 
 .logo {
   height: 80px;
-  margin-top: 10px;
+  margin-top: 18px;
+  margin-left: 40%;
 }
 
 .botao {
   display: inline-block;
   padding: .75rem 1.25rem;
-  border-radius: 5px;
-  color: #860204;
-  font-size: 1rem;
+  border-radius: 3px;
+  color: #7A1F1F;
+  font-size: medium;
+  font-family: 'Roboto', sans-serif;
   font-weight: 700;
-  letter-spacing: .20rem;
-  transition: all .3s;
-  position: relative;
-  overflow: hidden;
-  z-index: 1;
+  letter-spacing: .10rem;
   background-color: #ffffff; 
   border: none; 
-  margin-right: 10px;
+  margin-right: 65px;
+  margin-top: 10px;
   cursor: pointer;
 }
 
@@ -45,13 +44,13 @@
   align-items: center;
   height: 88vh;
   width: 100%;
-  background-color: #ffffff;
+  background-color: #7A1F1F;
 }
 
 .Frota {
   height: 90%;
   width: 90%;
-  background-color: #860204;
+  background-color: #ffffff;
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -74,10 +73,11 @@
   align-items: center;
   font-family: 'Roboto', sans-serif;
   font-weight: 400;
-  font-size: 35px;
+  font-size: xx-large;
   height: 45%;
   width: 90%;
-  color: #ffffff;
+  margin-top: 30px;
+  color: #3B1D1D;
 }
 
 .selectdiv {
@@ -92,15 +92,15 @@
 }
 
 .selectdiv select {
-  width: 90%;
-  padding: 20px;
-  border: 2px solid #ffffff;
-  border-radius: 8px;
-  background-color: #e9dada;
+  width: 76%;
+  padding: 14px;
+  border: 2px solid #7A1F1F;
+  border-radius: 3px;
+  background-color: #ffffff;
   font-family: 'Roboto', sans-serif;
-  font-weight: 700;
-  color: #860204;
-  font-size: 16px;
+  font-weight: 500;
+  color: #3B1D1D;
+  font-size: 20px;
   cursor: pointer;
   outline: none;
 }
@@ -112,7 +112,7 @@
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  background-color: #860204;
+  background-color: #7A1F1F;
 }
 
 .containerveiculos {
