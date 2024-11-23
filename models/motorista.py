@@ -13,7 +13,8 @@ class Motorista(db.Model):
             'cpf': self.cpf,
             'telefone': self.telefone,
             'email': self.email,
-            'foto': self.foto
+            'foto': self.foto,
+            'status': self.status
         }
     
     id = db.Column(db.Integer, primary_key = True, nullable=False, unique=True)
@@ -27,8 +28,9 @@ class Motorista(db.Model):
     telefone = db.Column(db.Integer, nullable=False)
     email = db.Column(db.String(100), nullable=False)
     foto = db.Column(db.String(1000), nullable=False)
+    status = db.Column(db.Boolean)
 
-    def __init__(self, nome, endereco, bairro, cidade, login, senha, cpf, telefone, email, foto):
+    def __init__(self, nome, endereco, bairro, cidade, login, senha, cpf, telefone, email, foto, status):
         self.nome = nome
         self.endereco = endereco
         self.bairro = bairro
@@ -39,6 +41,7 @@ class Motorista(db.Model):
         self.telefone = telefone
         self.email = email
         self.foto = foto
+        self.status = status
 
     def verify_senha(self, senha):
         return self.senha == senha

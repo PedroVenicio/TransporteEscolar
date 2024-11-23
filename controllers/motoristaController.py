@@ -8,7 +8,7 @@ def motorista_controller():
             try:
                 data = request.get_json()
                 print(data)
-                motorista = Motorista(data['nome'], data['endereco'], data['bairro'], data['cidade'], data['login'], data['senha'], data['cpf'], data['telefone'], data['email'], data['foto'])
+                motorista = Motorista(data['nome'], data['endereco'], data['bairro'], data['cidade'], data['login'], data['senha'], data['cpf'], data['telefone'], data['email'], data['foto'], data['status'])
                 db.session.add(motorista)
                 db.session.commit()
                 return 'motorista cadastrado com sucesso', 200
@@ -40,6 +40,7 @@ def motorista_controller():
                 put_motorista.telefone = data.get('telefone', put_motorista.telefone)
                 put_motorista.email = data.get('email', put_motorista.email)
                 put_motorista.foto = data.get('foto', put_motorista.foto)
+                put_motorista.status = data.get('status', put_motorista.status)
                 db.session.commit()
                 return 'motorista atualizado com sucesso', 200
             except Exception as e:

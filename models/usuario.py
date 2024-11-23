@@ -17,13 +17,14 @@ class Usuario(db.Model):
             'email': self.email,
             'foto': self.foto,
             'adm': self.adm,
+            'status': self.status,
             'voto': self.voto
         }
     
     id = db.Column(db.Integer, primary_key = True, nullable=False, unique=True)
     nome = db.Column(db.String(100), nullable=False)
-    horarioida = db.Column(db.Integer, nullable=False)
-    horariovolta = db.Column(db.Integer, nullable=False)
+    horarioida = db.Column(db.String(100), nullable=False)
+    horariovolta = db.Column(db.String(100), nullable=False)
     endereco = db.Column(db.String(100), nullable=False)
     bairro = db.Column(db.String(100), nullable=False)
     cidade = db.Column(db.String(100), nullable=False)
@@ -35,9 +36,10 @@ class Usuario(db.Model):
     voto = db.Column(db.Boolean)
     adm = db.Column(db.Boolean)
     foto = db.Column(db.String(1000), nullable=False)
+    status = db.Column(db.Boolean)
 
 
-    def __init__(self, nome, horarioida, horariovolta, endereco, bairro, cidade, login, senha, cpf, telefone, email, foto, adm, voto):
+    def __init__(self, nome, horarioida, horariovolta, endereco, bairro, cidade, login, senha, cpf, telefone, email, foto, adm, status, voto):
         self.nome = nome
         self.horarioida = horarioida
         self.horariovolta = horariovolta
@@ -52,6 +54,7 @@ class Usuario(db.Model):
         self.foto = foto
         self.voto = voto
         self.adm = adm
+        self.status = status
         
 
     def verify_senha(self, senha):

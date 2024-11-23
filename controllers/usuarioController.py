@@ -8,7 +8,7 @@ def usuario_controller():
             try:
                 data = request.get_json()
                 print(data)
-                usuario = Usuario(data['nome'], data['horarioida'], data['horariovolta'], data['endereco'], data['bairro'], data['cidade'], data['login'], data['senha'], data['cpf'], data['telefone'], data['email'], data['foto'], data['adm'], data['voto'])
+                usuario = Usuario(data['nome'], data['horarioida'], data['horariovolta'], data['endereco'], data['bairro'], data['cidade'], data['login'], data['senha'], data['cpf'], data['telefone'], data['email'], data['foto'], data['adm'], data['status'], data['voto'])
                 db.session.add(usuario)
                 db.session.commit()
                 return 'usuario cadastrado com sucesso', 200
@@ -44,6 +44,7 @@ def usuario_controller():
                 put_usuario.voto = data.get('voto', put_usuario.voto)
                 put_usuario.foto = data.get('foto', put_usuario.foto)
                 put_usuario.adm = data.get('adm', put_usuario.adm)
+                put_usuario.status = data.get('status', put_usuario.status)
                 db.session.commit()
                 return 'usuario atualizado com sucesso', 200
             except Exception as e:
