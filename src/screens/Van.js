@@ -32,6 +32,7 @@ function Van() {
         setOpen(false);
         setOpen1(false);
         setOpenDelete(false);
+        setSelectedFiles({});
     };
 
     function handleOpen(van) {
@@ -80,6 +81,7 @@ function Van() {
                     alert('Van cadastrada');
                     setMarca(''); setModelo(''); setCapacidade(''); setPlaca('');
                     setFoto1(''); setFoto2(''); setFoto3(''); setFoto4('');
+                    handleClose();
                     getVans();
                 })
                 .catch(error => {
@@ -96,6 +98,7 @@ function Van() {
             axios.put('http://localhost:3000/van', { id, marca: alterMarca, modelo: alterModelo, capacidade: alterCapacidade, placa: alterPlaca, foto1, foto2, foto3, foto4 })
                 .then(() => {
                     alert('Van alterada');
+                    handleClose();
                     getVans();
                 })
                 .catch(error => {

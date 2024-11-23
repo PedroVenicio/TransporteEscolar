@@ -10,13 +10,16 @@ import "slick-carousel/slick/slick-theme.css";
 
 function Frota() {
     const navigate = useNavigate();
-    const [myCar, setMyCar] = useState("Ford");
+    const [myCar, setMyCar] = useState("");
     const [get, setGet] = useState([]);
 
     async function getVans() {
         try {
             const response = await axios.get('http://localhost:3000/van');
             setGet(response.data.vans || []);
+            const vans = response.data.vans
+            const primeira = vans[0]
+            setMyCar(primeira.placa)
         } catch (error) {
             console.log('Erro ao obter vans: ', error);
         }

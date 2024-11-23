@@ -5,18 +5,20 @@ import Login from '../screens/Login';
 import Usuario from '../screens/Usuario';
 import Van from '../screens/Van';
 import Frota from "../screens/Frota";
+import Texto from "../screens/Texto";
 
 function Router() {
-    return(
+    return (
         <BrowserRouter>
             <Routes>
                 <Route index element={<HomeGeral />} />
-                <Route path="/Frota" element={<Frota/>}/>
-                <Route path="/Home"   element={<Home />} />
-                <Route path="/HomeGeral"   element={<HomeGeral />} />
-                <Route path="/login"  element={<Login />} />
-                <Route path="/Usuario"  element={<Usuario />} />
+                <Route path="/Frota" element={<Frota />} />
+                <Route path="/Home" element={<Home />} />
+                <Route path="/HomeGeral" element={<HomeGeral />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/Usuario" element={<Usuario />} />
                 <Route path="/Van" element={<Van />} />
+                <Route path="/HomeNull" element={<Texto />} />
             </Routes>
         </BrowserRouter>
     )

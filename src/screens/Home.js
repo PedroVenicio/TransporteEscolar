@@ -5,10 +5,11 @@ import logo from "../ft/logo.png";
 import logo3 from "../ft/logo3.png";
 import Usuario from './Usuario';
 import Van from './Van';
+import Texto from './Texto';
 
 function Home() {
     const navigate = useNavigate();
-    const [resultado, setResultado] = useState('');
+    const [resultado, setResultado] = useState(Texto);
 
     function voltarAction() {
         navigate('/HomeGeral');
