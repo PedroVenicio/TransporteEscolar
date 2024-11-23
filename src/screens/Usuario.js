@@ -277,14 +277,15 @@ function Usuario() {
                                     </div>
                                 </div>
                                 <div className={styles.infouser}>
-                                    <txt>{usuario.nome}</txt>
-                                    <txt>{usuario.horarioida}</txt>
-                                    <txt>{usuario.horariovolta}</txt>
-                                    <txt>{usuario.endereco}</txt>
-                                    <txt>{usuario.login}</txt>
-                                    <txt>{usuario.cpf}</txt>
-                                    <txt>{usuario.telefone}</txt>
-                                    <txt>{usuario.email}</txt>
+                                    <txt>Nome: {usuario.nome}</txt>
+                                    <txt>Endereço: {usuario.endereco}</txt>
+                                    <txt>Login: {usuario.login}</txt>
+                                    <txt>CPF: {usuario.cpf}</txt>
+                                    <txt>Telefone: {usuario.telefone}</txt>
+                                    <txt>E-mail: {usuario.email}</txt>
+                                    <div>
+                                        <txt>Ida: {usuario.horarioida}  |   Volta: {usuario.horariovolta}</txt>
+                                    </div>
                                 </div>
                                 <div className={styles.botoes}>
                                     <button className={styles.botoescss1} onClick={() => handleOpen(usuario, false)}>Alterar</button>
@@ -297,17 +298,17 @@ function Usuario() {
                         {filtrarMotorista.map((motorista) => (
                             <div key={motorista.id} className={styles.usuario}>
                                 <div className={styles.ftuser}>
-                                     <div className={styles.ftuser2}>
+                                    <div className={styles.ftuser2}>
                                         {motorista.foto && b64toimg(motorista.foto)}
-                                    </div> 
+                                    </div>
                                 </div>
                                 <div className={styles.infouser}>
-                                    <txt>{motorista.nome}</txt>
-                                    <txt>{motorista.endereco}</txt>
-                                    <txt>{motorista.login}</txt>
-                                    <txt>{motorista.cpf}</txt>
-                                    <txt>{motorista.telefone}</txt>
-                                    <txt>{motorista.email}</txt> 
+                                    <txt>Nome: {motorista.nome}</txt>
+                                    <txt>Endereço: {motorista.endereco}</txt>
+                                    <txt>Login: {motorista.login}</txt>
+                                    <txt>CPF: {motorista.cpf}</txt>
+                                    <txt>Telefone: {motorista.telefone}</txt>
+                                    <txt>E-mail: {motorista.email}</txt>
                                 </div>
                                 <div className={styles.botoes}>
                                     <button className={styles.botoescss1} onClick={() => handleOpen(motorista, false)}>Alterar</button>

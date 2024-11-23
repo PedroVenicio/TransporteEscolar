@@ -14,7 +14,8 @@
   .txtResultado {
     color: #ffffff;
     font-family: 'Roboto', sans-serif;
-    font-size: 100px;
-    height: 30%;
+    font-size: 75px;
+    height: 35%;
     width: 50%;
+    text-align: left;
   }
