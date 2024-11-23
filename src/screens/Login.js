@@ -2,17 +2,33 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from '../styles/Login.module.css';
 import logo3 from '../ft/logo3.png';
+import axios from 'axios';
+import { jwtDecode } from 'jwt-decode';
 
 
 export default function Login() {
   const navigate = useNavigate();
-  const [email, setEmail] = useState('');
+  const [login, setLogin] = useState('');
   const [password, setPassword] = useState('');
 
-  function loginAction(e) {
-    e.preventDefault();
-    console.log('Login attempted with:', email, password);
-    navigate('/Home');
+  async function loginAction(event) {
+    event.preventDefault();
+    try{
+      const response = await axios.post('http://localhost:3000/login',
+        {
+          login, senha: password
+        }
+      )
+      const { access_token } = response.data;
+      localStorage.setItem('token', access_token);
+      const decodedToken = jwtDecode(access_token)
+      if (decodedToken.adm === true) {
+        navigate('/Home')
+      }
+    } catch(error){
+        alert("Não foi possível logar")
+        console.log("não foi possivel logar: ", error)
+    }
   }
 
   return (
@@ -23,13 +39,13 @@ export default function Login() {
           <form onSubmit={loginAction}>
             <div className={styles.inputGroup}>
               <input
-                type="email"
-                id="email"
+                type="login"
+                id="login"
                 required
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                value={login}
+                onChange={(e) => setLogin(e.target.value)}
               />
-              <label htmlFor="email">Email</label>
+              <label htmlFor="login">login</label>
             </div>
             <div className={styles.inputGroup}>
               <input

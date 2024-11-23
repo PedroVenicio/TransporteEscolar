@@ -6,8 +6,11 @@ import styles from '../styles/Van.module.css';
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { useNavigate } from 'react-router-dom';
+
 
 function Van() {
+    const navigate = useNavigate();
     const [marca, setMarca] = useState('');
     const [modelo, setModelo] = useState('');
     const [capacidade, setCapacidade] = useState('');
@@ -123,6 +126,14 @@ function Van() {
     }
 
     useEffect(() => {
+        function verify() {
+            const token = localStorage.getItem('token');
+            if (token == null) {
+                alert("Method not allowed")
+                navigate('/HomeGeral')
+            }
+        }
+        verify()
         getVans();
     }, []);
 
