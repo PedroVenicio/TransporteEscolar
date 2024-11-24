@@ -262,6 +262,50 @@ body::-webkit-scrollbar {
   color: gray;
 }
 
+.select2 {
+  width: calc(100% - 10px);
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 14px;
+  box-sizing: border-box;
+  margin-left: 10px;
+  color: gray;
+}
+
+.divproblema{
+  display: flex;
+  flex-direction: row;
+  width: calc(100% - 10px);
+  font-family: 'Roboto', sans-serif;
+  font-weight: 400;
+  font-size: large;
+  margin-left: 10px;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  align-items: center;
+}
+
+.problema1{
+  width: 70%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+}
+.problema2{
+  width: 30%;
+  height: 100%;
+}
+.check{
+  width: 20%;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 14px;
+  box-sizing: border-box;
+  color: gray;
+}
+
 .input {
   justify-content: center;
   width: calc(100% - 10px);
@@ -272,6 +316,8 @@ body::-webkit-scrollbar {
   box-sizing: border-box;
   margin-left: 10px;
   color: gray;
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
 
 .modalBox label {

@@ -508,16 +508,22 @@ function Usuario() {
                             <option value={"vespertino"}>Vespertino</option>
                             <option value={"noturno"}>Noturno</option>
                         </select>
-                        <select className={styles.select} value={alterHorariovolta} onChange={event => setAlterHorariovolta(event.target.value)} disabled={isAdm || isMotorista}>
+                        <select className={styles.select2} value={alterHorariovolta} onChange={event => setAlterHorariovolta(event.target.value)} disabled={isAdm || isMotorista}>
                             <option value={"matutino"}>Matutino</option>
                             <option value={"vespertino"}>Vespertino</option>
                             <option value={"noturno"}>Noturno</option>
                         </select>
-                        <input className={styles.select} type='checkbox' disabled={isMotorista} checked={alterIsAdm} onChange={() => setAlterIsAdm(!alterIsAdm)} />
-                        <label className={selectedFiles ? styles.selected : ""}>
-                            {selectedFiles ? "Adicionada!" : "Adicionar foto"}
-                            <input id='arquivoEdit' type="file" onChange={(e) => handleFile(e)} style={{ display: "none" }} />
-                        </label>
+                        <div className={styles.divproblema}>
+                            <div className={styles.problema1}><input className={styles.check} type='checkbox' disabled={isMotorista} checked={alterIsAdm} onChange={() => setAlterIsAdm(!alterIsAdm)} /> Usuário adminstrador
+                            </div>
+                            <div className={styles.problema2}>
+                               <label className={selectedFiles ? styles.selected : ""}>
+                                    {selectedFiles ? "Adicionada!" : "Adicionar foto"}
+                                    <input id='arquivoEdit' type="file" onChange={(e) => handleFile(e)} style={{ display: "none" }} />
+                                </label>
+                            </div>
+                        </div>
+
                         <div className={styles.buttonsContainer}>
                             <button className={styles.cancel} onClick={handleClose}>Cancelar</button>
                             <button className={styles.confirm} onClick={putUsuarios}>Alterar</button>
