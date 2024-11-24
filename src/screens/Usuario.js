@@ -5,6 +5,7 @@ import Box from '@mui/material/Box';
 import styles from '../styles/Usuario.module.css';
 import logo from '../ft/logo.png';
 import { useNavigate } from 'react-router-dom';
+import imageCompression from 'browser-image-compression';
 
 
 function Usuario() {
@@ -241,12 +242,20 @@ function Usuario() {
     const admAtivos = filtrarAdm.filter((admin) => admin.status == 1);
     const admDesativados = filtrarAdm.filter((admin) => admin.status == 0);
 
-    const handleFile = (event) => {
+    const handleFile = async (event) => {
         setSelectedFiles(true)
         const file = event.target.files[0];
         const reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onloadend = () => setFoto(reader.result);
+
+        const options = {
+            maxSizeKB: 5,
+            maxWidthOrHeight: 100,
+            useWebWorker: true
+          }
+
+          const compressedFile = await imageCompression(file, options);
+          const compressedDataUrl = await imageCompression.getDataUrlFromFile(compressedFile);
+          setFoto(compressedDataUrl);
     };
 
     const b64toimg = (base64) => {
