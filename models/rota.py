@@ -14,7 +14,7 @@ class Rota(db.Model):
     
     id = db.Column(db.Integer, primary_key = True, nullable=False, unique=True)
     data = db.Column(db.Date, nullable=False)
-    hora = db.Column(db.Integer, nullable=False)
+    hora = db.Column(db.String(100), nullable=False)
     alunos = db.Column(db.Text, nullable=False)
 
 

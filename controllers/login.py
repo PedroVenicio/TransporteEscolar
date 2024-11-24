@@ -18,7 +18,7 @@ def Login():
         return jsonify(access_token=access_token), 200
 
     elif motorista and motorista.verify_senha(data['senha']):
-        additional_claims = {"motorista": True, "adm": False}
+        additional_claims = {"userId": motorista.id, "motorista": True, "adm": False}
         access_token = create_access_token(identity=motorista.id, additional_claims=additional_claims)
         return jsonify(access_token=access_token), 200
     

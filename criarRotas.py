@@ -106,13 +106,13 @@ def criarRotas(app):
 
                     rotaIda = {
                         "data": dia,
-                        "hora": 550,
+                        "hora": "matutino",
                         "alunos": passageirosIda
                     }
 
                     rotaVolta = {
                         "data": dia,
-                        "hora": 1140,
+                        "hora": "matutino",
                         "alunos": passageirosVolta11
                     }
                     try:
@@ -163,13 +163,13 @@ def criarRotas(app):
 
                     rotaIda = {
                         "data": dia,
-                        "hora": 1150,
+                        "hora": "vespertino",
                         "alunos": passageirosIda
                     }
 
                     rotaVolta = {
                         "data": dia,
-                        "hora": 1900,
+                        "hora": "vespertino",
                         "alunos": passageirosVolta19
                     }
                     try:
@@ -216,13 +216,13 @@ def criarRotas(app):
 
                     rotaIda = {
                         "data": dia,
-                        "hora": 1730,
+                        "hora": "noturno",
                         "alunos": passageirosIda
                     }
 
                     rotaVolta = {
                         "data": dia,
-                        "hora": 2215,
+                        "hora": "noturno",
                         "alunos": passageirosVolta22
                     }
                     try:

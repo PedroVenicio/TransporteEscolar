@@ -25,10 +25,10 @@ DROP TABLE IF EXISTS `rota_volta`;
 CREATE TABLE `rota_volta` (
   `id` int NOT NULL AUTO_INCREMENT,
   `data` date NOT NULL,
-  `hora` int NOT NULL,
+  `hora` varchar(50) NOT NULL,
   `alunos` text NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -37,7 +37,7 @@ CREATE TABLE `rota_volta` (
 
 LOCK TABLES `rota_volta` WRITE;
 /*!40000 ALTER TABLE `rota_volta` DISABLE KEYS */;
-INSERT INTO `rota_volta` VALUES (1,'2024-11-15',22,''),(2,'2024-11-15',11,'7, 10, '),(3,'2024-11-22',1140,'7, 10, '),(4,'2024-11-22',1140,'7, 10, '),(5,'2024-11-23',1900,''),(6,'2024-11-23',1900,'');
+INSERT INTO `rota_volta` VALUES (1,'2024-11-15','noturno',''),(2,'2024-11-15','matutino','7, 10, '),(3,'2024-11-22','matutino','7, 10, '),(4,'2024-11-24','matutino','7, 10, '),(7,'2024-11-23','noturno',''),(8,'2024-11-23','noturno',''),(9,'2024-11-23','matutino',''),(10,'2024-11-23','matutino','');
 /*!40000 ALTER TABLE `rota_volta` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -50,4 +50,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-11-23 16:46:32
+-- Dump completed on 2024-11-24 11:23:28
