@@ -315,6 +315,7 @@ function Usuario() {
                                 >
                                     {selectedFiles ? "Adicionada!" : "Adicionar foto"}
                                     <input
+                                        id='arquivo'
                                         type="file"
                                         onChange={(e) => handleFile(e)}
                                         style={{ display: "none" }}
