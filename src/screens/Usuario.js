@@ -3,7 +3,6 @@ import axios from 'axios';
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 import styles from '../styles/Usuario.module.css';
-import logo from '../ft/logo.png';
 import { useNavigate } from 'react-router-dom';
 import imageCompression from 'browser-image-compression';
 
@@ -75,7 +74,7 @@ function Usuario() {
     function postUsuarios() {
 
         if (nome && endereco && bairro && cidade && cpf && telefone && email) {
-            if (isMotorista === true) {
+            if (isMotorista == true) {
                 try {
                     const login = nome + '.' + (ultimoIdMotorista + 1);
                     const senha = cpf.substring(6, 0);
@@ -99,8 +98,8 @@ function Usuario() {
 
                     axios.post('http://localhost:3000/usuario', {
                         nome,
-                        horarioida: isAdm === true ? "null" : horarioida,
-                        horariovolta: isAdm === true ? "null" : horariovolta,
+                        horarioida: isAdm == true ? "null" : horarioida,
+                        horariovolta: isAdm == true ? "null" : horariovolta,
                         endereco, bairro, cidade, login, senha, cpf, telefone, email, foto, adm: isAdm, status: 1, voto: 0
                     })
 
@@ -142,8 +141,8 @@ function Usuario() {
         try {
             const response = await axios.get('http://localhost:3000/usuario');
             const usuarios = response.data.usuarios;
-            setGet(usuarios.filter(user => user.adm === false) || []);
-            setGetAdm(usuarios.filter(user => user.adm === true))
+            setGet(usuarios.filter(user => user.adm == false) || []);
+            setGetAdm(usuarios.filter(user => user.adm == true))
             setUltimoId(usuarios?.at(-1)?.id || '');
 
             const responseMotoristas = await axios.get('http://localhost:3000/motorista');
@@ -158,7 +157,7 @@ function Usuario() {
 
     const putUsuarios = () => {
         if (alterNome && alterEndereco && alterBairro && alterCidade && alterCpf && alterTelefone && alterEmail) {
-            if (isMotorista === false) {
+            if (isMotorista == false) {
                 try {
                     axios.put('http://localhost:3000/usuario', {
                         id, nome: alterNome, horarioida: alterHorarioida, horariovolta: alterHorariovolta, endereco: alterEndereco,
@@ -202,7 +201,7 @@ function Usuario() {
     }
 
     function desativarUsuario(id, status) {
-        isMotorista === false ? axios.put('http://localhost:3000/usuario', { id, status }) : axios.put('http://localhost:3000/motorista', { id, status });
+        isMotorista == false ? axios.put('http://localhost:3000/usuario', { id, status }) : axios.put('http://localhost:3000/motorista', { id, status });
         status == 0 ? alert('Usuário desativado') : alert("Usuário reativado");
         status == 0 ? setOpenDelete(false) : setOpenReactivate(false);
         setIsMotorista(false);
@@ -251,11 +250,11 @@ function Usuario() {
             maxSizeKB: 5,
             maxWidthOrHeight: 100,
             useWebWorker: true
-          }
+        }
 
-          const compressedFile = await imageCompression(file, options);
-          const compressedDataUrl = await imageCompression.getDataUrlFromFile(compressedFile);
-          setFoto(compressedDataUrl);
+        const compressedFile = await imageCompression(file, options);
+        const compressedDataUrl = await imageCompression.getDataUrlFromFile(compressedFile);
+        setFoto(compressedDataUrl);
     };
 
     const b64toimg = (base64) => {
@@ -290,31 +289,40 @@ function Usuario() {
                             <h2>Cadastrar usuário!</h2>
                             <div className={styles.fieldsContainer}>
                                 <input className={styles.input} type='text' value={nome} placeholder='Nome' onChange={event => setNome(event.target.value)} />
-                                horario de ida
-                                <select value={horarioida} onChange={event => setHorarioida(event.target.value)} disabled={isAdm || isMotorista}>
-                                    <option value={"matutino"}>Matutino</option>,
-                                    <option value={"vespertino"}>Vespertino</option>
-                                    <option value={"noturno"}>Noturno</option>
-                                </select>
-                                horario de volta
-                                <select value={horariovolta} onChange={event => setHorariovolta(event.target.value)} disabled={isAdm || isMotorista}>
-                                    <option value={"matutino"}>Matutino</option>
-                                    <option value={"vespertino"}>Vespertino</option>
-                                    <option value={"noturno"}>Noturno</option>
-                                </select>
                                 <input className={styles.input} type='text' value={endereco} placeholder='Endereço' onChange={event => setEndereco(event.target.value)} />
                                 <input className={styles.input} type='text' value={bairro} placeholder='Bairro' onChange={event => setBairro(event.target.value)} />
                                 <input className={styles.input} type='text' value={cidade} placeholder='Cidade' onChange={event => setCidade(event.target.value)} />
                                 <input className={styles.input} type='text' value={cpf} placeholder='CPF' onChange={event => setCpf(event.target.value)} />
                                 <input className={styles.input} type='text' value={telefone} placeholder='Telefone' onChange={event => setTelefone(event.target.value)} />
                                 <input className={styles.input} type='text' value={email} placeholder='Email' onChange={event => setEmail(event.target.value)} />
+                                <select className={styles.select} value={horarioida} onChange={event => setHorarioida(event.target.value)} disabled={isAdm || isMotorista}>
+                                    <option value={"matutino"}>Matutino</option>,
+                                    <option value={"vespertino"}>Vespertino</option>
+                                    <option value={"noturno"}>Noturno</option>
+                                </select>
+                                <select className={styles.select} value={horariovolta} onChange={event => setHorariovolta(event.target.value)} disabled={isAdm || isMotorista}>
+                                    <option value={"matutino"}>Matutino</option>
+                                    <option value={"vespertino"}>Vespertino</option>
+                                    <option value={"noturno"}>Noturno</option>
+                                </select>
+                                <select className={styles.select} onChange={event => typeUser(event.target.value)}>
+                                    <option value={1}>Passageiro</option>
+                                    <option value={2}>Administrador</option>
+                                    <option value={3}>Motorista</option>
+                                </select>
+                                <label
+                                    className={selectedFiles ? styles.selected : ""}
+                                >
+                                    {selectedFiles ? "Adicionada!" : "Adicionar foto"}
+                                    <input
+                                        type="file"
+                                        onChange={(e) => handleFile(e)}
+                                        style={{ display: "none" }}
+                                    />
+                                </label>
                             </div>
-                            Tipo de usuário <select onChange={event => typeUser(event.target.value)}>
-                                <option value={1}>Passageiro</option>
-                                <option value={2}>Administrador</option>
-                                <option value={3}>Motorista</option>
-                            </select>
-                            <input id='arquivo' className={styles.input} type='file' onChange={handleFile} />
+
+
                             <div className={styles.buttonsContainer}>
                                 <button className={styles.cancel} onClick={handleClose}>Cancelar</button>
                                 <button className={styles.confirm} onClick={postUsuarios}>Confirmar</button>
@@ -323,80 +331,155 @@ function Usuario() {
                     </Modal>
                 </div>
                 <div className={styles.botaoresultado}>
-                    <div className={styles.resultados}>
-                        {usuariosAtivos.map((usuario) => (
-                            <div key={usuario.id} className={styles.usuario}>
-                                <div className={styles.ftuser}>
-                                    <div className={styles.ftuser2}>
-                                        {usuario.foto && b64toimg(usuario.foto)}
+                    <div className={styles.resultadoativo}>
+                        <div className={styles.resultados}>
+                            {usuariosAtivos.map((usuario) => (
+                                <div key={usuario.id} className={styles.usuario}>
+                                    <div className={styles.ftuser}>
+                                        <div className={styles.ftuser2}>
+                                            {usuario.foto && b64toimg(usuario.foto)}
+                                        </div>
+                                    </div>
+                                    <div className={styles.infouser}>
+                                        <txt>Nome: {usuario.nome}</txt>
+                                        <txt>Endereço: {usuario.endereco}</txt>
+                                        <txt>Login: {usuario.login}</txt>
+                                        <txt>CPF: {usuario.cpf}</txt>
+                                        <txt>Telefone: {usuario.telefone}</txt>
+                                        <txt>E-mail: {usuario.email}</txt>
+                                        <div>
+                                            <txt>Ida: {usuario.horarioida}  |   Volta: {usuario.horariovolta}</txt>
+                                        </div>
+                                    </div>
+                                    <div className={styles.botoes}>
+                                        <button className={styles.botoescss1} onClick={() => handleOpen(usuario, false)}>Alterar</button>
+                                        <button className={styles.botoescss2} onClick={() => deleteModal(usuario.id, false, 1, 0)}>Desativar</button>
                                     </div>
                                 </div>
-                                <div className={styles.infouser}>
-                                    <txt>Nome: {usuario.nome}</txt>
-                                    <txt>Endereço: {usuario.endereco}</txt>
-                                    <txt>Login: {usuario.login}</txt>
-                                    <txt>CPF: {usuario.cpf}</txt>
-                                    <txt>Telefone: {usuario.telefone}</txt>
-                                    <txt>E-mail: {usuario.email}</txt>
-                                    <div>
-                                        <txt>Ida: {usuario.horarioida}  |   Volta: {usuario.horariovolta}</txt>
+                            ))}
+                        </div>
+                        <div className={styles.resultados}>
+                            {motoristasAtivos.map((motorista) => (
+                                <div key={motorista.id} className={styles.usuario}>
+                                    <div className={styles.ftuser}>
+                                        <div className={styles.ftuser2}>
+                                            {motorista.foto && b64toimg(motorista.foto)}
+                                        </div>
+                                    </div>
+                                    <div className={styles.infouser}>
+                                        <txt>Nome: {motorista.nome}</txt>
+                                        <txt>Endereço: {motorista.endereco}</txt>
+                                        <txt>Login: {motorista.login}</txt>
+                                        <txt>CPF: {motorista.cpf}</txt>
+                                        <txt>Telefone: {motorista.telefone}</txt>
+                                        <txt>E-mail: {motorista.email}</txt>
+                                    </div>
+                                    <div className={styles.botoes}>
+                                        <button className={styles.botoescss1} onClick={() => handleOpen(motorista, true)}>Alterar</button>
+                                        <button className={styles.botoescss2} onClick={() => deleteModal(motorista.id, true, 1, 0)}>Desativar</button>
                                     </div>
                                 </div>
-                                <div className={styles.botoes}>
-                                    <button className={styles.botoescss1} onClick={() => handleOpen(usuario, false)}>Alterar</button>
-                                    <button className={styles.botoescss2} onClick={() => deleteModal(usuario.id, false, 1, 0)}>Desativar</button>
+                            ))}
+                        </div>
+                        <div className={styles.resultados}>
+                            {admAtivos.map((usuario) => (
+                                <div key={usuario.id} className={styles.usuario}>
+                                    <div className={styles.ftuser}>
+                                        <div className={styles.ftuser2}>
+                                            {usuario.foto && b64toimg(usuario.foto)}
+                                        </div>
+                                    </div>
+                                    <div className={styles.infouser}>
+                                        <txt>{usuario.nome}</txt>
+                                        <txt>{usuario.endereco}</txt>
+                                        <txt>{usuario.login}</txt>
+                                        <txt>{usuario.cpf}</txt>
+                                        <txt>{usuario.telefone}</txt>
+                                        <txt>{usuario.email}</txt>
+                                    </div>
+                                    <div className={styles.botoes}>
+                                        <button className={styles.botoescss1} onClick={() => handleOpen(usuario, false)}>Alterar</button>
+                                        <button className={styles.botoescss2} onClick={() => deleteModal(usuario.id, false, 1, 0)}>Desativar</button>
+                                    </div>
                                 </div>
-                            </div>
-                        ))}
+                            ))}
+                        </div>
                     </div>
-                    <div className={styles.resultados}>
-                        {motoristasAtivos.map((motorista) => (
-                            <div key={motorista.id} className={styles.usuario}>
-                                <div className={styles.ftuser}>
-                                    <div className={styles.ftuser2}>
-                                        {motorista.foto && b64toimg(motorista.foto)}
-                                    </div>
-                                </div>
-                                <div className={styles.infouser}>
-                                    <txt>Nome: {motorista.nome}</txt>
-                                    <txt>Endereço: {motorista.endereco}</txt>
-                                    <txt>Login: {motorista.login}</txt>
-                                    <txt>CPF: {motorista.cpf}</txt>
-                                    <txt>Telefone: {motorista.telefone}</txt>
-                                    <txt>E-mail: {motorista.email}</txt>
-                                </div>
-                                <div className={styles.botoes}>
-                                    <button className={styles.botoescss1} onClick={() => handleOpen(motorista, true)}>Alterar</button>
-                                    <button className={styles.botoescss2} onClick={() => deleteModal(motorista.id, true, 1, 0)}>Desativar</button>
-                                </div>
-                            </div>
-                        ))}
+                    <div className={styles.avisodesativados}>
+                        <txt>Desativados:</txt>
                     </div>
-                    <div className={styles.resultados}>
-                        {admAtivos.map((usuario) => (
-                            <div key={usuario.id} className={styles.usuario}>
-                                <div className={styles.ftuser}>
-                                    <div className={styles.ftuser2}>
-                                        {usuario.foto && b64toimg(usuario.foto)}
+                    <div className={styles.resultadodesativado}>
+                        <div className={styles.resultados}>
+                            {usuariosDesativados.map((usuario) => (
+                                <div key={usuario.id} className={styles.usuario}>
+                                    <div className={styles.ftuser}>
+                                        <div className={styles.ftuser2}>
+                                            {usuario.foto && b64toimg(usuario.foto)}
+                                        </div>
+                                    </div>
+                                    <div className={styles.infouser}>
+                                        <txt>Nome: {usuario.nome}</txt>
+                                        <txt>Endereço: {usuario.endereco}</txt>
+                                        <txt>Login: {usuario.login}</txt>
+                                        <txt>CPF: {usuario.cpf}</txt>
+                                        <txt>Telefone: {usuario.telefone}</txt>
+                                        <txt>E-mail: {usuario.email}</txt>
+                                        <div>
+                                            <txt>Ida: {usuario.horarioida}  |   Volta: {usuario.horariovolta}</txt>
+                                        </div>
+                                    </div>
+                                    <div className={styles.botoes}>
+                                        <button className={styles.botoescss2} onClick={() => deleteModal(usuario.id, false, 0, 1)}>Reativar</button>
                                     </div>
                                 </div>
-                                <div className={styles.infouser}>
-                                    <txt>{usuario.nome}</txt>
-                                    <txt>{usuario.endereco}</txt>
-                                    <txt>{usuario.login}</txt>
-                                    <txt>{usuario.cpf}</txt>
-                                    <txt>{usuario.telefone}</txt>
-                                    <txt>{usuario.email}</txt>
+                            ))}
+                        </div>
+                        <div className={styles.resultados}>
+                            {motoristasDesativados.map((motorista) => (
+                                <div key={motorista.id} className={styles.usuario}>
+                                    <div className={styles.ftuser}>
+                                        <div className={styles.ftuser2}>
+                                            {motorista.foto && b64toimg(motorista.foto)}
+                                        </div>
+                                    </div>
+                                    <div className={styles.infouser}>
+                                        <txt>Nome: {motorista.nome}</txt>
+                                        <txt>Endereço: {motorista.endereco}</txt>
+                                        <txt>Login: {motorista.login}</txt>
+                                        <txt>CPF: {motorista.cpf}</txt>
+                                        <txt>Telefone: {motorista.telefone}</txt>
+                                        <txt>E-mail: {motorista.email}</txt>
+                                    </div>
+                                    <div className={styles.botoes}>
+                                        <button className={styles.botoescss2} onClick={() => deleteModal(motorista.id, true, 0, 1)}>Reativar</button>
+                                    </div>
                                 </div>
-                                <div className={styles.botoes}>
-                                    <button className={styles.botoescss1} onClick={() => handleOpen(usuario, false)}>Alterar</button>
-                                    <button className={styles.botoescss2} onClick={() => deleteModal(usuario.id, false, 1, 0)}>Desativar</button>
+                            ))}
+                        </div>
+                        <div className={styles.resultados}>
+                            {admDesativados.map((usuario) => (
+                                <div key={usuario.id} className={styles.usuario}>
+                                    <div className={styles.ftuser}>
+                                        <div className={styles.ftuser2}>
+                                            {usuario.foto && b64toimg(usuario.foto)}
+                                        </div>
+                                    </div>
+                                    <div className={styles.infouser}>
+                                        <txt>{usuario.nome}</txt>
+                                        <txt>{usuario.endereco}</txt>
+                                        <txt>{usuario.login}</txt>
+                                        <txt>{usuario.cpf}</txt>
+                                        <txt>{usuario.telefone}</txt>
+                                        <txt>{usuario.email}</txt>
+                                    </div>
+                                    <div className={styles.botoes}>
+                                        <button className={styles.botoescss2} onClick={() => deleteModal(usuario.id, false, 0, 1)}>Reativar</button>
+                                    </div>
                                 </div>
-                            </div>
-                        ))}
+                            ))}
+                        </div>
                     </div>
                 </div>
-
                 <Modal open={openDelete} onClose={handleClose}>
                     <Box className={styles.modalBox}>
                         Deseja desativar o usuário?
@@ -406,115 +489,41 @@ function Usuario() {
                         </div>
                     </Box>
                 </Modal>
-
-
-                {/* usuarios desativados a seguir, copiei e colei as divs de cima.
-
-                quando desativo algum usuário, a lista fica menor e mais achatada, algum problema no css */}
-
-
-                <div className={styles.botaoresultado}>
-                    <div className={styles.resultados}>
-                        {usuariosDesativados.map((usuario) => (
-                            <div key={usuario.id} className={styles.usuario}>
-                                <div className={styles.ftuser}>
-                                    <div className={styles.ftuser2}>
-                                        {usuario.foto && b64toimg(usuario.foto)}
-                                    </div>
-                                </div>
-                                <div className={styles.infouser}>
-                                    <txt>Nome: {usuario.nome}</txt>
-                                    <txt>Endereço: {usuario.endereco}</txt>
-                                    <txt>Login: {usuario.login}</txt>
-                                    <txt>CPF: {usuario.cpf}</txt>
-                                    <txt>Telefone: {usuario.telefone}</txt>
-                                    <txt>E-mail: {usuario.email}</txt>
-                                    <div>
-                                        <txt>Ida: {usuario.horarioida}  |   Volta: {usuario.horariovolta}</txt>
-                                    </div>
-                                </div>
-                                <div className={styles.botoes}>
-                                    <button className={styles.botoescss2} onClick={() => deleteModal(usuario.id, false, 0, 1)}>Reativar</button>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-
-                    <div className={styles.resultados}>
-                        {motoristasDesativados.map((motorista) => (
-                            <div key={motorista.id} className={styles.usuario}>
-                                <div className={styles.ftuser}>
-                                    <div className={styles.ftuser2}>
-                                        {motorista.foto && b64toimg(motorista.foto)}
-                                    </div>
-                                </div>
-                                <div className={styles.infouser}>
-                                    <txt>Nome: {motorista.nome}</txt>
-                                    <txt>Endereço: {motorista.endereco}</txt>
-                                    <txt>Login: {motorista.login}</txt>
-                                    <txt>CPF: {motorista.cpf}</txt>
-                                    <txt>Telefone: {motorista.telefone}</txt>
-                                    <txt>E-mail: {motorista.email}</txt>
-                                </div>
-                                <div className={styles.botoes}>
-                                    <button className={styles.botoescss2} onClick={() => deleteModal(motorista.id, true, 0, 1)}>Reativar</button>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-
-                    <div className={styles.resultados}>
-                        {admDesativados.map((usuario) => (
-                            <div key={usuario.id} className={styles.usuario}>
-                                <div className={styles.ftuser}>
-                                    <div className={styles.ftuser2}>
-                                        {usuario.foto && b64toimg(usuario.foto)}
-                                    </div>
-                                </div>
-                                <div className={styles.infouser}>
-                                    <txt>{usuario.nome}</txt>
-                                    <txt>{usuario.endereco}</txt>
-                                    <txt>{usuario.login}</txt>
-                                    <txt>{usuario.cpf}</txt>
-                                    <txt>{usuario.telefone}</txt>
-                                    <txt>{usuario.email}</txt>
-                                </div>
-                                <div className={styles.botoes}>
-                                    <button className={styles.botoescss2} onClick={() => deleteModal(usuario.id, false, 0, 1)}>Reativar</button>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-
-                </div>
             </div>
             <Modal open={open} onClose={handleClose}>
                 <Box className={styles.modalBox}>
-                    <input type="text" value={alterNome} onChange={event => setAlterNome(event.target.value)} placeholder="Nome" />
-                    horario de ida
-                    <select value={alterHorarioida} onChange={event => setAlterHorarioida(event.target.value)} disabled={isAdm || isMotorista}>
-                        <option value={"matutino"}>Matutino</option>
-                        <option value={"vespertino"}>Vespertino</option>
-                        <option value={"noturno"}>Noturno</option>
-                    </select>
-                    horario de volta
-                    <select value={alterHorariovolta} onChange={event => setAlterHorariovolta(event.target.value)} disabled={isAdm || isMotorista}>
-                        <option value={"matutino"}>Matutino</option>
-                        <option value={"vespertino"}>Vespertino</option>
-                        <option value={"noturno"}>Noturno</option>
-                    </select>
-                    <input type="text" value={alterEndereco} onChange={event => setAlterEndereco(event.target.value)} placeholder="Endereço" />
-                    <input type="text" value={alterBairro} onChange={event => setAlterBairro(event.target.value)} placeholder="Bairro" />
-                    <input type="text" value={alterCidade} onChange={event => setAlterCidade(event.target.value)} placeholder="Cidade" />
-                    <input type="text" value={alterCpf} onChange={event => setAlterCpf(event.target.value)} placeholder="CPF" />
-                    <input type="text" value={alterTelefone} onChange={event => setAlterTelefone(event.target.value)} placeholder="Telefone" />
-                    <input type="text" value={alterEmail} onChange={event => setAlterEmail(event.target.value)} placeholder="Email" />
-                    Usuario administrador <input type='checkbox' disabled={isMotorista} checked={alterIsAdm} onChange={() => setAlterIsAdm(!alterIsAdm)} />
-                    <input id='arquivoEdit' type="file" onChange={handleFile} />
-                    <button onClick={putUsuarios}>Alterar</button>
+                    <span className={styles.closeButton} onClick={handleClose}>&times;</span>
+                    <h2>Alterar usuário!</h2>
+                    <div className={styles.fieldsContainer}>
+                        <input className={styles.input} type="text" value={alterNome} onChange={event => setAlterNome(event.target.value)} placeholder="Nome" />
+                        <input className={styles.input} type="text" value={alterEndereco} onChange={event => setAlterEndereco(event.target.value)} placeholder="Endereço" />
+                        <input className={styles.input} type="text" value={alterBairro} onChange={event => setAlterBairro(event.target.value)} placeholder="Bairro" />
+                        <input className={styles.input} type="text" value={alterCidade} onChange={event => setAlterCidade(event.target.value)} placeholder="Cidade" />
+                        <input className={styles.input} type="text" value={alterCpf} onChange={event => setAlterCpf(event.target.value)} placeholder="CPF" />
+                        <input className={styles.input} type="text" value={alterTelefone} onChange={event => setAlterTelefone(event.target.value)} placeholder="Telefone" />
+                        <input className={styles.input} type="text" value={alterEmail} onChange={event => setAlterEmail(event.target.value)} placeholder="Email" />
+                        <select className={styles.select} value={alterHorarioida} onChange={event => setAlterHorarioida(event.target.value)} disabled={isAdm || isMotorista}>
+                            <option value={"matutino"}>Matutino</option>
+                            <option value={"vespertino"}>Vespertino</option>
+                            <option value={"noturno"}>Noturno</option>
+                        </select>
+                        <select className={styles.select} value={alterHorariovolta} onChange={event => setAlterHorariovolta(event.target.value)} disabled={isAdm || isMotorista}>
+                            <option value={"matutino"}>Matutino</option>
+                            <option value={"vespertino"}>Vespertino</option>
+                            <option value={"noturno"}>Noturno</option>
+                        </select>
+                        <input className={styles.select} type='checkbox' disabled={isMotorista} checked={alterIsAdm} onChange={() => setAlterIsAdm(!alterIsAdm)} />
+                        <label className={selectedFiles ? styles.selected : ""}>
+                            {selectedFiles ? "Adicionada!" : "Adicionar foto"}
+                            <input id='arquivoEdit' type="file" onChange={(e) => handleFile(e)} style={{ display: "none" }} />
+                        </label>
+                        <div className={styles.buttonsContainer}>
+                            <button className={styles.cancel} onClick={handleClose}>Cancelar</button>
+                            <button className={styles.confirm} onClick={putUsuarios}>Alterar</button>
+                        </div>
+                    </div>
                 </Box>
             </Modal>
-
             <Modal open={openReactivate} onClose={handleClose}>
                 <Box className={styles.modalBox}>
                     Deseja reativar o usuário?

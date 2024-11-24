@@ -182,7 +182,7 @@ function Van() {
                                         key={num}
                                         className={selectedFiles[num] ? styles.selected : ""}
                                     >
-                                        {selectedFiles[num] ? "Adicionada!" : "Adicionar"}
+                                        {selectedFiles[num] ? "Adicionada!" : "Adicionar foto"}
                                         <input
                                             type="file"
                                             onChange={(e) => handleFile(e, num)}

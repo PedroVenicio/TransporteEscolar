@@ -208,12 +208,18 @@ body::-webkit-scrollbar {
   cursor: pointer;
   background-color: #ffffff;
   margin: 10px;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 500;
+  font-size: small;
 }
 
 .modalBox label.selected {
   background-color: #7A1F1F;
   color: #fff;
   border:none;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 500;
+  font-size: medium;
 }
 
 .modalBox button {
