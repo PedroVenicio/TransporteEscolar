@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { View, StyleSheet, Text, Image, TouchableOpacity } from 'react-native';
 import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { jwtDecode } from 'jwt-decode';
 
 export default function HomeAdm({ navigation }) {
 
     const [excecoes, setExcecoes] = useState([]);
     const [resolvidas, setResolvidas] = useState([]);
     const [usuarios, setUsuarios] = useState([]);
+    const [admId, setAdmId] = useState('');
 
     const opcoesIda = ["5:50", "11:50", "17:30"];
     const opcoesVolta = ["11:40", "19:00", "22:15"];
@@ -16,7 +19,7 @@ export default function HomeAdm({ navigation }) {
     }, [])
 
     async function getExcecao() {
-        const response = await axios.get('http://10.119.0.19:3000/excessao');
+        const response = await axios.get('http://192.168.0.223:3000/excessao');
         const excecao = response.data.excessoes;
         const pendentes = excecao.filter(ex => ex.status == 0);
         const resolved = excecao.filter(ex => ex.status != 0);
@@ -24,9 +27,13 @@ export default function HomeAdm({ navigation }) {
         setExcecoes(pendentes || []);
         setResolvidas(resolved || []);
 
-        const responseUsuarios = await axios.get('http://10.119.0.19:3000/usuario');
+        const responseUsuarios = await axios.get('http://192.168.0.223:3000/usuario');
         const usuario = responseUsuarios.data.usuarios;
         setUsuarios(usuario || [])
+
+        const token = await AsyncStorage.getItem('token');
+        const decodedToken = jwtDecode(token);
+        setAdmId(decodedToken.userId)
     }
 
     function definirExcecao(id, status) {
@@ -44,17 +51,30 @@ export default function HomeAdm({ navigation }) {
             ]);
         }
 
-        axios.put('http://10.119.0.19:3000/excessao', {
+        axios.put('http://192.168.0.223:3000/excessao', {
             id, status: status
         })
         alert("a exceção foi atualizada")
     }
 
-
+    const adm = usuarios.find(user => user.id == admId)
 
     return (
         <View style={styles.container}>
             <View>
+                {adm ? (
+                    <View>
+                        <Image
+                            style={styles.foto}
+                            source={{
+                                uri: adm.foto,
+                            }}
+                        />
+                        <Text>Olá, {adm.nome}</Text>
+                    </View>
+                ) : (
+                    <Text>Carregando...</Text>
+                )}
                 <Text>Exceções pendentes</Text>
                 {excecoes == 0 ? <Text>Não há exceções solicitadas</Text> : excecoes.map((excecao) => {
                     const usuario = usuarios.find(user => user.id == excecao.userId);
@@ -107,7 +127,11 @@ const styles = StyleSheet.create({
         width: '100%',
         height: '100%',
     },
-    separar :{
+    separar: {
         marginBottom: 20
+    },
+    foto: {
+        height: 50,
+        width: 50,
     }
 });

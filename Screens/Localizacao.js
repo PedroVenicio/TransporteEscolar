@@ -16,18 +16,23 @@ export default function Localizacao({ navigation }) {
   const [modalVisible, setModalVisible] = useState(false);
   const [userId, setUserId] = useState('');
   const [open, setOpen] = useState(false);
-  const [date, setDate] = useState(getToday());
   const [descricao, setDescricao] = useState('');
+  const [usuarios, setUsuarios] = useState([]);
 
   const [selectedOpcao, setSelectedOpcao] = useState('ida e volta');
   const opcao = ['ida e volta', 'ida', 'volta'];
 
   const today = new Date();
   const startDate = getFormatedDate(today.setDate(today.getDate() + 1), 'YYYY/MM/DD');
+  const [date, setDate] = useState(startDate);
 
   useEffect(() => {
     async function fetchUser() {
       try {
+        const response = await axios.get('http://192.168.0.223:3000/usuario')
+        const usuario = response.data.usuarios;
+        setUsuarios(usuario);
+
         const token = await AsyncStorage.getItem('token');
         const decodedToken = jwtDecode(token);
         setUserId(decodedToken.userId);
@@ -43,7 +48,7 @@ export default function Localizacao({ navigation }) {
     if (descricao && (opcaoIda !== 'nulo' || opcaoVolta !== 'nulo')) {
       try {
         const token = await AsyncStorage.getItem('token');
-        axios.post('http://10.119.0.19:3000/excessao',
+        axios.post('http://192.168.0.223:3000/excessao',
           {
             descricao: descricao,
             status: 0,
@@ -89,10 +94,24 @@ export default function Localizacao({ navigation }) {
     setOpcaoVolta(0);
   }
 
+  const usuario = usuarios.find(user => user.id == userId)
+
 
   return (
     <View style={styles.container}>
-
+      {usuario ? (
+                <View>
+                    <Image
+                        style={styles.foto}
+                        source={{
+                            uri: usuario.foto,
+                        }}
+                    />
+                    <Text>Olá, {usuario.nome}</Text>
+                </View>
+            ) : (
+                <Text>Carregando...</Text>
+            )}
       <TouchableOpacity onPress={handleOpen}>
         <Text>Escolha a data da exceção</Text>
       </TouchableOpacity>
@@ -193,5 +212,9 @@ export default function Localizacao({ navigation }) {
 }
 
 const styles = StyleSheet.create({
+  foto: {
+    height: 50,
+    width: 50,
+}
 
 });

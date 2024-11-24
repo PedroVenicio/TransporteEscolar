@@ -1,95 +1,123 @@
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, Text, Image, TouchableOpacity, Touchable } from 'react-native';
+import { View, StyleSheet, Text } from 'react-native';
 import axios from 'axios';
 
 export default function AlunosRota({ navigation, route }) {
-
     const { periodo } = route.params;
     const periodos = ["ida matutino", "volta matutino", "ida vespertino", "volta vespertino", "ida noturno", "volta noturno"];
 
-    const [rotas, setRotas] = useState([]);
     const [rotaIda, setRotaIda] = useState([]);
     const [rotaVolta, setRotaVolta] = useState([]);
     const [usuarios, setUsuarios] = useState([]);
-
     const [rotaDisplay, setRotaDisplay] = useState([]);
 
-    const [idMatutino, setIdMatutino] = useState(0);
-    const [idVespertino, setIdVespertino] = useState(0);
-    const [idNoturno, setIdNoturno] = useState(0);
+    const [idMatutino, setIdMatutino] = useState('');
+    const [idVespertino, setIdVespertino] = useState('');
+    const [idNoturno, setIdNoturno] = useState('');
+    const [idVoltaMatutino, setIdVoltaMatutino] = useState('');
+    const [idVoltaVespertino, setIdVoltaVespertino] = useState('');
+    const [idVoltaNoturno, setIdVoltaNoturno] = useState('');
 
     const date = new Date();
-
     const formattedDate = `${date.getFullYear().toString().padStart(2, '0')}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate()}`;
 
+    const normalizeDate = (dateString) => {
+        const date = new Date(dateString);
+        return `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${(date.getDate() + 1).toString().padStart(2, '0')}`;
+    };
+
     async function getRotas() {
-        const response = await axios.get('http://192.168.0.223:3000/rotas')
-        const responseIda = await axios.get('http://192.168.0.223:3000/rota_ida')
-        const responseVolta = await axios.get('http://192.168.0.223:3000/rota_volta')
-        const responseUsuarios = await axios.get('http://192.168.0.223:3000/usuario');
+        try {
+            const responseIda = await axios.get('http://192.168.0.223:3000/rota_ida');
+            const responseVolta = await axios.get('http://192.168.0.223:3000/rota_volta');
+            const responseUsuarios = await axios.get('http://192.168.0.223:3000/usuario');
 
-        const rota = response.data.rotas;
-        const rotasIda = responseIda.data.rotas_ida;
-        const rotasVolta = responseVolta.data.rotas_volta;
-        const usuario = responseUsuarios.data.usuarios;
+            const rotasIda = responseIda.data.rotas_ida || [];
+            const rotasVolta = responseVolta.data.rotas_volta || [];
+            const usuarios = responseUsuarios.data.usuarios || [];
 
-        setUsuarios(usuario || [])
+            setUsuarios(usuarios);
+            setRotaIda(rotasIda);
+            setRotaVolta(rotasVolta);
 
-        const normalizeDate = (dateString) => {
-            const date = new Date(dateString);
-            return `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${(date.getDate() + 1).toString().padStart(2, '0')}`;
-        };
+            const rotaMatutino = rotasIda.find(r => normalizeDate(r.data) === formattedDate && r.hora === "matutino");
+            const rotaVoltaMatutino = rotasVolta.find(r => normalizeDate(r.data) === formattedDate && r.hora === "matutino");
+            setIdMatutino(rotaMatutino ? rotaMatutino.id : 0);
+            setIdVoltaMatutino(rotaVoltaMatutino ? rotaVoltaMatutino.id : 0);
 
-        setRotas(rota || []);
-        setRotaIda(rotasIda || []);
-        setRotaVolta(rotasVolta || []);
+            const rotaVespertino = rotasIda.find(r => normalizeDate(r.data) === formattedDate && r.hora === "vespertino");
+            const rotaVoltaVespertino = rotasVolta.find(r => normalizeDate(r.data) === formattedDate && r.hora === "vespertino");
+            setIdVespertino(rotaVespertino ? rotaVespertino.id : 0);
+            setIdVoltaVespertino(rotaVoltaVespertino ? rotaVoltaVespertino.id : 0);
 
-        const rotaMatutino = rotasIda.find(r => normalizeDate(r.data) == formattedDate && r.hora == 550);
-        setIdMatutino(rotaMatutino ? rotaMatutino.id : 0)
+            const rotaNoturno = rotasIda.find(r => normalizeDate(r.data) === formattedDate && r.hora === "noturno");
+            const rotaVoltaNoturno = rotasVolta.find(r => normalizeDate(r.data) === formattedDate && r.hora === "noturno");
+            setIdNoturno(rotaNoturno ? rotaNoturno.id : 0);
+            setIdVoltaNoturno(rotaVoltaNoturno ? rotaVoltaNoturno.id : 0);
 
-        const rotaVespertino = rotasIda.find(r => normalizeDate(r.data) == formattedDate && r.hora == 1150);
-        setIdVespertino(rotaVespertino ? rotaVespertino.id : 0)
-
-        const rotaNoturno = rotasIda.find(r => normalizeDate(r.data) == formattedDate && r.hora == 1150);
-        setIdNoturno(rotaNoturno ? rotaNoturno.id : 0)
+        } catch (error) {
+            console.error("Erro ao carregar as rotas:" (error));
+        }
     }
 
     useEffect(() => {
-        getRotas()
-    }, [])
+        getRotas();
+    }, []);
 
     useEffect(() => {
-        if (periodos.indexOf(periodo) === 0) {
-            setRotaDisplay(rotaIda.find(r => r.id === idMatutino));
-        } else if (periodos.indexOf(periodo) === 1) {
-            setRotaDisplay(rotaIda.find(r => r.id === idVespertino));
-        } else if (periodos.indexOf(periodo) === 2) {
-            setRotaDisplay(rotaIda.find(r => r.id === idMatutino));
-        } else if (periodos.indexOf(periodo) === 3) {
-            setRotaDisplay(rotaIda.find(r => r.id === idVespertino));
-        } else if (periodos.indexOf(periodo) === 4) {
-            setRotaDisplay(rotaIda.find(r => r.id === idNoturno));
-        } else {
-            setRotaDisplay(rotaIda.find(r => r.id === idNoturno));
+        try {
+            if (rotaIda.length > 0 && rotaVolta.length > 0) {
+                let rota;
+                switch (periodo) {
+                    case "ida matutino":
+                        rota = rotaIda.find(r => r.id === idMatutino);
+                        break;
+                    case "volta matutino":
+                        rota = rotaVolta.find(r => r.id === idVoltaMatutino);
+                        break;
+                    case "ida vespertino":
+                        rota = rotaIda.find(r => r.id === idVespertino);
+                        break;
+                    case "volta vespertino":
+                        rota = rotaVolta.find(r => r.id === idVoltaVespertino);
+                        break;
+                    case "ida noturno":
+                        rota = rotaIda.find(r => r.id === idNoturno);
+                        break;
+                    case "volta noturno":
+                        rota = rotaVolta.find(r => r.id === idVoltaNoturno);
+                        break;
+                    default:
+                        rota = null;
+                }
+                setRotaDisplay(rota);
+            }
+        } catch (error) {
+            console.error("Erro ao atualizar a rota display:", error.message);
         }
-    }, [periodo, rotaIda, idMatutino, idVespertino, idNoturno]);
+    }, [periodo, rotaIda, rotaVolta, idMatutino, idVespertino, idNoturno, idVoltaMatutino, idVoltaVespertino, idVoltaNoturno]);
 
     return (
         <View style={styles.container}>
-            <Text>Rota {periodo} do dia {formattedDate}</Text>
-
-            {rotaDisplay && rotaDisplay.alunos ? (
-                rotaDisplay.alunos.split(',').map(id => {
-                    const aluno = usuarios.find(u => u.id.toString() === id.trim() && u.horarioIda === rotaDisplay.hora);
-                    return aluno ? (
-                        <View key={aluno.id}>
-                            <Text>{aluno.id}</Text>
-                            <Text>{aluno.nome}</Text>
-                        </View>
-                    ) : null;
-                })
+            {rotaIda.length === 0 || rotaVolta.length === 0 ? (
+                <Text>Carregando dados...</Text>
             ) : (
-                <Text>Rota não encontrada</Text>
+                <>
+                    <Text>Rota {periodo} do dia {formattedDate.split("-").reverse().join("/")}</Text>
+                    {rotaDisplay && rotaDisplay.alunos ? (
+                        rotaDisplay.alunos.split(',').map(id => {
+                            const aluno = usuarios.find(u => u.id.toString() === id.trim());
+                            return aluno ? (
+                                <View key={aluno.id}>
+                                    <Text>{aluno.id}</Text>
+                                    <Text>{aluno.nome}</Text>
+                                </View>
+                            ) : null;
+                        })
+                    ) : (
+                        <Text>Rota não encontrada ou inexistente</Text>
+                    )}
+                </>
             )}
         </View>
     );
