@@ -69,6 +69,22 @@ function Usuario() {
         setOpenDelete(false);
         setOpenReactivate(false);
         setSelectedFiles(false);
+        setNome('');
+        setHorarioida('');
+        setHorariovolta('');
+        setEndereco('');
+        setBairro('');
+        setCidade('');
+        setCpf('');
+        setTelefone('');
+        setEmail('');
+        setFoto('');
+        setIsAdm(false);
+        setIsMotorista(false);
+        handleClose();
+        getUsuarios();
+        const fileInput = document.getElementById('arquivo');
+        fileInput.value = '';
     }
 
     function postUsuarios() {
@@ -517,7 +533,7 @@ function Usuario() {
                             <div className={styles.problema1}><input className={styles.check} type='checkbox' disabled={isMotorista} checked={alterIsAdm} onChange={() => setAlterIsAdm(!alterIsAdm)} /> Usuário adminstrador
                             </div>
                             <div className={styles.problema2}>
-                               <label className={selectedFiles ? styles.selected : ""}>
+                                <label className={selectedFiles ? styles.selected : ""}>
                                     {selectedFiles ? "Adicionada!" : "Adicionar foto"}
                                     <input id='arquivoEdit' type="file" onChange={(e) => handleFile(e)} style={{ display: "none" }} />
                                 </label>
