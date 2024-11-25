@@ -12,15 +12,22 @@ export default function Votacao({ navigation }) {
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedVotos, setSelectedVotos] = useState(null);
   const votos = ['vou e volto', 'vou, mas não volto', 'não vou, mas volto', 'não vou e não volto'];
-  const periodoIda = [{"matutino": 530, "vespertino": 1130, "noturno": 17}]
-  const periodoVolta = [{"matutino": 1140, "vespertino": 1900, "noturno": 2215}]
+  const periodoIda = [{ "matutino": 530, "vespertino": 1130, "noturno": 17 }]
+  const periodoVolta = [{ "matutino": 1140, "vespertino": 1900, "noturno": 2215 }]
+
+  const [diaVotacao, setDiaVotacao] = useState('');
+
   const date = new Date()
+
+  const dia = `${date.getFullYear().toString().padStart(2, '0')}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate()}`;
+
   const horaAtual = `${date.getHours().toString().padStart(2, '0')}${date.getMinutes().toString().padStart(2, '0')}`;
+  console.log(horaAtual)
+  console.log(dia)
 
   const [disable, setDisable] = useState(false)
-  const [refreshKey, setRefreshKey] = useState(null);
   const [userId, setUserId] = useState();
-  
+
 
   async function postVotacao() {
     try {
@@ -29,17 +36,14 @@ export default function Votacao({ navigation }) {
         {
           opcao: selectedVotos,
           userId: userId,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`
-          },
+          data: diaVotacao
         }
       )
       alert('Voto cadastrado.')
       setModalVisible(false);
       setSelectedVotos(null);
       setDisable(true);
+
       axios.put('http://192.168.0.223:3000/usuario',
         {
           id: token.userId, voto: 1
@@ -52,29 +56,82 @@ export default function Votacao({ navigation }) {
   }
 
   useEffect(() => {
-    async function fetchUser() {
-      try {
-        const token = await AsyncStorage.getItem('token');
-        const decodedToken = jwtDecode(token)
-        setUserId(decodedToken.userId);
-      }
-      catch (error) {
-        console.log('erro: ', error)
-      }
-    }
     fetchUser();
   }, [])
 
+  async function fetchUser() {
+    try {
+      const token = await AsyncStorage.getItem('token');
+      const decodedToken = jwtDecode(token)
+      setUserId(decodedToken.userId);
+
+      const response = await axios.get('http://192.168.0.223:3000/usuario');
+      const usuario = response.data.usuarios.find(u => u.id == decodedToken.userId);
+
+      const responseVotos = await axios.get('http://192.168.0.223:3000/votacao');
+      const votos = responseVotos.data.votacoes
+      const votoUsuario = votos.find(v => v.userId == decodedToken.userId) || '';
+      console.log(votoUsuario)
+
+      const horIda = Object.keys(periodoIda[0]).find(key => key === usuario.horarioida);
+      const horVolta = Object.keys(periodoVolta[0]).find(key => key === usuario.horariovolta);
+
+      const horaIda = periodoIda[0][horIda]
+      const horaVolta = periodoVolta[0][horVolta]
+
+      if (votoUsuario != '') {
+        axios.put('http://192.168.0.223:3000/usuario',
+          {
+            id: decodedToken.userId, voto: 1
+          }
+        )
+        setDiaVotacao('');
+        setDisable(true);
+      }
+      else if (horaAtual > horaIda && horaAtual < horaVolta) {
+        axios.put('http://192.168.0.223:3000/usuario',
+          {
+            id: decodedToken.userId, voto: 1
+          }
+        )
+        setDiaVotacao('');
+        setDisable(true);
+      }
+      else if (horaAtual > horaVolta) {
+        axios.put('http://192.168.0.223:3000/usuario',
+          {
+            id: decodedToken.userId, voto: 0
+          }
+        )
+
+        const date = new Date()
+        const diaVotacao = `${date.getFullYear().toString().padStart(2, '0')}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate() + 1}`;
+
+        setDisable(false);
+        setDiaVotacao(diaVotacao)
+      }
+      else if (horaAtual < horaIda) {
+        axios.put('http://192.168.0.223:3000/usuario',
+          {
+            id: decodedToken.userId, voto: 0
+          }
+        )
+        const date = new Date()
+        const diaVotacao = `${date.getFullYear().toString().padStart(2, '0')}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate()}`;
+        setDisable(false);
+        setDiaVotacao(diaVotacao)
+      }
+    }
+    catch (error) {
+      console.log('erro: ', error)
+    }
+  }
+
   useFocusEffect(
     useCallback(() => {
-      getVotoStatus();
-    }, [refreshKey])
-  )
-
-  function refresh() {
-    setRefreshKey(oldKey => oldKey + 1)
-    setSelectedVotos(null);
-  }
+      /*  getVotoStatus(); */
+      fetchUser()
+    }, []))
 
   function verifyVoto() {
     if (selectedVotos == null) {
@@ -85,19 +142,20 @@ export default function Votacao({ navigation }) {
     }
   }
 
-  async function getVotoStatus() {
+  /* async function getVotoStatus() {
     try {
       const response = await axios.get('http://192.168.0.223:3000/usuario')
       const usuario = response.data.usuarios.find(u => u.id == userId);
-      setDisable(usuario.voto)
+      setDisable(usuario.voto);
     }
     catch (error) {
-      console.log('erro: ', error)
+      console.log('erro get voto status: ', error);
     }
-  }
+  } */
 
   return (
     <View style={styles.container}>
+      {diaVotacao ? <Text>Votação para o dia: {diaVotacao.split("-").reverse().join("/")}</Text> : <Text>Votação indisponível</Text>}
       {votos.map((votos, index) => (
         <View key={index} style={styles.todos}>
           <CheckBox style={styles.checkBox}
@@ -113,9 +171,6 @@ export default function Votacao({ navigation }) {
       ))}
       <TouchableOpacity disabled={disable} onPress={verifyVoto}>
         <Text>Votar</Text>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={() => refresh()}>
-        <Text>Recarregar</Text>
       </TouchableOpacity>
       <Modal
         animationType="slide"
