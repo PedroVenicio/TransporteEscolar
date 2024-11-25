@@ -68,6 +68,9 @@ function Usuario() {
         setOpenDelete(false);
         setOpenReactivate(false);
         setSelectedFiles(false);
+        
+        setIsAdm(false);
+        setIsMotorista(false);
     }
 
     function handleCloseCadastrar() {
@@ -289,7 +292,7 @@ function Usuario() {
                 <div className={styles.divpesquisa}>
                     <input type='text' className={styles.pesquisa} value={pesquisa} placeholder='Pesquisar:' onChange={e => setPesquisa(e.target.value)} />
                     <button className={styles.cadbot} onClick={() => setOpen1(true)}>Cadastrar</button>
-                    <Modal open={open1} onClose={handleClose}>
+                    <Modal open={open1} onClose={handleCloseCadastrar}>
                         <Box className={styles.modalBox}>
                             <span className={styles.closeButton} onClick={handleCloseCadastrar}>&times;</span>
                             <h2>Cadastrar usuário!</h2>
