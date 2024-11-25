@@ -6,18 +6,19 @@ from flask_jwt_extended import jwt_required
 
 votos = ['vou e volto', 'vou, mas não volto', 'não vou, mas volto', 'não vou e não volto']
 
-@jwt_required()
 def votacao_controller():
         if request.method == 'POST':
             try:
                 votacao = request.get_json()
                 print(votacao)
                 idUser = votacao['userId']
+                data = votacao['data']
                 for i in votos:
                     if i == votacao['opcao']:
                         opcao = votos.index(i) + 1
-                        data = {"opcao": opcao, "userId": idUser}
-                voto = Votacao(data['opcao'], data['userId'])
+                        data = {"opcao": opcao, "userId": idUser, "data": data}
+                voto = Votacao(data['opcao'], data['userId'], data['data'])
+                print(voto)
                 db.session.add(voto)
 
                 put_statsVotacao_id = data['userId']

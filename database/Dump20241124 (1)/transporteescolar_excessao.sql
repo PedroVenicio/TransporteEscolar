@@ -16,29 +16,34 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `rota_volta`
+-- Table structure for table `excessao`
 --
 
-DROP TABLE IF EXISTS `rota_volta`;
+DROP TABLE IF EXISTS `excessao`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `rota_volta` (
+CREATE TABLE `excessao` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `data` date NOT NULL,
-  `hora` varchar(50) NOT NULL,
-  `alunos` text NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
+  `descricao` varchar(100) NOT NULL,
+  `status` tinyint(1) NOT NULL,
+  `opcaoIda` int DEFAULT NULL,
+  `opcaoVolta` int DEFAULT NULL,
+  `userId` int DEFAULT NULL,
+  `data` date DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `userId` (`userId`),
+  CONSTRAINT `excessao_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `usuario` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `rota_volta`
+-- Dumping data for table `excessao`
 --
 
-LOCK TABLES `rota_volta` WRITE;
-/*!40000 ALTER TABLE `rota_volta` DISABLE KEYS */;
-INSERT INTO `rota_volta` VALUES (1,'2024-11-15','noturno',''),(2,'2024-11-15','matutino','7, 10, '),(3,'2024-11-22','matutino','7, 10, '),(4,'2024-11-24','matutino','7, 10, '),(7,'2024-11-23','noturno',''),(8,'2024-11-23','noturno',''),(9,'2024-11-23','matutino',''),(10,'2024-11-23','matutino','');
-/*!40000 ALTER TABLE `rota_volta` ENABLE KEYS */;
+LOCK TABLES `excessao` WRITE;
+/*!40000 ALTER TABLE `excessao` DISABLE KEYS */;
+INSERT INTO `excessao` VALUES (8,'Realizar trabalho',0,3,0,7,'2024-11-18'),(9,'Consulta medica',0,0,4,7,'2024-11-20');
+/*!40000 ALTER TABLE `excessao` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -50,4 +55,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-11-24 11:23:28
+-- Dump completed on 2024-11-24 23:15:29

@@ -16,30 +16,29 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `votacao`
+-- Table structure for table `rota_ida`
 --
 
-DROP TABLE IF EXISTS `votacao`;
+DROP TABLE IF EXISTS `rota_ida`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `votacao` (
+CREATE TABLE `rota_ida` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `opcao` int NOT NULL,
-  `userId` int NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `userId` (`userId`),
-  CONSTRAINT `votacao_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `usuario` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=latin1;
+  `data` date NOT NULL,
+  `hora` varchar(50) NOT NULL,
+  `alunos` text NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `votacao`
+-- Dumping data for table `rota_ida`
 --
 
-LOCK TABLES `votacao` WRITE;
-/*!40000 ALTER TABLE `votacao` DISABLE KEYS */;
-INSERT INTO `votacao` VALUES (36,1,7),(37,1,10);
-/*!40000 ALTER TABLE `votacao` ENABLE KEYS */;
+LOCK TABLES `rota_ida` WRITE;
+/*!40000 ALTER TABLE `rota_ida` DISABLE KEYS */;
+INSERT INTO `rota_ida` VALUES (1,'2024-11-15','noturno',''),(2,'2024-11-15','matutino','7, 10, '),(3,'2024-11-22','matutino','7, 10, '),(4,'2024-11-24','matutino','7, 10, '),(7,'2024-11-24','noturno','7'),(8,'2024-11-23','noturno',''),(11,'2024-11-24','noturno',''),(12,'2024-11-24','noturno',''),(13,'2024-11-24','matutino',''),(14,'2024-11-24','matutino','');
+/*!40000 ALTER TABLE `rota_ida` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -51,4 +50,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-11-24 11:23:29
+-- Dump completed on 2024-11-24 23:15:30
