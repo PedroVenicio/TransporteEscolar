@@ -81,8 +81,6 @@ function Usuario() {
         setFoto('');
         setIsAdm(false);
         setIsMotorista(false);
-        handleClose();
-        getUsuarios();
         const fileInput = document.getElementById('arquivo');
         fileInput.value = '';
     }
