@@ -16,6 +16,7 @@ export default function Localizacao({ navigation }) {
   const [modalVisible, setModalVisible] = useState(false);
   const [userId, setUserId] = useState('');
   const [open, setOpen] = useState(false);
+  const [open1, setOpen1] = useState(false);
   const [descricao, setDescricao] = useState('');
   const [usuarios, setUsuarios] = useState([]);
 
@@ -84,6 +85,10 @@ export default function Localizacao({ navigation }) {
     setOpen(!open)
   }
 
+  function handleOpen1() {
+    setOpen1(!open1)
+  }
+
   function handleChange(propDate) {
     setDate(propDate)
   }
@@ -116,102 +121,117 @@ export default function Localizacao({ navigation }) {
         )}
       </View>
       <View style={styles.meio}>
-        <TouchableOpacity style={styles.excecaobotao} onPress={handleOpen}>
+        <TouchableOpacity style={styles.excecaobotao} onPress={handleOpen1}>
           <Text>Solicitar exceção</Text>
         </TouchableOpacity>
 
-        {/* <Modal aquiiii>
         <Modal
-          visible={open}
+          visible={open1}
           animationType="slide"
           transparent={true}
-          onRequestClose={() => {
-            setOpen(!open);
-          }}
-        >
-          <DatePicker
-            mode='calendar'
-            selected={date}
-            minimumDate={startDate}
-            onDateChange={handleChange}
-          />
-          <TouchableOpacity onPress={handleOpen}>
-            <Text>Escolher</Text>
-          </TouchableOpacity>
-          <Text>Data escolhida: {date.split("/").reverse().join("/")}</Text>
-        </Modal>
+          onRequestClose={() => setOpen1(!open1)}>
+          <View style={styles.modalContainer}>
+            <View style={styles.modalContent}>
+              {opcao.map((opcao, index) => (
+                <View key={index}>
+                  <CheckBox
+                    title={` ${opcao}`}
+                    checked={selectedOpcao === opcao}
+                    onPress={() => handleCheckbox(opcao)}
+                    checkedIcon="dot-circle-o"
+                    uncheckedIcon="circle-o"
+                    checkedColor="red"
+                  />
+                </View>
+              ))}
 
-        {opcao.map((opcao, index) => (
-          <View key={index}>
-            <CheckBox
-              title={` ${opcao}`}
-              checked={selectedOpcao === opcao}
-              onPress={() => handleCheckbox(opcao)}
-              checkedIcon="dot-circle-o"
-              uncheckedIcon="circle-o"
-              checkedColor="red"
-            />
+              {(opcao.indexOf(selectedOpcao) + 1 === 1 || opcao.indexOf(selectedOpcao) + 1 === 2) && (
+                <RNPickerSelect
+                  placeholder={{
+                    label: 'Selecione o horário de ida',
+                    value: 'nulo',
+                  }}
+                  onValueChange={(value) => setOpcaoIda(value)}
+                  items={[
+                    { label: '5:50', value: '1' },
+                    { label: '11:50', value: '2' },
+                    { label: '17:30', value: '3' },
+                  ]}
+                  value={opcaoIda}
+                />
+              )}
+
+              {(opcao.indexOf(selectedOpcao) + 1 === 1 || opcao.indexOf(selectedOpcao) + 1 === 3) && (
+                <RNPickerSelect
+                  placeholder={{
+                    label: 'Selecione o horário de volta',
+                    value: 'nulo',
+                  }}
+                  onValueChange={(value) => setOpcaoVolta(value)}
+                  items={[
+                    { label: '11:40', value: '4' },
+                    { label: '19:00', value: '5' },
+                    { label: '22:15', value: '6' },
+                  ]}
+                  value={opcaoVolta}
+                />
+              )}
+
+              <TextInput
+                placeholder="Descreva o motivo da exceção"
+                value={descricao}
+                onChangeText={setDescricao}
+                style={{ marginVertical: 10 }}
+              />
+
+              <TouchableOpacity onPress={handleOpen}>
+                <Text>Selecionar Data</Text>
+              </TouchableOpacity>
+
+              <Modal
+                visible={open}
+                animationType="fade"
+                transparent={true}
+                onRequestClose={() => setOpen(!open)}>
+                <View style={styles.modalContainer}>
+                  <View style={styles.modalContent}>
+                    <DatePicker
+                      mode="calendar"
+                      selected={date}
+                      minimumDate={startDate}
+                      onDateChange={handleChange}
+                    />
+                    <TouchableOpacity onPress={handleOpen}>
+                      <Text>Escolher</Text>
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              </Modal>
+
+              <TouchableOpacity onPress={() => setModalVisible(true)}>
+                <Text>Enviar</Text>
+              </TouchableOpacity>
+
+              <Modal
+                animationType="slide"
+                transparent={true}
+                visible={modalVisible}
+                onRequestClose={() => setModalVisible(!modalVisible)}>
+                <View style={styles.modalContainer}>
+                  <View style={styles.modalContent}>
+                    <Text>Confirmar envio?</Text>
+                    <TouchableOpacity onPress={enviar}>
+                      <Text>Sim</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={() => setModalVisible(!modalVisible)}>
+                      <Text>Não</Text>
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              </Modal>
+            </View>
           </View>
-        ))}
-
-        {(opcao.indexOf(selectedOpcao) + 1 === 1 || opcao.indexOf(selectedOpcao) + 1 === 2) && (
-          <RNPickerSelect
-            placeholder={{
-              label: 'Selecione o horário de ida',
-              value: 'nulo'
-            }}
-            onValueChange={(value) => setOpcaoIda(value)}
-            items={[
-              { label: '5:50', value: '1' },
-              { label: '11:50', value: '2' },
-              { label: '17:30', value: '3' },
-            ]}
-            value={opcaoIda}
-          />
-        )}
-
-        {(opcao.indexOf(selectedOpcao) + 1 === 1 || opcao.indexOf(selectedOpcao) + 1 === 3) && (
-          <RNPickerSelect
-            placeholder={{
-              label: 'Selecione o horário de volta',
-              value: 'nulo'
-            }}
-            onValueChange={(value) => setOpcaoVolta(value)}
-            items={[
-              { label: '11:40', value: '4' },
-              { label: '19:00', value: '5' },
-              { label: '22:15', value: '6' },
-            ]}
-            value={opcaoVolta}
-          />
-        )}
-        <TextInput
-          placeholder="Descreva o motivo da excessão"
-          value={descricao}
-          onChangeText={setDescricao}
-        />
-
-        <TouchableOpacity onPress={() => setModalVisible(true)}>
-          <Text>Enviar</Text>
-        </TouchableOpacity>
-        <Modal
-          animationType="slide"
-          transparent={true}
-          visible={modalVisible}
-          onRequestClose={() => {
-            setModalVisible(!modalVisible);
-          }}>
-          <View>
-            <Text>Confirmar envio?</Text>
-            <TouchableOpacity onPress={enviar}>
-              <Text>Sim</Text>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => setModalVisible(!modalVisible)}>
-              <Text>Não</Text>
-            </TouchableOpacity>
-          </View>
         </Modal>
-        </Modal> */}
       </View>
     </View>
 
@@ -268,5 +288,23 @@ const styles = StyleSheet.create({
     backgroundColor: 'grey',
     width: '50%',
     height: '20%',
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)', // Fundo semitransparente
+  },
+  modalContent: {
+    width: '80%',
+    padding: 20,
+    backgroundColor: '#fff',
+    borderRadius: 10,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
   },
 });
