@@ -296,14 +296,14 @@ function Usuario() {
                                 <input className={styles.input} type='text' value={telefone} placeholder='Telefone' onChange={event => setTelefone(event.target.value)} />
                                 <input className={styles.input} type='text' value={email} placeholder='Email' onChange={event => setEmail(event.target.value)} />
                                 <select className={styles.select} value={horarioida} onChange={event => setHorarioida(event.target.value)} disabled={isAdm || isMotorista}>
-                                    <option value={"matutino"}>Matutino</option>,
-                                    <option value={"vespertino"}>Vespertino</option>
-                                    <option value={"noturno"}>Noturno</option>
+                                    <option value={"matutino"}>Ida matutino</option>,
+                                    <option value={"vespertino"}>Ida vespertino</option>
+                                    <option value={"noturno"}>Ida noturno</option>
                                 </select>
                                 <select className={styles.select} value={horariovolta} onChange={event => setHorariovolta(event.target.value)} disabled={isAdm || isMotorista}>
-                                    <option value={"matutino"}>Matutino</option>
-                                    <option value={"vespertino"}>Vespertino</option>
-                                    <option value={"noturno"}>Noturno</option>
+                                    <option value={"matutino"}> Volta matutino</option>
+                                    <option value={"vespertino"}>Volta vespertino</option>
+                                    <option value={"noturno"}>Volta noturno</option>
                                 </select>
                                 <select className={styles.select} onChange={event => typeUser(event.target.value)}>
                                     <option value={1}>Passageiro</option>
@@ -504,14 +504,14 @@ function Usuario() {
                         <input className={styles.input} type="text" value={alterTelefone} onChange={event => setAlterTelefone(event.target.value)} placeholder="Telefone" />
                         <input className={styles.input} type="text" value={alterEmail} onChange={event => setAlterEmail(event.target.value)} placeholder="Email" />
                         <select className={styles.select} value={alterHorarioida} onChange={event => setAlterHorarioida(event.target.value)} disabled={isAdm || isMotorista}>
-                            <option value={"matutino"}>Matutino</option>
-                            <option value={"vespertino"}>Vespertino</option>
-                            <option value={"noturno"}>Noturno</option>
+                            <option value={"matutino"}>Ida matutino</option>
+                            <option value={"vespertino"}>Ida vespertino</option>
+                            <option value={"noturno"}>Ida noturno</option>
                         </select>
                         <select className={styles.select2} value={alterHorariovolta} onChange={event => setAlterHorariovolta(event.target.value)} disabled={isAdm || isMotorista}>
-                            <option value={"matutino"}>Matutino</option>
-                            <option value={"vespertino"}>Vespertino</option>
-                            <option value={"noturno"}>Noturno</option>
+                            <option value={"matutino"}>Volta matutino</option>
+                            <option value={"vespertino"}>Volta vespertino</option>
+                            <option value={"noturno"}>Volta noturno</option>
                         </select>
                         <div className={styles.divproblema}>
                             <div className={styles.problema1}><input className={styles.check} type='checkbox' disabled={isMotorista} checked={alterIsAdm} onChange={() => setAlterIsAdm(!alterIsAdm)} /> Usuário adminstrador
