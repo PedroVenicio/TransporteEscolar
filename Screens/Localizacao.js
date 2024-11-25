@@ -188,6 +188,8 @@ export default function Localizacao({ navigation }) {
                 <Text>Selecionar Data</Text>
               </TouchableOpacity>
 
+              <Text>Data escolhida: {date.split("/").reverse().join("/")}</Text>
+
               <Modal
                 visible={open}
                 animationType="fade"
@@ -210,6 +212,9 @@ export default function Localizacao({ navigation }) {
 
               <TouchableOpacity onPress={() => setModalVisible(true)}>
                 <Text>Enviar</Text>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={(() => setOpen1(false))}>
+                <Text>Cancelar</Text>
               </TouchableOpacity>
 
               <Modal
