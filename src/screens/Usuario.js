@@ -10,8 +10,8 @@ import imageCompression from 'browser-image-compression';
 function Usuario() {
     const navigate = useNavigate();
     const [nome, setNome] = useState('');
-    const [horarioida, setHorarioida] = useState("matutino");
-    const [horariovolta, setHorariovolta] = useState("matutino");
+    const [horarioida, setHorarioida] = useState('matutino');
+    const [horariovolta, setHorariovolta] = useState('matutino');
     const [endereco, setEndereco] = useState('');
     const [bairro, setBairro] = useState('');
     const [cidade, setCidade] = useState('');
@@ -65,13 +65,17 @@ function Usuario() {
 
     const handleClose = () => {
         setOpen(false);
-        setOpen1(false);
         setOpenDelete(false);
         setOpenReactivate(false);
         setSelectedFiles(false);
+    }
+
+    function handleCloseCadastrar() {
+        setOpen1(false);
+
         setNome('');
-        setHorarioida('');
-        setHorariovolta('');
+        setHorarioida('matutino');
+        setHorariovolta('matutino');
         setEndereco('');
         setBairro('');
         setCidade('');
@@ -81,8 +85,6 @@ function Usuario() {
         setFoto('');
         setIsAdm(false);
         setIsMotorista(false);
-        handleClose();
-        getUsuarios();
         const fileInput = document.getElementById('arquivo');
         fileInput.value = '';
     }
@@ -114,8 +116,8 @@ function Usuario() {
 
                     axios.post('http://localhost:3000/usuario', {
                         nome,
-                        horarioida: isAdm == true ? "null" : horarioida,
-                        horariovolta: isAdm == true ? "null" : horariovolta,
+                        horarioida: isAdm === true ? "null" : horarioida,
+                        horariovolta: isAdm === true ? "null" : horariovolta,
                         endereco, bairro, cidade, login, senha, cpf, telefone, email, foto, adm: isAdm, status: 1, voto: 0
                     })
 
@@ -128,19 +130,7 @@ function Usuario() {
                 }
             }
             alert('Usuário cadastrado');
-            setNome('');
-            setHorarioida('');
-            setHorariovolta('');
-            setEndereco('');
-            setBairro('');
-            setCidade('');
-            setCpf('');
-            setTelefone('');
-            setEmail('');
-            setFoto('');
-            setIsAdm(false);
-            setIsMotorista(false);
-            handleClose();
+            handleCloseCadastrar();
             getUsuarios();
             const fileInput = document.getElementById('arquivo');
             fileInput.value = '';
@@ -301,7 +291,7 @@ function Usuario() {
                     <button className={styles.cadbot} onClick={() => setOpen1(true)}>Cadastrar</button>
                     <Modal open={open1} onClose={handleClose}>
                         <Box className={styles.modalBox}>
-                            <span className={styles.closeButton} onClick={handleClose}>&times;</span>
+                            <span className={styles.closeButton} onClick={handleCloseCadastrar}>&times;</span>
                             <h2>Cadastrar usuário!</h2>
                             <div className={styles.fieldsContainer}>
                                 <input className={styles.input} type='text' value={nome} placeholder='Nome' onChange={event => setNome(event.target.value)} />
@@ -341,7 +331,7 @@ function Usuario() {
 
 
                             <div className={styles.buttonsContainer}>
-                                <button className={styles.cancel} onClick={handleClose}>Cancelar</button>
+                                <button className={styles.cancel} onClick={handleCloseCadastrar}>Cancelar</button>
                                 <button className={styles.confirm} onClick={postUsuarios}>Confirmar</button>
                             </div>
                         </Box>
@@ -519,12 +509,12 @@ function Usuario() {
                         <input className={styles.input} type="text" value={alterCpf} onChange={event => setAlterCpf(event.target.value)} placeholder="CPF" />
                         <input className={styles.input} type="text" value={alterTelefone} onChange={event => setAlterTelefone(event.target.value)} placeholder="Telefone" />
                         <input className={styles.input} type="text" value={alterEmail} onChange={event => setAlterEmail(event.target.value)} placeholder="Email" />
-                        <select className={styles.select} value={alterHorarioida} onChange={event => setAlterHorarioida(event.target.value)} disabled={isAdm || isMotorista}>
+                        <select className={styles.select} value={alterHorarioida} onChange={event => setAlterHorarioida(event.target.value)} disabled={alterIsAdm || isMotorista}>
                             <option value={"matutino"}>Ida matutino</option>
                             <option value={"vespertino"}>Ida vespertino</option>
                             <option value={"noturno"}>Ida noturno</option>
                         </select>
-                        <select className={styles.select2} value={alterHorariovolta} onChange={event => setAlterHorariovolta(event.target.value)} disabled={isAdm || isMotorista}>
+                        <select className={styles.select2} value={alterHorariovolta} onChange={event => setAlterHorariovolta(event.target.value)} disabled={alterIsAdm || isMotorista}>
                             <option value={"matutino"}>Volta matutino</option>
                             <option value={"vespertino"}>Volta vespertino</option>
                             <option value={"noturno"}>Volta noturno</option>
