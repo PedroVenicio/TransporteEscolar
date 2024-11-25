@@ -60,7 +60,7 @@ def criarRotas(app):
                     if i['horariovolta'] == 22:
                         dezPM.append(i['id'])
 
-                if hora == 225500: #55000 = 5:50:00
+                if hora == 55000: #55000 = 5:50:00
                     for i in listVotacao:
                         if i['opcao'] == 1:
                             for ids in cincoAM:

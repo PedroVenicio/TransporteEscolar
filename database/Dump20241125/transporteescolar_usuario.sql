@@ -33,7 +33,7 @@ CREATE TABLE `usuario` (
   `login` varchar(50) NOT NULL,
   `senha` varchar(50) NOT NULL,
   `cpf` bigint NOT NULL,
-  `telefone` int NOT NULL,
+  `telefone` bigint NOT NULL,
   `email` varchar(50) NOT NULL,
   `foto` longtext NOT NULL,
   `adm` tinyint DEFAULT NULL,
@@ -62,4 +62,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-11-24 23:15:30
+-- Dump completed on 2024-11-25  0:02:42

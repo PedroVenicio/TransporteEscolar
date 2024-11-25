@@ -16,29 +16,31 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `rota_volta`
+-- Table structure for table `votacao`
 --
 
-DROP TABLE IF EXISTS `rota_volta`;
+DROP TABLE IF EXISTS `votacao`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `rota_volta` (
+CREATE TABLE `votacao` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `data` date NOT NULL,
-  `hora` varchar(50) NOT NULL,
-  `alunos` text NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
+  `opcao` int NOT NULL,
+  `userId` int NOT NULL,
+  `data` date DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `userId` (`userId`),
+  CONSTRAINT `votacao_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `usuario` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `rota_volta`
+-- Dumping data for table `votacao`
 --
 
-LOCK TABLES `rota_volta` WRITE;
-/*!40000 ALTER TABLE `rota_volta` DISABLE KEYS */;
-INSERT INTO `rota_volta` VALUES (1,'2024-11-15','noturno',''),(2,'2024-11-15','matutino','7, 10, '),(3,'2024-11-22','matutino','7, 10, '),(4,'2024-11-24','matutino','7, 10, '),(7,'2024-11-23','noturno',''),(8,'2024-11-23','noturno',''),(9,'2024-11-23','matutino',''),(10,'2024-11-23','matutino',''),(11,'2024-11-24','noturno',''),(12,'2024-11-24','noturno',''),(13,'2024-11-24','matutino',''),(14,'2024-11-24','matutino','');
-/*!40000 ALTER TABLE `rota_volta` ENABLE KEYS */;
+LOCK TABLES `votacao` WRITE;
+/*!40000 ALTER TABLE `votacao` DISABLE KEYS */;
+INSERT INTO `votacao` VALUES (36,1,7,'2024-11-24'),(40,2,17,'2024-11-24'),(41,1,14,'2024-11-25'),(42,3,10,'2024-11-24');
+/*!40000 ALTER TABLE `votacao` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -50,4 +52,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-11-24 23:15:30
+-- Dump completed on 2024-11-25  0:02:43
