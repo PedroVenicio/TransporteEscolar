@@ -16,6 +16,7 @@ export default function Localizacao({ navigation }) {
   const [modalVisible, setModalVisible] = useState(false);
   const [userId, setUserId] = useState('');
   const [open, setOpen] = useState(false);
+  const [excecaoModal, setExcecaoModal] = useState(false);
   const [descricao, setDescricao] = useState('');
   const [usuarios, setUsuarios] = useState([]);
 
@@ -84,6 +85,10 @@ export default function Localizacao({ navigation }) {
     setOpen(!open)
   }
 
+  function handleExcecaoModal() {
+    setExcecaoModal(!excecaoModal)
+  }
+
   function handleChange(propDate) {
     setDate(propDate)
   }
@@ -116,102 +121,111 @@ export default function Localizacao({ navigation }) {
         )}
       </View>
       <View style={styles.meio}>
-        <TouchableOpacity style={styles.excecaobotao} onPress={handleOpen}>
+        <TouchableOpacity style={styles.excecaobotao} onPress={handleExcecaoModal}>
           <Text>Solicitar exceção</Text>
         </TouchableOpacity>
 
-        {/* <Modal aquiiii>
-        <Modal
-          visible={open}
-          animationType="slide"
-          transparent={true}
+        <Modal visible={excecaoModal}
           onRequestClose={() => {
-            setOpen(!open);
-          }}
-        >
-          <DatePicker
-            mode='calendar'
-            selected={date}
-            minimumDate={startDate}
-            onDateChange={handleChange}
-          />
-          <TouchableOpacity onPress={handleOpen}>
-            <Text>Escolher</Text>
+            setExcecaoModal(!excecaoModal);
+          }}>
+          <TouchableOpacity style={styles.excecaobotao} onPress={handleOpen}>
+            <Text>Escolher data</Text>
           </TouchableOpacity>
           <Text>Data escolhida: {date.split("/").reverse().join("/")}</Text>
-        </Modal>
-
-        {opcao.map((opcao, index) => (
-          <View key={index}>
-            <CheckBox
-              title={` ${opcao}`}
-              checked={selectedOpcao === opcao}
-              onPress={() => handleCheckbox(opcao)}
-              checkedIcon="dot-circle-o"
-              uncheckedIcon="circle-o"
-              checkedColor="red"
+          <Modal
+            visible={open}
+            animationType="slide"
+            transparent={true}
+            onRequestClose={() => {
+              setOpen(!open);
+            }}
+          >
+            <DatePicker
+              mode='calendar'
+              selected={date}
+              minimumDate={startDate}
+              onDateChange={handleChange}
             />
-          </View>
-        ))}
-
-        {(opcao.indexOf(selectedOpcao) + 1 === 1 || opcao.indexOf(selectedOpcao) + 1 === 2) && (
-          <RNPickerSelect
-            placeholder={{
-              label: 'Selecione o horário de ida',
-              value: 'nulo'
-            }}
-            onValueChange={(value) => setOpcaoIda(value)}
-            items={[
-              { label: '5:50', value: '1' },
-              { label: '11:50', value: '2' },
-              { label: '17:30', value: '3' },
-            ]}
-            value={opcaoIda}
-          />
-        )}
-
-        {(opcao.indexOf(selectedOpcao) + 1 === 1 || opcao.indexOf(selectedOpcao) + 1 === 3) && (
-          <RNPickerSelect
-            placeholder={{
-              label: 'Selecione o horário de volta',
-              value: 'nulo'
-            }}
-            onValueChange={(value) => setOpcaoVolta(value)}
-            items={[
-              { label: '11:40', value: '4' },
-              { label: '19:00', value: '5' },
-              { label: '22:15', value: '6' },
-            ]}
-            value={opcaoVolta}
-          />
-        )}
-        <TextInput
-          placeholder="Descreva o motivo da excessão"
-          value={descricao}
-          onChangeText={setDescricao}
-        />
-
-        <TouchableOpacity onPress={() => setModalVisible(true)}>
-          <Text>Enviar</Text>
-        </TouchableOpacity>
-        <Modal
-          animationType="slide"
-          transparent={true}
-          visible={modalVisible}
-          onRequestClose={() => {
-            setModalVisible(!modalVisible);
-          }}>
-          <View>
-            <Text>Confirmar envio?</Text>
-            <TouchableOpacity onPress={enviar}>
-              <Text>Sim</Text>
+            <TouchableOpacity onPress={handleOpen}>
+              <Text>Escolher</Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => setModalVisible(!modalVisible)}>
-              <Text>Não</Text>
-            </TouchableOpacity>
-          </View>
+          </Modal>
+
+          {opcao.map((opcao, index) => (
+            <View key={index}>
+              <CheckBox
+                title={` ${opcao}`}
+                checked={selectedOpcao === opcao}
+                onPress={() => handleCheckbox(opcao)}
+                checkedIcon="dot-circle-o"
+                uncheckedIcon="circle-o"
+                checkedColor="red"
+              />
+            </View>
+          ))}
+
+          {(opcao.indexOf(selectedOpcao) + 1 === 1 || opcao.indexOf(selectedOpcao) + 1 === 2) && (
+            <RNPickerSelect
+              placeholder={{
+                label: 'Selecione o horário de ida',
+                value: 'nulo'
+              }}
+              onValueChange={(value) => setOpcaoIda(value)}
+              items={[
+                { label: '5:50', value: '1' },
+                { label: '11:50', value: '2' },
+                { label: '17:30', value: '3' },
+              ]}
+              value={opcaoIda}
+            />
+          )}
+
+          {(opcao.indexOf(selectedOpcao) + 1 === 1 || opcao.indexOf(selectedOpcao) + 1 === 3) && (
+            <RNPickerSelect
+              placeholder={{
+                label: 'Selecione o horário de volta',
+                value: 'nulo'
+              }}
+              onValueChange={(value) => setOpcaoVolta(value)}
+              items={[
+                { label: '11:40', value: '4' },
+                { label: '19:00', value: '5' },
+                { label: '22:15', value: '6' },
+              ]}
+              value={opcaoVolta}
+            />
+          )}
+          <TextInput
+            placeholder="Descreva o motivo da excessão"
+            value={descricao}
+            onChangeText={setDescricao}
+          />
+
+          <TouchableOpacity onPress={() => setModalVisible(true)}>
+            <Text>Enviar</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => setExcecaoModal(false)}>
+            <Text>Cancelar</Text>
+          </TouchableOpacity>
+          <Modal
+            animationType="slide"
+            transparent={true}
+            visible={modalVisible}
+            onRequestClose={() => {
+              setModalVisible(!modalVisible);
+            }}>
+            <View>
+              <Text>Confirmar envio?</Text>
+              <TouchableOpacity onPress={enviar}>
+                <Text>Sim</Text>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => setModalVisible(!modalVisible)}>
+                <Text>Não</Text>
+              </TouchableOpacity>
+            </View>
+          </Modal>
         </Modal>
-        </Modal> */}
       </View>
     </View>
 
