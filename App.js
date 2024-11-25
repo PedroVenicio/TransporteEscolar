@@ -22,8 +22,7 @@ function HomeTabs() {
         tabBarInactiveTintColor: "grey",
         tabBarActiveBackgroundColor: "transparent",
         tabBarInactiveBackgroundColor: "transparent",
-        headerStyle: { backgroundColor: "red" },
-        headerTitle: ' '
+        headerShown: false,
       }}
     >
       <Tab.Screen

@@ -178,15 +178,18 @@ export default function Votacao({ navigation }) {
         visible={modalVisible}
         onRequestClose={() => {
           setModalVisible(!modalVisible);
-        }}>
-        <View>
-          <Text>Confirmar voto: "{selectedVotos}"?</Text>
-          <TouchableOpacity onPress={postVotacao}>
-            <Text>Sim</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => setModalVisible(!modalVisible)}>
-            <Text>Não</Text>
-          </TouchableOpacity>
+        }}
+      >
+        <View style={styles.modalContainer}>
+          <View style={styles.modalContent}>
+            <Text>Confirmar voto: "{selectedVotos}"?</Text>
+            <TouchableOpacity onPress={postVotacao} style={styles.modalButton}>
+              <Text>Sim</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => setModalVisible(!modalVisible)} style={styles.modalButton}>
+              <Text>Não</Text>
+            </TouchableOpacity>
+          </View>
         </View>
       </Modal>
     </View>
@@ -195,8 +198,8 @@ export default function Votacao({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     justifyContent: 'center',
-    backgroundColor: 'white',
     alignItems: 'center',
+    backgroundColor: 'white',
     width: '100%',
     height: '100%',
   },
@@ -204,5 +207,26 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
     width: 210,
     height: 65,
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)', // Fundo semitransparente
+  },
+  modalContent: {
+    width: '80%',
+    padding: 20,
+    backgroundColor: 'white',
+    borderRadius: 10,
+    alignItems: 'center',
+  },
+  modalButton: {
+    marginTop: 10,
+    padding: 10,
+    borderRadius: 5,
+    backgroundColor: 'red',
+    alignItems: 'center',
+    width: '50%',
   },
 });

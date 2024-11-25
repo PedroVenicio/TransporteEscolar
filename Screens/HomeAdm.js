@@ -19,7 +19,7 @@ export default function HomeAdm({ navigation }) {
     }, [])
 
     async function getExcecao() {
-        const response = await axios.get('http://192.168.0.223:3000/excessao');
+        const response = await axios.get('http://192.168.3.37:3000/excessao');
         const excecao = response.data.excessoes;
         const pendentes = excecao.filter(ex => ex.status == 0);
         const resolved = excecao.filter(ex => ex.status != 0);
@@ -27,7 +27,7 @@ export default function HomeAdm({ navigation }) {
         setExcecoes(pendentes || []);
         setResolvidas(resolved || []);
 
-        const responseUsuarios = await axios.get('http://192.168.0.223:3000/usuario');
+        const responseUsuarios = await axios.get('http://192.168.3.37:3000/usuario');
         const usuario = responseUsuarios.data.usuarios;
         setUsuarios(usuario || [])
 
@@ -51,7 +51,7 @@ export default function HomeAdm({ navigation }) {
             ]);
         }
 
-        axios.put('http://192.168.0.223:3000/excessao', {
+        axios.put('http://192.168.3.37:3000/excessao', {
             id, status: status
         })
         alert("a exceção foi atualizada")

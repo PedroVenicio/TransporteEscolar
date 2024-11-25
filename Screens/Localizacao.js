@@ -29,7 +29,7 @@ export default function Localizacao({ navigation }) {
   useEffect(() => {
     async function fetchUser() {
       try {
-        const response = await axios.get('http://192.168.0.223:3000/usuario')
+        const response = await axios.get('http://192.168.3.37:3000/usuario')
         const usuario = response.data.usuarios;
         setUsuarios(usuario);
 
@@ -48,7 +48,7 @@ export default function Localizacao({ navigation }) {
     if (descricao && (opcaoIda !== 'nulo' || opcaoVolta !== 'nulo')) {
       try {
         const token = await AsyncStorage.getItem('token');
-        axios.post('http://192.168.0.223:3000/excessao',
+        axios.post('http://192.168.3.37:3000/excessao',
           {
             descricao: descricao,
             status: 0,
@@ -99,122 +99,174 @@ export default function Localizacao({ navigation }) {
 
   return (
     <View style={styles.container}>
-      {usuario ? (
-                <View>
-                    <Image
-                        style={styles.foto}
-                        source={{
-                            uri: usuario.foto,
-                        }}
-                    />
-                    <Text>Olá, {usuario.nome}</Text>
-                </View>
-            ) : (
-                <Text>Carregando...</Text>
-            )}
-      <TouchableOpacity onPress={handleOpen}>
-        <Text>Escolha a data da exceção</Text>
-      </TouchableOpacity>
-      <Text>Data escolhida: {date.split("/").reverse().join("/")}</Text>
-
-      <Modal
-        visible={open}
-        animationType="slide"
-        transparent={true}
-        onRequestClose={() => {
-          setOpen(!open);
-        }}
-      >
-        <DatePicker
-          mode='calendar'
-          selected={date}
-          minimumDate={startDate}
-          onDateChange={handleChange}
-        />
-        <TouchableOpacity onPress={handleOpen}>
-          <Text>Escolher</Text>
+      <View style={styles.divheader}>
+        {usuario ? (
+          <View style={styles.header}>
+            <View style={styles.divft}>
+              <Image style={styles.foto} source={{ uri: usuario.foto, }} />
+            </View>
+            <View style={styles.divnome}>
+              <Text style={styles.textoheader}>Olá, {usuario.nome}</Text>
+              <Text style={styles.textoheader}>Olá, {usuario.login}</Text>
+              <Text style={styles.textoheader}>Olá, {usuario.cpf}</Text>
+            </View>
+          </View>
+        ) : (
+          <Text>Carregando...</Text>
+        )}
+      </View>
+      <View style={styles.meio}>
+        <TouchableOpacity style={styles.excecaobotao} onPress={handleOpen}>
+          <Text>Solicitar exceção</Text>
         </TouchableOpacity>
-      </Modal>
 
-      {opcao.map((opcao, index) => (
-        <View key={index}>
-          <CheckBox
-            title={` ${opcao}`}
-            checked={selectedOpcao === opcao}
-            onPress={() => handleCheckbox(opcao)}
-            checkedIcon="dot-circle-o"
-            uncheckedIcon="circle-o"
-            checkedColor="red"
+        {/* <Modal aquiiii>
+        <Modal
+          visible={open}
+          animationType="slide"
+          transparent={true}
+          onRequestClose={() => {
+            setOpen(!open);
+          }}
+        >
+          <DatePicker
+            mode='calendar'
+            selected={date}
+            minimumDate={startDate}
+            onDateChange={handleChange}
           />
-        </View>
-      ))}
-
-      {(opcao.indexOf(selectedOpcao) + 1 === 1 || opcao.indexOf(selectedOpcao) + 1 === 2) && (
-        <RNPickerSelect
-          placeholder={{
-            label: 'Selecione o horário de ida',
-            value: 'nulo'
-          }}
-          onValueChange={(value) => setOpcaoIda(value)}
-          items={[
-            { label: '5:50', value: '1' },
-            { label: '11:50', value: '2' },
-            { label: '17:30', value: '3' },
-          ]}
-          value={opcaoIda}
-        />
-      )}
-
-      {(opcao.indexOf(selectedOpcao) + 1 === 1 || opcao.indexOf(selectedOpcao) + 1 === 3) && (
-        <RNPickerSelect
-          placeholder={{
-            label: 'Selecione o horário de volta',
-            value: 'nulo'
-          }}
-          onValueChange={(value) => setOpcaoVolta(value)}
-          items={[
-            { label: '11:40', value: '4' },
-            { label: '19:00', value: '5' },
-            { label: '22:15', value: '6' },
-          ]}
-          value={opcaoVolta}
-        />
-      )}
-      <TextInput
-        placeholder="Descreva o motivo da excessão"
-        value={descricao}
-        onChangeText={setDescricao}
-      />
-
-      <TouchableOpacity onPress={() => setModalVisible(true)}>
-        <Text>Enviar</Text>
-      </TouchableOpacity>
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={modalVisible}
-        onRequestClose={() => {
-          setModalVisible(!modalVisible);
-        }}>
-        <View>
-          <Text>Confirmar envio?</Text>
-          <TouchableOpacity onPress={enviar}>
-            <Text>Sim</Text>
+          <TouchableOpacity onPress={handleOpen}>
+            <Text>Escolher</Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => setModalVisible(!modalVisible)}>
-            <Text>Não</Text>
-          </TouchableOpacity>
-        </View>
-      </Modal>
+          <Text>Data escolhida: {date.split("/").reverse().join("/")}</Text>
+        </Modal>
+
+        {opcao.map((opcao, index) => (
+          <View key={index}>
+            <CheckBox
+              title={` ${opcao}`}
+              checked={selectedOpcao === opcao}
+              onPress={() => handleCheckbox(opcao)}
+              checkedIcon="dot-circle-o"
+              uncheckedIcon="circle-o"
+              checkedColor="red"
+            />
+          </View>
+        ))}
+
+        {(opcao.indexOf(selectedOpcao) + 1 === 1 || opcao.indexOf(selectedOpcao) + 1 === 2) && (
+          <RNPickerSelect
+            placeholder={{
+              label: 'Selecione o horário de ida',
+              value: 'nulo'
+            }}
+            onValueChange={(value) => setOpcaoIda(value)}
+            items={[
+              { label: '5:50', value: '1' },
+              { label: '11:50', value: '2' },
+              { label: '17:30', value: '3' },
+            ]}
+            value={opcaoIda}
+          />
+        )}
+
+        {(opcao.indexOf(selectedOpcao) + 1 === 1 || opcao.indexOf(selectedOpcao) + 1 === 3) && (
+          <RNPickerSelect
+            placeholder={{
+              label: 'Selecione o horário de volta',
+              value: 'nulo'
+            }}
+            onValueChange={(value) => setOpcaoVolta(value)}
+            items={[
+              { label: '11:40', value: '4' },
+              { label: '19:00', value: '5' },
+              { label: '22:15', value: '6' },
+            ]}
+            value={opcaoVolta}
+          />
+        )}
+        <TextInput
+          placeholder="Descreva o motivo da excessão"
+          value={descricao}
+          onChangeText={setDescricao}
+        />
+
+        <TouchableOpacity onPress={() => setModalVisible(true)}>
+          <Text>Enviar</Text>
+        </TouchableOpacity>
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={modalVisible}
+          onRequestClose={() => {
+            setModalVisible(!modalVisible);
+          }}>
+          <View>
+            <Text>Confirmar envio?</Text>
+            <TouchableOpacity onPress={enviar}>
+              <Text>Sim</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => setModalVisible(!modalVisible)}>
+              <Text>Não</Text>
+            </TouchableOpacity>
+          </View>
+        </Modal>
+        </Modal> */}
+      </View>
     </View>
 
   );
 }
 
 const styles = StyleSheet.create({
+  container: {
+  },
+  divheader: {
+    width: '100%',
+    height: '20%',
+    backgroundColor: '#3B1D1D',
+    justifyContent: 'flex-end',
+  },
+  header: {
+    width: '100%',
+    height: '75%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    display: 'flex',
+    flexDirection: 'row',
+  },
+  divft: {
+    height: '70%',
+    width: '20%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderWidth: 2,
+    borderColor: 'red',
+    borderRadius: 100,
+  },
+  divnome: {
+    height: '100%',
+    width: '70%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    color: 'white',
+  },
+  textoheader: {
+    color: 'white',
+  },
   foto: {
-    height: 50,
-    width: 50,
-}
-
+    height: '100%',
+    width: '100%',
+    borderRadius: 100,
+  },
+  meio: {
+    height: '80%',
+    width: '100%',
+    backgroundColor: 'blue',
+  },
+  excecaobotao: {
+    backgroundColor: 'grey',
+    width: '50%',
+    height: '20%',
+  },
 });

@@ -13,7 +13,7 @@ export default function HomeMotorista({ navigation }) {
     useEffect(() => {
         async function getMotoristas() {
             try {
-                const response = await axios.get('http://192.168.0.223:3000/motorista');
+                const response = await axios.get('http://192.168.3.37:3000/motorista');
                 const motoristas = response.data.motoristas;
                 setMotorista(motoristas);
 

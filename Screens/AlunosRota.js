@@ -28,9 +28,9 @@ export default function AlunosRota({ navigation, route }) {
 
     async function getRotas() {
         try {
-            const responseIda = await axios.get('http://192.168.0.223:3000/rota_ida');
-            const responseVolta = await axios.get('http://192.168.0.223:3000/rota_volta');
-            const responseUsuarios = await axios.get('http://192.168.0.223:3000/usuario');
+            const responseIda = await axios.get('http://192.168.3.37:3000/rota_ida');
+            const responseVolta = await axios.get('http://192.168.3.37:3000/rota_volta');
+            const responseUsuarios = await axios.get('http://192.168.3.37:3000/usuario');
 
             const rotasIda = responseIda.data.rotas_ida || [];
             const rotasVolta = responseVolta.data.rotas_volta || [];
