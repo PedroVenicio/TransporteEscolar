@@ -9,7 +9,7 @@ import { jwtDecode } from 'jwt-decode';
 import { CheckBox } from '@rneui/themed';
 
 
-export default function Localizacao({ navigation }) {
+export default function Excecao({ navigation }) {
 
   const [opcaoIda, setOpcaoIda] = useState(0);
   const [opcaoVolta, setOpcaoVolta] = useState(0);

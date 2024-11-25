@@ -1,13 +1,12 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Fontisto, MaterialIcons, AntDesign } from '@expo/vector-icons';
+import { Fontisto, AntDesign } from '@expo/vector-icons';
 import axios from 'axios';
 
 import Login from './Screens/Login_tela';
 import Votacao from './Screens/Votacao_tela';
-import Localizacao from './Screens/Localizacao';
-import Pagamento from './Screens/Pagamentos';
+import Excecao from './Screens/Excecao';
 import HomeAdm from './Screens/HomeAdm';
 import HomeMotorista from './Screens/HomeMotorista';
 import AlunosRota from './Screens/AlunosRota';
@@ -16,23 +15,14 @@ function HomeTabs() {
   const Tab = createBottomTabNavigator();
   return (
     <Tab.Navigator
-      initialRouteName='HomeTabs'
-      screenOptions={{
-        tabBarActiveTintColor: "red",
-        tabBarInactiveTintColor: "grey",
-        tabBarActiveBackgroundColor: "transparent",
-        tabBarInactiveBackgroundColor: "transparent",
-        headerShown: false,
+    initialRouteName="Votacao"
+    screenOptions={{
+      tabBarStyle: { backgroundColor: '#3B1D1D' },
+      tabBarActiveTintColor: 'red',
+      tabBarInactiveTintColor: 'white',
+      headerShown: false,
       }}
     >
-      <Tab.Screen
-        name='Localizacao'
-        component={Localizacao}
-        options={{
-          tabBarLabel: 'Localizacao',
-          tabBarIcon: ({ color }) => (<Fontisto name="bus" size={30} color={color} />)
-        }}
-      />
       <Tab.Screen
         name='Votacao'
         component={Votacao}
@@ -42,11 +32,11 @@ function HomeTabs() {
         }}
       />
       <Tab.Screen
-        name='Pagamento'
-        component={Pagamento}
+        name='Excecao'
+        component={Excecao}
         options={{
-          tabBarLabel: 'Pagamento',
-          tabBarIcon: ({ color }) => (<MaterialIcons name="attach-money" size={38} color={color} />)
+          tabBarLabel: 'Exceção',
+          tabBarIcon: ({ color }) => (<AntDesign name="exception1" size={24} color={color} />)
         }}
       />
     </Tab.Navigator>
@@ -71,6 +61,5 @@ export default function App() {
         <Stack.Screen name='HomeMotorista' component={HomeMotorista} options={{ headerShown: false }} />
         <Stack.Screen name='AlunosRota' component={AlunosRota} options={{ headerShown: false }} />
       </Stack.Navigator>
-    </NavigationContainer>
-  );
+    </NavigationContainer>);
 }

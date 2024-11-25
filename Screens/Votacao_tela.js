@@ -155,23 +155,47 @@ export default function Votacao({ navigation }) {
 
   return (
     <View style={styles.container}>
-      {diaVotacao ? <Text>Votação para o dia: {diaVotacao.split("-").reverse().join("/")}</Text> : <Text>Votação indisponível</Text>}
-      {votos.map((votos, index) => (
-        <View key={index} style={styles.todos}>
-          <CheckBox style={styles.checkBox}
-            title={` ${votos}`}
-            checked={selectedVotos === votos}
-            onPress={() => setSelectedVotos(votos)}
-            checkedIcon="dot-circle-o"
-            uncheckedIcon="circle-o"
-            checkedColor="red"
-            disabled={disable}
-          />
+      <View style={styles.divheader}>
+        <Text style={styles.txtheader}>Votação</Text>
+      </View>
+      <View style={styles.meio}>
+        <View style={styles.divtexto}>
+          {diaVotacao ? <Text style={styles.texto} >Votação para o dia: {diaVotacao.split("-").reverse().join("/")}</Text> : <Text style={styles.texto}>Votação indisponível</Text>}
+          <Text style={styles.textoaviso}> !* Não nos responsabilizamos pela perca da sua votação*!</Text>
         </View>
-      ))}
-      <TouchableOpacity disabled={disable} onPress={verifyVoto}>
-        <Text>Votar</Text>
-      </TouchableOpacity>
+        <View style={styles.divtodos}>
+          {votos.map((votos, index) => (
+            <View style={styles.todos}>
+              <View key={index} style={styles.todositem}>
+                <CheckBox
+                  title={` ${votos}`}
+                  checked={selectedVotos === votos}
+                  onPress={() => setSelectedVotos(votos)}
+                  checkedIcon="dot-circle-o"
+                  uncheckedIcon="circle-o"
+                  checkedColor="#b90000"
+                  uncheckedColor="#ffffff"
+                  disabled={disable}
+                  containerStyle={{
+                    backgroundColor: 'transparent',
+                    borderWidth: 0,
+                    padding: 0,
+                  }}
+                  textStyle={{
+                    color: 'white',
+                  }}
+                />
+
+              </View>
+            </View>
+          ))}
+        </View>
+        <View style={styles.divbotao}>
+          <TouchableOpacity style={styles.botao} disabled={disable} onPress={verifyVoto}>
+            <Text style={styles.textobotao}>Votar</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
       <Modal
         animationType="slide"
         transparent={true}
@@ -182,12 +206,13 @@ export default function Votacao({ navigation }) {
       >
         <View style={styles.modalContainer}>
           <View style={styles.modalContent}>
-            <Text>Confirmar voto: "{selectedVotos}"?</Text>
-            <TouchableOpacity onPress={postVotacao} style={styles.modalButton}>
-              <Text>Sim</Text>
+            <Text style={styles.modalText}>Confirmar voto: </Text>
+            <Text style={styles.modalText}>"{selectedVotos}"?</Text>
+            <TouchableOpacity onPress={postVotacao} style={[styles.modalButton, styles.confirmButton]}>
+              <Text style={styles.buttonText}>Sim, confirmar</Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => setModalVisible(!modalVisible)} style={styles.modalButton}>
-              <Text>Não</Text>
+            <TouchableOpacity onPress={() => setModalVisible(!modalVisible)} style={[styles.modalButton, styles.cancelButton]}>
+              <Text style={[styles.buttonText, styles.cancelButtonText]}>Não, cancelar</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -197,36 +222,129 @@ export default function Votacao({ navigation }) {
 }
 const styles = StyleSheet.create({
   container: {
+  },
+  divheader: {
+    width: '100%',
+    height: '20%',
+    backgroundColor: '#3B1D1D',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'white',
+  },
+  txtheader: {
+    color: 'white',
+    fontSize: 40,
+    marginTop: 40,
+  },
+  meio: {
     width: '100%',
-    height: '100%',
+    height: '80%',
+    backgroundColor: 'white',
+    justifyContent: 'space-evenly',
+    alignItems: 'center',
+  },
+  divtexto: {
+    width: '100%',
+    height: '15%',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  texto: {
+    fontSize: 20,
+    color: '#3B1D1D',
+  },
+  textoaviso: {
+    marginTop: 5,
+    fontSize: 10,
+    color: '#b90000',
+  },
+  divtodos: {
+    width: '70%',
+    height: '65%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#3B1D1D',
+    borderRadius: 6,
   },
   todos: {
-    backgroundColor: 'transparent',
-    width: 210,
-    height: 65,
+    width: 250,
+    height: 100,
+    borderRadius: 1,
+    paddingLeft: 15,
+    paddingRight: 15,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  todositem: {
+    backgroundColor: 'transparente',
+    width: '100%',
+  },
+  divbotao: {
+    width: '100%',
+    height: '15%',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  botao: {
+    height: 50,
+    paddingLeft: 25,
+    paddingRight: 25,
+    backgroundColor: '#3B1D1D',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 5,
+    width: '70%',
+  },
+  textobotao: {
+    color: 'white',
+    fontSize: 20,
   },
   modalContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)', // Fundo semitransparente
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
   },
   modalContent: {
     width: '80%',
     padding: 20,
-    backgroundColor: 'white',
+    backgroundColor: '#fff',
     borderRadius: 10,
     alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  modalText: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#3B1D1D',
+    marginBottom: 20,
+    textAlign: 'center',
   },
   modalButton: {
-    marginTop: 10,
-    padding: 10,
+    width: '100%',
+    paddingVertical: 10,
     borderRadius: 5,
-    backgroundColor: 'red',
+    marginTop: 10,
     alignItems: 'center',
-    width: '50%',
+  },
+  confirmButton: {
+    backgroundColor: '#3B1D1D',
+  },
+  cancelButton: {
+    borderWidth: 1,
+    borderColor: '#b90000',
+    backgroundColor: '#fff',
+  },
+  buttonText: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#fff',
+  },
+  cancelButtonText: {
+    color: '#b90000',
   },
 });
