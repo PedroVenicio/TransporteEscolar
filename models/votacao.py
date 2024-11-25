@@ -14,7 +14,7 @@ class Votacao(db.Model):
     id = db.Column(db.Integer, primary_key = True, nullable=False, unique=True)
     opcao = db.Column(db.Integer, nullable=False)
     userId = db.Column(ForeignKey('usuario.id'), nullable=False)
-    data = db.Column(db.Date, nullable=False)
+    data = db.Column(db.String(100), nullable=False)
 
     usuario = relationship('Usuario', backref='votacao')
 
