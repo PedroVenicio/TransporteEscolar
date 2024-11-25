@@ -18,7 +18,7 @@ function HomeTabs() {
     initialRouteName="Votacao"
     screenOptions={{
       tabBarStyle: { backgroundColor: '#3B1D1D' },
-      tabBarActiveTintColor: 'red',
+      tabBarActiveTintColor: '#b90000',
       tabBarInactiveTintColor: 'white',
       headerShown: false,
       }}

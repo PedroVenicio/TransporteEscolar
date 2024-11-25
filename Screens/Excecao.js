@@ -112,8 +112,8 @@ export default function Excecao({ navigation }) {
             </View>
             <View style={styles.divnome}>
               <Text style={styles.textoheader}>Olá, {usuario.nome}</Text>
-              <Text style={styles.textoheader}>Olá, {usuario.login}</Text>
-              <Text style={styles.textoheader}>Olá, {usuario.cpf}</Text>
+              <Text style={styles.textoheader}>Login: {usuario.login}</Text>
+              <Text style={styles.textoheader}>CPF: {usuario.cpf}</Text>
             </View>
           </View>
         ) : (
@@ -121,10 +121,23 @@ export default function Excecao({ navigation }) {
         )}
       </View>
       <View style={styles.meio}>
-        <TouchableOpacity style={styles.excecaobotao} onPress={handleOpen1}>
-          <Text>Solicitar exceção</Text>
-        </TouchableOpacity>
-
+        <View style={styles.regrasBox}>
+          <Text style={styles.tt}>REGRAS</Text>
+          <Text style={styles.regrasTexto}>Não é permitido realizar refeições dentro dos veículos.</Text>
+          <Text style={styles.regrasTexto}>Respeitar os horários tendo no máximo dois minutos de atraso.</Text>
+          <Text style={styles.regrasTexto}>Não é permitido embarque e desembarque fora de contrato.</Text>
+          <Text style={styles.regrasTexto}>Proíbido levar qualquer acompanhante no veículo.</Text>
+          <Text style={styles.regrasTexto}>Proíbido o transporte de animais dentro dos veículos.</Text>
+          <Text style={styles.regrasTexto}>Proíbido embarcar no veículo possuindo qualquer item ilicito ou ponteagudo.</Text>
+          <Text style={styles.regrasTexto}>Uso obrigatório dos cintos de segurança.</Text>
+          <Text style={styles.regrasTexto}>Proíbido transitar dentro dos veículos em movimento.</Text>
+          <Text style={styles.regrasTexto1}>! Caso as demais regras forem descumpridas é passível a quebra do contrato e sua multa !</Text>
+        </View>
+        <View style={styles.divbotao}>
+          <TouchableOpacity style={styles.excecaoBotao} onPress={handleOpen1}>
+            <Text style={styles.excecaoTexto}>Solicitar exceção</Text>
+          </TouchableOpacity>
+        </View>
         <Modal
           visible={open1}
           animationType="slide"
@@ -132,10 +145,11 @@ export default function Excecao({ navigation }) {
           onRequestClose={() => setOpen1(!open1)}>
           <View style={styles.modalContainer}>
             <View style={styles.modalContent}>
+              <Text style={styles.modalContenttxt}> Selecione a opção desejada</Text>
               {opcao.map((opcao, index) => (
-                <View key={index}>
+                <View key={index} style={styles.checkBox}>
                   <CheckBox
-                    title={` ${opcao}`}
+                    title={`${opcao}`}
                     checked={selectedOpcao === opcao}
                     onPress={() => handleCheckbox(opcao)}
                     checkedIcon="dot-circle-o"
@@ -144,7 +158,6 @@ export default function Excecao({ navigation }) {
                   />
                 </View>
               ))}
-
               {(opcao.indexOf(selectedOpcao) + 1 === 1 || opcao.indexOf(selectedOpcao) + 1 === 2) && (
                 <RNPickerSelect
                   placeholder={{
@@ -177,15 +190,8 @@ export default function Excecao({ navigation }) {
                 />
               )}
 
-              <TextInput
-                placeholder="Descreva o motivo da exceção"
-                value={descricao}
-                onChangeText={setDescricao}
-                style={{ marginVertical: 10 }}
-              />
-
-              <TouchableOpacity onPress={handleOpen}>
-                <Text>Selecionar Data</Text>
+              <TouchableOpacity onPress={handleOpen} style={styles.botaodata}>
+                <Text style={styles.botaodatatxt}>Selecionar Data</Text>
               </TouchableOpacity>
 
               <Text>Data escolhida: {date.split("/").reverse().join("/")}</Text>
@@ -195,26 +201,36 @@ export default function Excecao({ navigation }) {
                 animationType="fade"
                 transparent={true}
                 onRequestClose={() => setOpen(!open)}>
-                <View style={styles.modalContainer}>
-                  <View style={styles.modalContent}>
+                <View style={styles.modalContainer1}>
+                  <View style={styles.modalContent1}>
                     <DatePicker
                       mode="calendar"
                       selected={date}
                       minimumDate={startDate}
                       onDateChange={handleChange}
                     />
-                    <TouchableOpacity onPress={handleOpen}>
-                      <Text>Escolher</Text>
+                    <TouchableOpacity onPress={handleOpen} style={[styles.modalButton, styles.confirmButton]}>
+                      <Text style={styles.buttonText}>Escolher</Text>
                     </TouchableOpacity>
                   </View>
                 </View>
               </Modal>
 
-              <TouchableOpacity onPress={() => setModalVisible(true)}>
-                <Text>Enviar</Text>
+              <TextInput
+                placeholder="Descreva o motivo da exceção:"
+                value={descricao}
+                onChangeText={setDescricao}
+                style={styles.motivo}
+                placeholderTextColor={'gray'}
+                multiline={true} 
+                numberOfLines={10}
+              />
+
+              <TouchableOpacity style={[styles.modalButton, styles.confirmButton]} onPress={() => setModalVisible(true)}>
+                <Text style={styles.buttonText}>Enviar</Text>
               </TouchableOpacity>
-              <TouchableOpacity onPress={(() => setOpen1(false))}>
-                <Text>Cancelar</Text>
+              <TouchableOpacity style={[styles.modalButton, styles.cancelButton]} onPress={(() => setOpen1(false))}>
+                <Text style={[styles.buttonText, styles.cancelButtonText]}>Cancelar</Text>
               </TouchableOpacity>
 
               <Modal
@@ -222,15 +238,19 @@ export default function Excecao({ navigation }) {
                 transparent={true}
                 visible={modalVisible}
                 onRequestClose={() => setModalVisible(!modalVisible)}>
-                <View style={styles.modalContainer}>
-                  <View style={styles.modalContent}>
-                    <Text>Confirmar envio?</Text>
-                    <TouchableOpacity onPress={enviar}>
-                      <Text>Sim</Text>
+                <View style={styles.modalContainer2}>
+                  <View style={styles.modalContent2}>
+                    <View style={styles.titulo}>
+                    <Text style={styles.ttmodal}>Confirmar envio?</Text>
+                    </View>
+                    <View style={styles.titulo}>
+                    <TouchableOpacity onPress={enviar} style={[styles.modalButton1, styles.confirmButton]}>
+                      <Text  style={styles.buttonText}>Sim</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={() => setModalVisible(!modalVisible)}>
-                      <Text>Não</Text>
+                    <TouchableOpacity style={[styles.modalButton1, styles.cancelButton]} onPress={() => setModalVisible(!modalVisible)}>
+                      <Text style={[styles.buttonText, styles.cancelButtonText]}>Não</Text>
                     </TouchableOpacity>
+                    </View>
                   </View>
                 </View>
               </Modal>
@@ -245,71 +265,266 @@ export default function Excecao({ navigation }) {
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
+    backgroundColor: '#3B1D1D',
   },
   divheader: {
     width: '100%',
     height: '20%',
     backgroundColor: '#3B1D1D',
-    justifyContent: 'flex-end',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   header: {
-    width: '100%',
-    height: '75%',
-    justifyContent: 'center',
-    alignItems: 'center',
-    display: 'flex',
+    width: '90%',
     flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginTop: 35,
   },
   divft: {
-    height: '70%',
-    width: '20%',
-    justifyContent: 'center',
-    alignItems: 'center',
+    height: 60,
+    width: 60,
+    borderRadius: 30,
     borderWidth: 2,
-    borderColor: 'red',
-    borderRadius: 100,
-  },
-  divnome: {
-    height: '100%',
-    width: '70%',
+    borderColor: '#FFFFFF',
     justifyContent: 'center',
     alignItems: 'center',
-    color: 'white',
-  },
-  textoheader: {
-    color: 'white',
+    backgroundColor: '#860204',
   },
   foto: {
     height: '100%',
     width: '100%',
-    borderRadius: 100,
+    borderRadius: 30,
+  },
+  divnome: {
+    flex: 1,
+    marginLeft: 20,
+  },
+  textoheader: {
+    color: '#FFFFFF',
+    fontSize: 16,
   },
   meio: {
-    height: '80%',
-    width: '100%',
-    backgroundColor: 'blue',
+    flex: 1,
+    backgroundColor: '#FFFFFF',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
-  excecaobotao: {
-    backgroundColor: 'grey',
-    width: '50%',
-    height: '20%',
+  regrasBox: {
+    backgroundColor: '#F5F5F5',
+    borderRadius: 10,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 4,
+    elevation: 3,
+    marginBottom: 20,
+    height: '80%',
+    width: '85%',
+    justifyContent: 'center',
+    paddingTop: 10,
+  },
+  tt: {
+    fontSize: 16,
+    lineHeight: 20,
+    color: '#333333',
+    marginBottom: 10,
+    marginLeft: 140,
+    marginRight: 10,
+  },
+  regrasTexto: {
+    fontSize: 14,
+    lineHeight: 20,
+    color: '#333333',
+    marginBottom: 10,
+    marginLeft: 20,
+    marginRight: 10,
+  },
+  regrasTexto1: {
+    fontSize: 12,
+    lineHeight: 20,
+    color: '#b90000',
+    marginBottom: 10,
+    marginLeft: 20,
+    marginRight: 10,
+  },
+  divbotao: {
+    height: '10%',
+    width: '95%',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  excecaoBotao: {
+    backgroundColor: '#7A1F1F',
+    paddingVertical: 12,
+    paddingHorizontal: 15,
+    borderRadius: 5,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  excecaoTexto: {
+    color: '#FFFFFF',
+    fontSize: 16,
+    fontWeight: 'bold',
   },
   modalContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)', 
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
   },
   modalContent: {
-    width: '80%',
+    width: '90%',
+    height: '80%',
     padding: 20,
+    alignItems: 'left',
     backgroundColor: '#fff',
-    borderRadius: 10,
+    borderRadius: 12,
+    boxShadow: '0px 4px 15px rgba(0, 0, 0, 0.1)',
+  },
+  modalContenttxt: {
+    color: 'black',
+    fontSize: 20,
+    marginLeft: 30,
+  },
+  checkBox: {
+    alignItems: 'left',
+    marginVertical: 10,
+  },
+  input: {
+    width: '100%',
+    padding: 12,
+    marginVertical: 10,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: '#ddd',
+    backgroundColor: '#f9f9f9',
+    fontSize: 14,
+  },
+  motivo: {
+    width: '100%',
+    height: '20%',
+    padding: 12,
+    marginVertical: 10,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: '#ddd',
+    backgroundColor: '#f9f9f9',
+    justifyContent: 'flex-end',
+    fontSize: 14,
+  },
+  picker: {
+    width: '100%',
+    padding: 12,
+    marginVertical: 10,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: '#ddd',
+    backgroundColor: '#f9f9f9',
+  },
+  buttonText: {
+    color: '#860204',
+    fontSize: 16,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginVertical: 10,
+  },
+  button: {
+    backgroundColor: '#ff5c5c',
+    paddingVertical: 12,
+    paddingHorizontal: 20,
+    borderRadius: 8,
+    marginVertical: 10,
     alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
+    justifyContent: 'center',
+  },
+  modalButton: {
+    width: '100%',
+    paddingVertical: 10,
+    borderRadius: 5,
+    marginTop: 10,
+    alignItems: 'center',
+  },
+  modalButton1: {
+    width: '40%',
+    height: '80%',
+    paddingVertical: 10,
+    borderRadius: 5,
+    marginTop: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  confirmButton: {
+    backgroundColor: '#3B1D1D',
+  },
+  cancelButton: {
+    borderWidth: 1,
+    borderColor: '#b90000',
+    backgroundColor: '#fff',
+  },
+  buttonText: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#fff',
+  },
+  cancelButtonText: {
+    color: '#b90000',
+  },
+  botaodata:{
+    backgroundColor: '#3B1D1D',
+    width: '45%',
+    height: '5%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 4,
+    marginTop: 10,
+    marginBottom: 10,
+  },
+  botaodatatxt:{
+    color: 'white',
+  },
+  modalContainer1: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+  modalContent1: {
+    width: '90%',
+    height: '50%',
+    padding: 20,
+    alignItems: 'left',
+    backgroundColor: '#fff',
+    borderRadius: 12,
+    boxShadow: '0px 4px 15px rgba(0, 0, 0, 0.5)',
+  },
+  modalContainer2: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+  modalContent2: {
+    width: '90%',
+    height: '20%',
+    padding: 20,
+    alignItems: 'left',
+    backgroundColor: '#fff',
+    borderRadius: 12,
+    boxShadow: '0px 4px 15px rgba(0, 0, 0, 0.5)',
+    display: 'flex',
+    flexDirection:'column',
+  },
+  titulo:{
+    width: '100%',
+    height: '50%',
+    display: 'flex',
+    flexDirection:'row',
+    justifyContent: 'space-evenly'
+  },
+  ttmodal:{
+  color: 'black',
+  fontSize: 25,
   },
 });

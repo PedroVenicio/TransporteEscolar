@@ -264,6 +264,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#3B1D1D',
     borderRadius: 6,
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
   },
   todos: {
     width: 250,
@@ -286,14 +288,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   botao: {
-    height: 50,
+    height: 40,
     paddingLeft: 25,
     paddingRight: 25,
-    backgroundColor: '#3B1D1D',
+    backgroundColor: '#7A1F1F',
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 5,
-    width: '70%',
+    width: '42%',
   },
   textobotao: {
     color: 'white',
@@ -303,7 +305,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    backgroundColor: 'rgba(0, 0, 0, 0.7)',
   },
   modalContent: {
     width: '80%',
