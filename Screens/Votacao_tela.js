@@ -12,7 +12,7 @@ export default function Votacao({ navigation }) {
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedVotos, setSelectedVotos] = useState(null);
   const votos = ['vou e volto', 'vou, mas não volto', 'não vou, mas volto', 'não vou e não volto'];
-  const periodoIda = [{ "matutino": 530, "vespertino": 1130, "noturno": 17 }]
+  const periodoIda = [{ "matutino": 530, "vespertino": 1130, "noturno": 1700 }]
   const periodoVolta = [{ "matutino": 1140, "vespertino": 1900, "noturno": 2215 }]
 
   const [diaVotacao, setDiaVotacao] = useState('');
