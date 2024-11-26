@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, StyleSheet, TextInput, Text, Image, TouchableOpacity, Modal } from 'react-native';
 import axios from 'axios';
-import RNPickerSelect from 'react-native-picker-select';
+import { Picker } from '@react-native-picker/picker';
 import DatePicker from 'react-native-modern-datepicker';
 import { getToday, getFormatedDate } from 'react-native-modern-datepicker';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -19,6 +19,8 @@ export default function Excecao({ navigation }) {
   const [open1, setOpen1] = useState(false);
   const [descricao, setDescricao] = useState('');
   const [usuarios, setUsuarios] = useState([]);
+  const [openIda, setOpenIda] = useState(false);
+  const [openVolta, setOpenVolta] = useState(false);
 
   const [selectedOpcao, setSelectedOpcao] = useState('ida e volta');
   const opcao = ['ida e volta', 'ida', 'volta'];
@@ -30,7 +32,7 @@ export default function Excecao({ navigation }) {
   useEffect(() => {
     async function fetchUser() {
       try {
-        const response = await axios.get('http://192.168.3.37:3000/usuario')
+        const response = await axios.get('http://192.168.0.223:3000/usuario')
         const usuario = response.data.usuarios;
         setUsuarios(usuario);
 
@@ -49,7 +51,7 @@ export default function Excecao({ navigation }) {
     if (descricao && (opcaoIda !== 'nulo' || opcaoVolta !== 'nulo')) {
       try {
         const token = await AsyncStorage.getItem('token');
-        axios.post('http://192.168.3.37:3000/excessao',
+        axios.post('http://192.168.0.223:3000/excessao',
           {
             descricao: descricao,
             status: 0,
@@ -158,37 +160,80 @@ export default function Excecao({ navigation }) {
                   />
                 </View>
               ))}
+
               {(opcao.indexOf(selectedOpcao) + 1 === 1 || opcao.indexOf(selectedOpcao) + 1 === 2) && (
-                <RNPickerSelect
-                  placeholder={{
-                    label: 'Selecione o horário de ida',
-                    value: 'nulo',
-                  }}
-                  onValueChange={(value) => setOpcaoIda(value)}
-                  items={[
-                    { label: '5:50', value: '1' },
-                    { label: '11:50', value: '2' },
-                    { label: '17:30', value: '3' },
-                  ]}
-                  value={opcaoIda}
-                />
-              )}
+                <TouchableOpacity style={[styles.modalButton, styles.confirmButton]} onPress={() => setOpenIda(true)}>
+                  <Text style={styles.buttonText}> Selecione o horario de ida</Text>
+                </TouchableOpacity>)}
+
+              <Modal
+                visible={openIda}
+                animationType="slide"
+                transparent={true}
+                onRequestClose={() => setOpenIda(false)}
+              >
+                <View style={styles.modalContainer3}>
+                  <View style={styles.modalContent3}>
+                    <Picker
+                      selectedValue={opcaoIda}
+                      onValueChange={(value) => setOpcaoIda(value)}
+                      style={styles.Picker}
+                      itemStyle={{ color: 'black', fontSize: 20 }}
+                    >
+                      <Picker.Item label="Selecione o horário de ida" value="nulo" />
+                      <Picker.Item label="Matutino" value="matutino" />
+                      <Picker.Item label="Vespertino" value="vespertino" />
+                      <Picker.Item label="Noturno" value="noturno" />
+                    </Picker>
+                    <View style={styles.titulo1}>
+                      <TouchableOpacity onPress={enviar} style={[styles.modalButton2, styles.confirmButton1]}>
+                        <Text style={styles.buttonText1}>Sim</Text>
+                      </TouchableOpacity>
+                      <TouchableOpacity style={[styles.modalButton2, styles.cancelButton1]} onPress={() => setModalVisible(!modalVisible)}>
+                        <Text style={[styles.buttonText1, styles.cancelButtonText1]}>Não</Text>
+                      </TouchableOpacity>
+                    </View>
+                  </View>
+                </View>
+
+              </Modal>
 
               {(opcao.indexOf(selectedOpcao) + 1 === 1 || opcao.indexOf(selectedOpcao) + 1 === 3) && (
-                <RNPickerSelect
-                  placeholder={{
-                    label: 'Selecione o horário de volta',
-                    value: 'nulo',
-                  }}
-                  onValueChange={(value) => setOpcaoVolta(value)}
-                  items={[
-                    { label: '11:40', value: '4' },
-                    { label: '19:00', value: '5' },
-                    { label: '22:15', value: '6' },
-                  ]}
-                  value={opcaoVolta}
-                />
-              )}
+                <TouchableOpacity style={[styles.modalButton, styles.confirmButton]} onPress={() => setOpenVolta(true)}>
+                  <Text style={styles.buttonText}> Selecione o horario de volta</Text>
+                </TouchableOpacity>)}
+
+              <Modal
+                visible={openVolta}
+                animationType="slide"
+                transparent={true}
+                onRequestClose={() => setOpenVolta(false)}
+              >
+                <View style={styles.modalContainer3}>
+                  <View style={styles.modalContent3}>
+                  <Picker
+                      selectedValue={opcaoIda}
+                      onValueChange={(value) => setOpcaoVolta(value)}
+                      style={styles.Picker}
+                      itemStyle={{ color: 'black', fontSize: 20 }}
+                    >
+                      <Picker.Item label="Selecione o horário de volta" value="nulo" />
+                      <Picker.Item label="Matutino" value="matutino" />
+                      <Picker.Item label="Vespertino" value="vespertino" />
+                      <Picker.Item label="Noturno" value="noturno" />
+                    </Picker>
+                    <View style={styles.titulo1}>
+                    <TouchableOpacity style={[styles.modalButton2, styles.cancelButton1]} onPress={() => setModalVisible(!modalVisible)}>
+                        <Text style={[styles.buttonText1, styles.cancelButtonText1]}>Não</Text>
+                      </TouchableOpacity>
+                      <TouchableOpacity onPress={enviar} style={[styles.modalButton2, styles.confirmButton1]}>
+                        <Text style={styles.buttonText1}>Sim</Text>
+                      </TouchableOpacity>
+                    </View>
+                  </View>
+                </View>
+
+              </Modal>
 
               <TouchableOpacity onPress={handleOpen} style={styles.botaodata}>
                 <Text style={styles.botaodatatxt}>Selecionar Data</Text>
@@ -222,7 +267,7 @@ export default function Excecao({ navigation }) {
                 onChangeText={setDescricao}
                 style={styles.motivo}
                 placeholderTextColor={'gray'}
-                multiline={true} 
+                multiline={true}
                 numberOfLines={10}
               />
 
@@ -241,15 +286,15 @@ export default function Excecao({ navigation }) {
                 <View style={styles.modalContainer2}>
                   <View style={styles.modalContent2}>
                     <View style={styles.titulo}>
-                    <Text style={styles.ttmodal}>Confirmar envio?</Text>
+                      <Text style={styles.ttmodal}>Confirmar envio?</Text>
                     </View>
                     <View style={styles.titulo}>
-                    <TouchableOpacity onPress={enviar} style={[styles.modalButton1, styles.confirmButton]}>
-                      <Text  style={styles.buttonText}>Sim</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={[styles.modalButton1, styles.cancelButton]} onPress={() => setModalVisible(!modalVisible)}>
-                      <Text style={[styles.buttonText, styles.cancelButtonText]}>Não</Text>
-                    </TouchableOpacity>
+                      <TouchableOpacity onPress={enviar} style={[styles.modalButton1, styles.confirmButton]}>
+                        <Text style={styles.buttonText}>Sim</Text>
+                      </TouchableOpacity>
+                      <TouchableOpacity style={[styles.modalButton1, styles.cancelButton]} onPress={() => setModalVisible(!modalVisible)}>
+                        <Text style={[styles.buttonText, styles.cancelButtonText]}>Não</Text>
+                      </TouchableOpacity>
                     </View>
                   </View>
                 </View>
@@ -414,14 +459,12 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
     fontSize: 14,
   },
-  picker: {
+  Picker: {
+    color: 'black',
+    marginTop: 60,
     width: '100%',
-    padding: 12,
-    marginVertical: 10,
-    borderRadius: 8,
-    borderWidth: 1,
-    borderColor: '#ddd',
-    backgroundColor: '#f9f9f9',
+    height: '10%',
+    justifyContent: 'center',
   },
   buttonText: {
     color: '#860204',
@@ -471,7 +514,7 @@ const styles = StyleSheet.create({
   cancelButtonText: {
     color: '#b90000',
   },
-  botaodata:{
+  botaodata: {
     backgroundColor: '#3B1D1D',
     width: '45%',
     height: '5%',
@@ -481,7 +524,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     marginBottom: 10,
   },
-  botaodatatxt:{
+  botaodatatxt: {
     color: 'white',
   },
   modalContainer1: {
@@ -514,17 +557,58 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     boxShadow: '0px 4px 15px rgba(0, 0, 0, 0.5)',
     display: 'flex',
-    flexDirection:'column',
+    flexDirection: 'column',
   },
-  titulo:{
+  modalContainer3: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+  modalContent3: {
+    width: '90%',
+    height: '40%',
+    padding: 20,
+    backgroundColor: '#fff',
+    borderRadius: 12,
+    boxShadow: '0px 4px 15px rgba(0, 0, 0, 0.5)',
+    alignItems: 'center',
+  },
+  titulo1: {
     width: '100%',
     height: '50%',
     display: 'flex',
-    flexDirection:'row',
+    flexDirection: 'row',
     justifyContent: 'space-evenly'
   },
-  ttmodal:{
-  color: 'black',
-  fontSize: 25,
+  ttmoda1l: {
+    color: 'black',
+    fontSize: 25,
+  },
+  modalButton2: {
+    width: '40%',
+    height: '30%',
+    paddingVertical: 10,
+    borderRadius: 5,
+    marginTop: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 100,
+  },
+  confirmButton1: {
+    backgroundColor: '#3B1D1D',
+  },
+  cancelButton1: {
+    borderWidth: 1,
+    borderColor: '#b90000',
+    backgroundColor: '#fff',
+  },
+  buttonText1: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#fff',
+  },
+  cancelButtonText1: {
+    color: '#b90000',
   },
 });

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, Text } from 'react-native';
+import { View, StyleSheet, Text, Image } from 'react-native';
 import axios from 'axios';
 
 export default function AlunosRota({ navigation, route }) {
@@ -25,6 +25,8 @@ export default function AlunosRota({ navigation, route }) {
         const date = new Date(dateString);
         return `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${(date.getDate() + 1).toString().padStart(2, '0')}`;
     };
+
+    
 
     async function getRotas() {
         try {
@@ -56,7 +58,7 @@ export default function AlunosRota({ navigation, route }) {
             setIdVoltaNoturno(rotaVoltaNoturno ? rotaVoltaNoturno.id : 0);
 
         } catch (error) {
-            console.error("Erro ao carregar as rotas:" (error));
+            console.error("Erro ao carregar as rotas:"(error));
         }
     }
 
@@ -97,38 +99,72 @@ export default function AlunosRota({ navigation, route }) {
         }
     }, [periodo, rotaIda, rotaVolta, idMatutino, idVespertino, idNoturno, idVoltaMatutino, idVoltaVespertino, idVoltaNoturno]);
 
+
     return (
         <View style={styles.container}>
-            {rotaIda.length === 0 || rotaVolta.length === 0 ? (
-                <Text>Carregando dados...</Text>
-            ) : (
-                <>
-                    <Text>Rota {periodo} do dia {formattedDate.split("-").reverse().join("/")}</Text>
-                    {rotaDisplay && rotaDisplay.alunos ? (
-                        rotaDisplay.alunos.split(',').map(id => {
-                            const aluno = usuarios.find(u => u.id.toString() === id.trim());
-                            return aluno ? (
-                                <View key={aluno.id}>
-                                    <Text>{aluno.id}</Text>
-                                    <Text>{aluno.nome}</Text>
-                                </View>
-                            ) : null;
-                        })
-                    ) : (
-                        <Text>Rota não encontrada ou inexistente</Text>
-                    )}
-                </>
-            )}
+            <View style={styles.divheader}>
+                <Text style={styles.headertxt}>Rota: {periodo} - dia {formattedDate.split("-").reverse().join("/")}</Text>
+            </View>
+            <View style={styles.meio}>
+                {rotaIda.length === 0 || rotaVolta.length === 0 ? (
+                    <Text>Carregando dados...</Text>
+                ) : (
+                    <>
+
+
+                        {rotaDisplay && rotaDisplay.alunos ? (
+                            rotaDisplay.alunos.split(',').map(id => {
+                                const aluno = usuarios.find(u => u.id.toString() === id.trim());
+                                console.log(aluno)
+                                return aluno ? (
+                                    <View key={aluno.id}>
+                                        <Text>{aluno.id}</Text>
+                                        <Text>{aluno.nome}</Text>
+                                    {aluno.foto ? (
+                                      <View style={styles.header}>
+                                        <View style={styles.divft}>
+                                          <Image style={styles.foto} source={{ uri: aluno.foto, }} />
+                                        </View>
+                                      </View>
+                                    ) : (
+                                      <Text>Carregando...</Text>
+                                    )}
+                                  </View>
+                                ) : null;
+                            })
+                        ) : (
+                            <Text>Rota não encontrada ou inexistente</Text>
+                        )}
+                    </>
+                )}
+            </View>
         </View>
     );
 }
 
 const styles = StyleSheet.create({
     container: {
-        justifyContent: 'center',
         backgroundColor: 'white',
         alignItems: 'center',
         width: '100%',
         height: '100%',
-    }
+    },
+    divheader: {
+        width: '100%',
+        height: '15%',
+        backgroundColor: '#3B1D1D',
+        justifyContent: 'center',
+        alignItems: 'center',
+        display: 'flex',
+    },
+    headertxt: {
+        color: 'white',
+        fontSize: 20,
+        fontWeight: '500',
+        marginTop: 40,
+    },
+    meio: {
+        width: '100%',
+        height: '85%',
+    },
 });

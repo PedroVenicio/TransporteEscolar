@@ -165,8 +165,8 @@ export default function Votacao({ navigation }) {
         </View>
         <View style={styles.divtodos}>
           {votos.map((votos, index) => (
-            <View style={styles.todos}>
-              <View key={index} style={styles.todositem}>
+            <View style={styles.todos} key={index}>
+              <View  style={styles.todositem}>
                 <CheckBox
                   title={` ${votos}`}
                   checked={selectedVotos === votos}
