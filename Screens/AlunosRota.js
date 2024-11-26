@@ -112,8 +112,9 @@ export default function AlunosRota({ navigation, route }) {
                     <Text style={styles.bttxt}>Voltar</Text>
                 </TouchableOpacity>
             </View>
-            <ScrollView>
-                <View style={styles.meio}>
+
+            <View style={styles.meio}>
+                <ScrollView>
                     {rotaIda.length === 0 || rotaVolta.length === 0 ? (
                         <Text>Carregando dados...</Text>
                     ) : (
@@ -147,8 +148,8 @@ export default function AlunosRota({ navigation, route }) {
                             )}
                         </>
                     )}
-                </View>
-            </ScrollView>
+                </ScrollView>
+            </View>
         </View >
     );
 }
@@ -200,8 +201,8 @@ const styles = StyleSheet.create({
         color: '#7A1F1F',
     },
     divft: {
-        width: '17%',
-        height: '80%',
+        width: '20%',
+        height: '75%',
         borderRadius: 100,
         borderWidth: 2,
         borderColor: '#7A1F1F',
