@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, Text, Image } from 'react-native';
+import { View, StyleSheet, Text, Image, TouchableOpacity } from 'react-native';
 import axios from 'axios';
+import HomeMotorista from './HomeMotorista';
 
 export default function AlunosRota({ navigation, route }) {
     const { periodo } = route.params;
@@ -26,6 +27,9 @@ export default function AlunosRota({ navigation, route }) {
         return `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${(date.getDate() + 1).toString().padStart(2, '0')}`;
     };
 
+    function Voltar (){
+        navigation.navigate('HomeMotorista')
+    }
 
 
     async function getRotas() {
@@ -104,14 +108,15 @@ export default function AlunosRota({ navigation, route }) {
         <View style={styles.container}>
             <View style={styles.divheader}>
                 <Text style={styles.headertxt}>Rota: {periodo} - dia {formattedDate.split("-").reverse().join("/")}</Text>
+                <TouchableOpacity onPress={Voltar} style={styles.botao}>
+                    <Text style={styles.bttxt}>Voltar</Text>
+                </TouchableOpacity>
             </View>
             <View style={styles.meio}>
                 {rotaIda.length === 0 || rotaVolta.length === 0 ? (
                     <Text>Carregando dados...</Text>
                 ) : (
                     <>
-
-
                         {rotaDisplay && rotaDisplay.alunos ? (
                             rotaDisplay.alunos.split(',').map(id => {
                                 const aluno = usuarios.find(u => u.id.toString() === id.trim());
@@ -160,12 +165,15 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         display: 'flex',
+        flexDirection: 'row',
+
     },
     headertxt: {
         color: 'white',
-        fontSize: 20,
+        fontSize: 16,
         fontWeight: '500',
         marginTop: 40,
+        marginRight: 10,
     },
     meio: {
         width: '100%',
@@ -213,5 +221,20 @@ const styles = StyleSheet.create({
         height: '100%',
         width: '100%',
         borderRadius: 30,
+    },
+    botao: {
+        width: '17%',
+        height: '20%',
+        backgroundColor: 'white',
+        marginTop: 40,
+        borderRadius: 4,
+        marginLeft: 10,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    bttxt: {
+        color: '#7A1F1F',
+        fontSize: 15,
+        fontWeight: '500',
     },
 });

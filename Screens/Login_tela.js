@@ -61,7 +61,7 @@ export default function Login({ navigation }) {
         <Text style={styles.label}>Login</Text>
         <TextInput
           style={styles.input}
-          placeholder="E-mail"
+          placeholder="Login"
           placeholderTextColor="#6D6D6D"
           value={login}
           onChangeText={setLogin}

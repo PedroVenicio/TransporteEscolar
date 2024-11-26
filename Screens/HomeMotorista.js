@@ -1,8 +1,13 @@
 import React from 'react';
 import { View, StyleSheet, Text, ScrollView, TouchableOpacity, Image } from 'react-native';
 
-export default function HomeMotorista({ navigation }) {
 
+
+export default function HomeMotorista({ navigation }) {
+    function Voltar (){
+        navigation.navigate('Login')
+    }
+    
     return (
         <View style={styles.container}>
             <View style={styles.divheader}>
@@ -10,7 +15,7 @@ export default function HomeMotorista({ navigation }) {
                     source={require('../ft/logo3.png')}
                     style={styles.image}
                 />
-                <TouchableOpacity style={styles.botao}>
+                <TouchableOpacity onPress={Voltar} style={styles.botao}>
                     <Text style={styles.bttxt}>Log off</Text>
                 </TouchableOpacity>
 
