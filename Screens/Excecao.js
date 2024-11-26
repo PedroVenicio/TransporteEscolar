@@ -26,6 +26,8 @@ export default function Excecao({ navigation }) {
   const [selectedOpcao, setSelectedOpcao] = useState('ida e volta');
   const opcao = ['ida e volta', 'ida', 'volta'];
 
+  const periodos = ["matutino", "vespertino", "noturno"]
+
   const today = new Date();
   const startDate = getFormatedDate(today.setDate(today.getDate() + 1), 'YYYY/MM/DD');
   const [date, setDate] = useState(startDate);
@@ -181,9 +183,9 @@ export default function Excecao({ navigation }) {
                       style={styles.Picker}
                       itemStyle={{ color: 'black', fontSize: 20 }}
                     >
-                      <Picker.Item label="Matutino" value="matutino" />
-                      <Picker.Item label="Vespertino" value="vespertino" />
-                      <Picker.Item label="Noturno" value="noturno" />
+                      {periodos.filter(p => p !== usuario.horarioida).map(p => (
+                        <Picker.Item key={p} label={p} value={p} />
+                      ))}
                     </Picker>
                     <View style={styles.titulo1}>
                       <TouchableOpacity onPress={() => setOpenIda(!openIda)} style={[styles.modalButton2, styles.confirmButton1]}>
@@ -214,9 +216,10 @@ export default function Excecao({ navigation }) {
                       style={styles.Picker}
                       itemStyle={{ color: 'black', fontSize: 20 }}
                     >
-                      <Picker.Item label="Matutino" value="matutino" />
-                      <Picker.Item label="Vespertino" value="vespertino" />
-                      <Picker.Item label="Noturno" value="noturno" />
+                      {periodos.filter(p => p !== usuario.horariovolta).map(p => (
+                        <Picker.Item key={p} label={p} value={p} />
+                      ))}
+
                     </Picker>
                     <View style={styles.titulo1}>
                       <TouchableOpacity onPress={() => setOpenVolta(!openVolta)} style={[styles.modalButton2, styles.confirmButton1]}>
@@ -282,7 +285,7 @@ export default function Excecao({ navigation }) {
                       <Text style={styles.ttmoda1l}>Confirmar envio?</Text>
                     </View>
                     <View style={styles.titulo1}>
-                    <TouchableOpacity style={[styles.modalButton1, styles.cancelButton1]} onPress={() => setModalVisible(!modalVisible)}>
+                      <TouchableOpacity style={[styles.modalButton1, styles.cancelButton1]} onPress={() => setModalVisible(!modalVisible)}>
                         <Text style={[styles.buttonText1, styles.cancelButtonText]}>Não, cancelar</Text>
                       </TouchableOpacity>
                       <TouchableOpacity onPress={enviar} style={[styles.modalButton1, styles.confirmButton1]}>
@@ -444,7 +447,7 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '5%',
     padding: 20,
-    marginVertical:20,
+    marginVertical: 20,
     borderRadius: 8,
     borderWidth: 1,
     borderColor: '#ddd',
