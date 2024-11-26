@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { TextInput, StyleSheet, TouchableOpacity, Text, View, Animated } from 'react-native';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -8,6 +8,11 @@ export default function Login({ navigation }) {
   const [login, setLogin] = useState('');
   const [password, setPassword] = useState('');
   const [buttonScale] = useState(new Animated.Value(1));
+
+  useEffect(() => {
+    setLogin('');
+    setPassword('');
+  }, [])
 
   const handleLogin = () => {
     Animated.sequence([

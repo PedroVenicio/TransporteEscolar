@@ -185,7 +185,7 @@ export default function Excecao({ navigation }) {
                     >
                       {usuario ? periodos.filter(p => p !== usuario.horarioida).map(p => (
                         <Picker.Item key={p} label={p} value={p} />
-                      )) : "carregando"}
+                      )) : <Picker.Item label={"excecao indisponivel"} value={"nulo"} />}
                     </Picker>
                     <View style={styles.titulo1}>
                       <TouchableOpacity onPress={() => setOpenIda(!openIda)} style={[styles.modalButton2, styles.confirmButton1]}>
@@ -218,7 +218,7 @@ export default function Excecao({ navigation }) {
                     >
                       {usuario ? periodos.filter(p => p !== usuario.horariovolta).map(p => (
                         <Picker.Item key={p} label={p} value={p} />
-                      )) : "carregando"}
+                      )) : <Picker.Item label={"excecao indisponivel"} value={"nulo"} />}
                     </Picker>
                     <View style={styles.titulo1}>
                       <TouchableOpacity onPress={() => setOpenVolta(!openVolta)} style={[styles.modalButton2, styles.confirmButton1]}>
