@@ -32,7 +32,7 @@ export default function Votacao({ navigation }) {
   async function postVotacao() {
     try {
       const token = await AsyncStorage.getItem('token');
-      axios.post('http://192.168.0.223:3000/votacao',
+      axios.post('http://192.168.3.37:3000/votacao',
         {
           opcao: selectedVotos,
           userId: userId,
@@ -44,7 +44,7 @@ export default function Votacao({ navigation }) {
       setSelectedVotos(null);
       setDisable(true);
 
-      axios.put('http://192.168.0.223:3000/usuario',
+      axios.put('http://192.168.3.37:3000/usuario',
         {
           id: token.userId, voto: 1
         })
@@ -65,10 +65,10 @@ export default function Votacao({ navigation }) {
       const decodedToken = jwtDecode(token)
       setUserId(decodedToken.userId);
 
-      const response = await axios.get('http://192.168.0.223:3000/usuario');
+      const response = await axios.get('http://192.168.3.37:3000/usuario');
       const usuario = response.data.usuarios.find(u => u.id == decodedToken.userId);
 
-      const responseVotos = await axios.get('http://192.168.0.223:3000/votacao');
+      const responseVotos = await axios.get('http://192.168.3.37:3000/votacao');
       const votos = responseVotos.data.votacoes
       const votoUsuario = votos.find(v => v.userId == decodedToken.userId) || '';
       console.log(votoUsuario)
@@ -80,7 +80,7 @@ export default function Votacao({ navigation }) {
       const horaVolta = periodoVolta[0][horVolta]
 
       if (votoUsuario != '') {
-        axios.put('http://192.168.0.223:3000/usuario',
+        axios.put('http://192.168.3.37:3000/usuario',
           {
             id: decodedToken.userId, voto: 1
           }
@@ -89,7 +89,7 @@ export default function Votacao({ navigation }) {
         setDisable(true);
       }
       else if (horaAtual > horaIda && horaAtual < horaVolta) {
-        axios.put('http://192.168.0.223:3000/usuario',
+        axios.put('http://192.168.3.37:3000/usuario',
           {
             id: decodedToken.userId, voto: 1
           }
@@ -98,7 +98,7 @@ export default function Votacao({ navigation }) {
         setDisable(true);
       }
       else if (horaAtual > horaVolta) {
-        axios.put('http://192.168.0.223:3000/usuario',
+        axios.put('http://192.168.3.37:3000/usuario',
           {
             id: decodedToken.userId, voto: 0
           }
@@ -111,7 +111,7 @@ export default function Votacao({ navigation }) {
         setDiaVotacao(diaVotacao)
       }
       else if (horaAtual < horaIda) {
-        axios.put('http://192.168.0.223:3000/usuario',
+        axios.put('http://192.168.3.37:3000/usuario',
           {
             id: decodedToken.userId, voto: 0
           }
@@ -144,7 +144,7 @@ export default function Votacao({ navigation }) {
 
   /* async function getVotoStatus() {
     try {
-      const response = await axios.get('http://192.168.0.223:3000/usuario')
+      const response = await axios.get('http://192.168.3.37:3000/usuario')
       const usuario = response.data.usuarios.find(u => u.id == userId);
       setDisable(usuario.voto);
     }
