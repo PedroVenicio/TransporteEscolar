@@ -61,7 +61,7 @@ export default function Login({ navigation }) {
         <Text style={styles.label}>Login</Text>
         <TextInput
           style={styles.input}
-          placeholder="|"
+          placeholder="E-mail"
           placeholderTextColor="#6D6D6D"
           value={login}
           onChangeText={setLogin}
@@ -69,7 +69,7 @@ export default function Login({ navigation }) {
         <Text style={styles.label}>Senha</Text>
         <TextInput
           style={styles.input}
-          placeholder="|"
+          placeholder="Senha"
           placeholderTextColor="#6D6D6D"
           value={password}
           onChangeText={setPassword}

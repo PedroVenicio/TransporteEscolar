@@ -11,14 +11,15 @@ import { CheckBox } from '@rneui/themed';
 
 export default function Excecao({ navigation }) {
 
-  const [opcaoIda, setOpcaoIda] = useState(0);
-  const [opcaoVolta, setOpcaoVolta] = useState(0);
+  const [opcaoIda, setOpcaoIda] = useState("matutino");
+  const [opcaoVolta, setOpcaoVolta] = useState("matutino");
   const [modalVisible, setModalVisible] = useState(false);
   const [userId, setUserId] = useState('');
   const [open, setOpen] = useState(false);
   const [open1, setOpen1] = useState(false);
   const [descricao, setDescricao] = useState('');
   const [usuarios, setUsuarios] = useState([]);
+
   const [openIda, setOpenIda] = useState(false);
   const [openVolta, setOpenVolta] = useState(false);
 
@@ -163,7 +164,7 @@ export default function Excecao({ navigation }) {
 
               {(opcao.indexOf(selectedOpcao) + 1 === 1 || opcao.indexOf(selectedOpcao) + 1 === 2) && (
                 <TouchableOpacity style={[styles.modalButton, styles.confirmButton]} onPress={() => setOpenIda(true)}>
-                  <Text style={styles.buttonText}> Selecione o horario de ida</Text>
+                  <Text style={styles.buttonText}> Selecione o horario de ida: {opcaoIda}</Text>
                 </TouchableOpacity>)}
 
               <Modal
@@ -186,11 +187,8 @@ export default function Excecao({ navigation }) {
                       <Picker.Item label="Noturno" value="noturno" />
                     </Picker>
                     <View style={styles.titulo1}>
-                      <TouchableOpacity onPress={enviar} style={[styles.modalButton2, styles.confirmButton1]}>
-                        <Text style={styles.buttonText1}>Sim</Text>
-                      </TouchableOpacity>
-                      <TouchableOpacity style={[styles.modalButton2, styles.cancelButton1]} onPress={() => setModalVisible(!modalVisible)}>
-                        <Text style={[styles.buttonText1, styles.cancelButtonText1]}>Não</Text>
+                      <TouchableOpacity onPress={() => setOpenIda(!openIda)} style={[styles.modalButton2, styles.confirmButton1]}>
+                        <Text style={styles.buttonText1}>Escolher</Text>
                       </TouchableOpacity>
                     </View>
                   </View>
@@ -200,7 +198,7 @@ export default function Excecao({ navigation }) {
 
               {(opcao.indexOf(selectedOpcao) + 1 === 1 || opcao.indexOf(selectedOpcao) + 1 === 3) && (
                 <TouchableOpacity style={[styles.modalButton, styles.confirmButton]} onPress={() => setOpenVolta(true)}>
-                  <Text style={styles.buttonText}> Selecione o horario de volta</Text>
+                  <Text style={styles.buttonText}> Selecione o horario de volta: {opcaoVolta}</Text>
                 </TouchableOpacity>)}
 
               <Modal
@@ -223,10 +221,7 @@ export default function Excecao({ navigation }) {
                       <Picker.Item label="Noturno" value="noturno" />
                     </Picker>
                     <View style={styles.titulo1}>
-                    <TouchableOpacity style={[styles.modalButton2, styles.cancelButton1]} onPress={() => setModalVisible(!modalVisible)}>
-                        <Text style={[styles.buttonText1, styles.cancelButtonText1]}>Não</Text>
-                      </TouchableOpacity>
-                      <TouchableOpacity onPress={enviar} style={[styles.modalButton2, styles.confirmButton1]}>
+                      <TouchableOpacity onPress={() => setOpenVolta(!openVolta)} style={[styles.modalButton2, styles.confirmButton1]}>
                         <Text style={styles.buttonText1}>Sim</Text>
                       </TouchableOpacity>
                     </View>
