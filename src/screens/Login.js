@@ -45,7 +45,7 @@ export default function Login() {
                 value={login}
                 onChange={(e) => setLogin(e.target.value)}
               />
-              <label htmlFor="login">login</label>
+              <label htmlFor="login">Login</label>
             </div>
             <div className={styles.inputGroup}>
               <input

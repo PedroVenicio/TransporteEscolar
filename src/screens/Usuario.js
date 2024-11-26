@@ -97,7 +97,8 @@ function Usuario() {
         if (nome && endereco && bairro && cidade && cpf && telefone && email) {
             if (isMotorista == true) {
                 try {
-                    const login = nome + '.' + (ultimoIdMotorista + 1);
+                    const primeiroNome = nome.split(' ')[0];
+                    const login = primeiroNome + '.' + (ultimoIdMotorista + 1);
                     const senha = cpf.substring(6, 0);
                     axios.post('http://localhost:3000/motorista', {
                         nome, endereco, bairro, cidade, login, senha, cpf, telefone, email, foto, status: 1, adm: isAdm, status: 1, voto: 0
@@ -113,8 +114,8 @@ function Usuario() {
             }
             else {
                 try {
-
-                    const login = nome + '.' + (ultimoId + 1);
+                    const primeiroNome = nome.split(' ')[0];
+                    const login = primeiroNome + '.' + (ultimoId + 1);
                     const senha = cpf.substring(6, 0);
 
                     axios.post('http://localhost:3000/usuario', {
