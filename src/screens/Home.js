@@ -16,8 +16,8 @@ function Home() {
         function verify() {
             const token = localStorage.getItem('token');
             if (token == null) {
-                alert("Method not allowed")
-                navigate('/HomeGeral')
+                alert("Method not allowed");
+                navigate('/HomeGeral');
             }
         }
         verify()
@@ -25,6 +25,7 @@ function Home() {
 
     function voltarAction() {
         navigate('/HomeGeral');
+        localStorage.clear();
     }
 
     function crudUser() {
