@@ -33,7 +33,7 @@ export default function Excecao({ navigation }) {
   useEffect(() => {
     async function fetchUser() {
       try {
-        const response = await axios.get('http://192.168.0.223:3000/usuario')
+        const response = await axios.get('http://192.168.3.37:3000/usuario')
         const usuario = response.data.usuarios;
         setUsuarios(usuario);
 
@@ -52,7 +52,7 @@ export default function Excecao({ navigation }) {
     if (descricao && (opcaoIda !== 'nulo' || opcaoVolta !== 'nulo')) {
       try {
         const token = await AsyncStorage.getItem('token');
-        axios.post('http://192.168.0.223:3000/excessao',
+        axios.post('http://192.168.3.37:3000/excessao',
           {
             descricao: descricao,
             status: 0,
@@ -181,7 +181,6 @@ export default function Excecao({ navigation }) {
                       style={styles.Picker}
                       itemStyle={{ color: 'black', fontSize: 20 }}
                     >
-                      <Picker.Item label="Selecione o horário de ida" value="nulo" />
                       <Picker.Item label="Matutino" value="matutino" />
                       <Picker.Item label="Vespertino" value="vespertino" />
                       <Picker.Item label="Noturno" value="noturno" />
@@ -209,20 +208,19 @@ export default function Excecao({ navigation }) {
               >
                 <View style={styles.modalContainer3}>
                   <View style={styles.modalContent3}>
-                  <Picker
+                    <Picker
                       selectedValue={opcaoIda}
                       onValueChange={(value) => setOpcaoVolta(value)}
                       style={styles.Picker}
                       itemStyle={{ color: 'black', fontSize: 20 }}
                     >
-                      <Picker.Item label="Selecione o horário de volta" value="nulo" />
                       <Picker.Item label="Matutino" value="matutino" />
                       <Picker.Item label="Vespertino" value="vespertino" />
                       <Picker.Item label="Noturno" value="noturno" />
                     </Picker>
                     <View style={styles.titulo1}>
                       <TouchableOpacity onPress={() => setOpenVolta(!openVolta)} style={[styles.modalButton2, styles.confirmButton1]}>
-                        <Text style={styles.buttonText1}>Sim</Text>
+                        <Text style={styles.buttonText1}>Escolher</Text>
                       </TouchableOpacity>
                     </View>
                   </View>
@@ -262,8 +260,8 @@ export default function Excecao({ navigation }) {
                 onChangeText={setDescricao}
                 style={styles.motivo}
                 placeholderTextColor={'gray'}
-                multiline={true}
-                numberOfLines={10}
+                numberOfLines={2}
+                returnKeyType="done"
               />
 
               <TouchableOpacity style={[styles.modalButton, styles.confirmButton]} onPress={() => setModalVisible(true)}>
@@ -280,15 +278,15 @@ export default function Excecao({ navigation }) {
                 onRequestClose={() => setModalVisible(!modalVisible)}>
                 <View style={styles.modalContainer2}>
                   <View style={styles.modalContent2}>
-                    <View style={styles.titulo}>
-                      <Text style={styles.ttmodal}>Confirmar envio?</Text>
+                    <View style={styles.titulo1}>
+                      <Text style={styles.ttmoda1l}>Confirmar envio?</Text>
                     </View>
-                    <View style={styles.titulo}>
-                      <TouchableOpacity onPress={enviar} style={[styles.modalButton1, styles.confirmButton]}>
-                        <Text style={styles.buttonText}>Sim</Text>
+                    <View style={styles.titulo1}>
+                    <TouchableOpacity style={[styles.modalButton1, styles.cancelButton1]} onPress={() => setModalVisible(!modalVisible)}>
+                        <Text style={[styles.buttonText1, styles.cancelButtonText]}>Não, cancelar</Text>
                       </TouchableOpacity>
-                      <TouchableOpacity style={[styles.modalButton1, styles.cancelButton]} onPress={() => setModalVisible(!modalVisible)}>
-                        <Text style={[styles.buttonText, styles.cancelButtonText]}>Não</Text>
+                      <TouchableOpacity onPress={enviar} style={[styles.modalButton1, styles.confirmButton1]}>
+                        <Text style={styles.buttonText}>Sim</Text>
                       </TouchableOpacity>
                     </View>
                   </View>
@@ -444,14 +442,13 @@ const styles = StyleSheet.create({
   },
   motivo: {
     width: '100%',
-    height: '20%',
-    padding: 12,
-    marginVertical: 10,
+    height: '5%',
+    padding: 20,
+    marginVertical:20,
     borderRadius: 8,
     borderWidth: 1,
     borderColor: '#ddd',
     backgroundColor: '#f9f9f9',
-    justifyContent: 'flex-end',
     fontSize: 14,
   },
   Picker: {

@@ -26,7 +26,7 @@ export default function AlunosRota({ navigation, route }) {
         return `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${(date.getDate() + 1).toString().padStart(2, '0')}`;
     };
 
-    
+
 
     async function getRotas() {
         try {
@@ -117,19 +117,23 @@ export default function AlunosRota({ navigation, route }) {
                                 const aluno = usuarios.find(u => u.id.toString() === id.trim());
                                 console.log(aluno)
                                 return aluno ? (
-                                    <View key={aluno.id}>
-                                        <Text>{aluno.id}</Text>
-                                        <Text>{aluno.nome}</Text>
-                                    {aluno.foto ? (
-                                      <View style={styles.header}>
-                                        <View style={styles.divft}>
-                                          <Image style={styles.foto} source={{ uri: aluno.foto, }} />
-                                        </View>
-                                      </View>
-                                    ) : (
-                                      <Text>Carregando...</Text>
-                                    )}
-                                  </View>
+                                    <View key={aluno.id} style={styles.aluno}>
+                                        {aluno.foto ? (
+                                            <View style={styles.header}>
+                                                <View style={styles.divft}>
+                                                <Image style={styles.foto} source={{ uri: aluno.foto, }} />
+                                                </View>
+                                                <View style={styles.divinfo}>
+                                                <Text style={styles.headertxt2}>Nome: {aluno.nome}</Text>
+                                                <Text style={styles.headertxt2}>Bairro: {aluno.bairro}</Text>
+                                                <Text style={styles.headertxt2}>Endereço: {aluno.endereco}</Text>
+                                                </View>
+                                            </View>
+                                        ) : (
+                                            <Text>Carregando...</Text>
+                                        )}
+
+                                    </View>
                                 ) : null;
                             })
                         ) : (
@@ -166,5 +170,48 @@ const styles = StyleSheet.create({
     meio: {
         width: '100%',
         height: '85%',
+    },
+    aluno: {
+        width: '100%',
+        height: '20%',
+        justifyContent: 'left',
+        borderColor: 'gray',
+        borderWidth: 0.5,
+    },
+    header: {
+        width: '100%',
+        height: '100%',
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    headertxt2: {
+        color: '#7A1F1F',
+    },
+    divft: {
+        width:'20%',
+        height: '55%',
+        borderRadius: 100,
+        borderWidth: 2,
+        borderColor: '#7A1F1F',
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#ffffff',
+        marginLeft: 60,
+    },
+    divinfo: {
+        width:'80%',
+        height: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'left',
+        marginLeft: 20,
+    },
+    foto: {
+        height: '100%',
+        width: '100%',
+        borderRadius: 30,
     },
 });
