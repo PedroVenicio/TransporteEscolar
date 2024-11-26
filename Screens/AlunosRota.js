@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, Text, Image, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, Text, Image, TouchableOpacity, ScrollView } from 'react-native';
 import axios from 'axios';
 import HomeMotorista from './HomeMotorista';
 
@@ -27,7 +27,7 @@ export default function AlunosRota({ navigation, route }) {
         return `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${(date.getDate() + 1).toString().padStart(2, '0')}`;
     };
 
-    function Voltar (){
+    function Voltar() {
         navigation.navigate('HomeMotorista')
     }
 
@@ -112,42 +112,44 @@ export default function AlunosRota({ navigation, route }) {
                     <Text style={styles.bttxt}>Voltar</Text>
                 </TouchableOpacity>
             </View>
-            <View style={styles.meio}>
-                {rotaIda.length === 0 || rotaVolta.length === 0 ? (
-                    <Text>Carregando dados...</Text>
-                ) : (
-                    <>
-                        {rotaDisplay && rotaDisplay.alunos ? (
-                            rotaDisplay.alunos.split(',').map(id => {
-                                const aluno = usuarios.find(u => u.id.toString() === id.trim());
-                                console.log(aluno)
-                                return aluno ? (
-                                    <View key={aluno.id} style={styles.aluno}>
-                                        {aluno.foto ? (
-                                            <View style={styles.header}>
-                                                <View style={styles.divft}>
-                                                <Image style={styles.foto} source={{ uri: aluno.foto, }} />
+            <ScrollView>
+                <View style={styles.meio}>
+                    {rotaIda.length === 0 || rotaVolta.length === 0 ? (
+                        <Text>Carregando dados...</Text>
+                    ) : (
+                        <>
+                            {rotaDisplay && rotaDisplay.alunos ? (
+                                rotaDisplay.alunos.split(',').map(id => {
+                                    const aluno = usuarios.find(u => u.id.toString() === id.trim());
+                                    console.log(aluno)
+                                    return aluno ? (
+                                        <View key={aluno.id} style={styles.aluno}>
+                                            {aluno.foto ? (
+                                                <View style={styles.header}>
+                                                    <View style={styles.divft}>
+                                                        <Image style={styles.foto} source={{ uri: aluno.foto, }} />
+                                                    </View>
+                                                    <View style={styles.divinfo}>
+                                                        <Text style={styles.headertxt2}>Nome: {aluno.nome}</Text>
+                                                        <Text style={styles.headertxt2}>Bairro: {aluno.bairro}</Text>
+                                                        <Text style={styles.headertxt2}>Endereço: {aluno.endereco}</Text>
+                                                    </View>
                                                 </View>
-                                                <View style={styles.divinfo}>
-                                                <Text style={styles.headertxt2}>Nome: {aluno.nome}</Text>
-                                                <Text style={styles.headertxt2}>Bairro: {aluno.bairro}</Text>
-                                                <Text style={styles.headertxt2}>Endereço: {aluno.endereco}</Text>
-                                                </View>
-                                            </View>
-                                        ) : (
-                                            <Text>Carregando...</Text>
-                                        )}
+                                            ) : (
+                                                <Text>Carregando...</Text>
+                                            )}
 
-                                    </View>
-                                ) : null;
-                            })
-                        ) : (
-                            <Text>Rota não encontrada ou inexistente</Text>
-                        )}
-                    </>
-                )}
-            </View>
-        </View>
+                                        </View>
+                                    ) : null;
+                                })
+                            ) : (
+                                <Text>Rota não encontrada ou inexistente</Text>
+                            )}
+                        </>
+                    )}
+                </View>
+            </ScrollView>
+        </View >
     );
 }
 
@@ -198,7 +200,7 @@ const styles = StyleSheet.create({
         color: '#7A1F1F',
     },
     divft: {
-        width:'20%',
+        width: '20%',
         height: '55%',
         borderRadius: 100,
         borderWidth: 2,
@@ -209,7 +211,7 @@ const styles = StyleSheet.create({
         marginLeft: 60,
     },
     divinfo: {
-        width:'80%',
+        width: '80%',
         height: '100%',
         display: 'flex',
         flexDirection: 'column',
