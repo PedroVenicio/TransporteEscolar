@@ -112,16 +112,18 @@ export default function HomeAdm({ navigation }) {
                         {resolvidas == 0 ? <Text style={styles.tipotxt2}>Não há exceções resolvidas</Text> : resolvidas.map((excecao) => {
                             const usuario = usuarios.find(user => user.id == excecao.userId);
                             return (
-                                <View key={excecao.id} style={styles.separar}>
-                                    <Text>Motivo: {excecao.descricao}</Text>
-                                    <Text>Horario ida: {excecao.opcaoIda == 0 ? "não selecionado" : opcoesIda[excecao.opcaoIda - 1]}</Text>
-                                    <Text>Horario volta: {excecao.opcaoVolta == 0 ? "não selecionado" : opcoesVolta[excecao.opcaoVolta - 4]}</Text>
-                                    <Text>Data: {excecao.data.slice(5).split('00:00:00 GMT')}</Text>
-                                    <Text>Usuario: {usuario ? usuario.nome : "Usuário não encontrado"}</Text>
-                                    <Text>Estado: {excecao.status == 1 ? "Aprovado" : "Rejeitado"}</Text>
-                                    <TouchableOpacity onPress={() => definirExcecao(excecao.id, 0)}>
-                                        <Text>Alterar decisão</Text>
-                                    </TouchableOpacity>
+                                <View key={excecao.id} style={styles.card}>
+                                    <Text style={styles.cardtxt}>Usuario: {usuario ? usuario.nome : "Usuário não encontrado"}</Text>
+                                    <Text style={styles.cardtxt}>Horario ida: {excecao.opcaoIda == 0 ? "não selecionado" : opcoesIda[excecao.opcaoIda - 1]}</Text>
+                                    <Text style={styles.cardtxt}>Horario volta: {excecao.opcaoVolta == 0 ? "não selecionado" : opcoesVolta[excecao.opcaoVolta - 4]}</Text>
+                                    <Text style={styles.cardtxt}>Data: {excecao.data.slice(5).split('00:00:00 GMT')}</Text>
+                                    <Text style={styles.cardtxt}>Motivo: {excecao.descricao}</Text>
+                                    <Text style={styles.cardtxt}>Estado: {excecao.status == 1 ? "Aprovado" : "Rejeitado"}</Text>
+                                    <View style={styles.viewbotao}>
+                                        <TouchableOpacity style={styles.botaoalterar} onPress={() => definirExcecao(excecao.id, 0)}>
+                                            <Text style={styles.botaorecusartxt}>Alterar decisão</Text>
+                                        </TouchableOpacity>
+                                    </View>
                                 </View>
                             );
                         })}
@@ -204,16 +206,16 @@ const styles = StyleSheet.create({
     card: {
         backgroundColor: '#7A1F1F',
         marginTop: 15,
-        height: '40%',
-        width: '100%',
+        height: 200,
+        width: 300,
         paddingHorizontal: 20,
         paddingVertical: 30,
         justifyContent: 'center',
         borderRadius: 8,
         shadowColor: '#000',
-        shadowOffset: { width: 2, height: 2 }, 
+        shadowOffset: { width: 2, height: 2 },
         shadowOpacity: 0.3,
-        shadowRadius: 6, 
+        shadowRadius: 6,
     },
     cardtxt: {
         color: 'white',
@@ -228,6 +230,14 @@ const styles = StyleSheet.create({
     },
     botaorecusar: {
         width: '35%',
+        height: '65%',
+        backgroundColor: '#b90000',
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 4,
+    },
+    botaoalterar: {
+        width: '70%',
         height: '65%',
         backgroundColor: '#b90000',
         justifyContent: 'center',

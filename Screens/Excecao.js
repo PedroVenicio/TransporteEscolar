@@ -164,9 +164,9 @@ export default function Excecao({ navigation }) {
                 </View>
               ))}
 
-              {(opcao.indexOf(selectedOpcao) + 1 === 1 || opcao.indexOf(selectedOpcao) + 1 === 2) && (
+{(opcao.indexOf(selectedOpcao) + 1 === 1 || opcao.indexOf(selectedOpcao) + 1 === 2) && (
                 <TouchableOpacity style={[styles.modalButton, styles.confirmButton]} onPress={() => setOpenIda(true)}>
-                  <Text style={styles.buttonText}> Selecione o horario de ida: {opcaoIda}</Text>
+                  <Text style={styles.buttonText}> Selecione o horario de ida: {opcaoIda == 1 ? "matutino" : opcaoIda == 2 ? "vespertino" : "noturno"}</Text>
                 </TouchableOpacity>)}
 
               <Modal
@@ -184,7 +184,7 @@ export default function Excecao({ navigation }) {
                       itemStyle={{ color: 'black', fontSize: 20 }}
                     >
                       {usuario ? periodos.filter(p => p !== usuario.horarioida).map(p => (
-                        <Picker.Item key={p} label={p} value={p} />
+                        <Picker.Item key={p} label={p} value={p == "matutino" ? 1 : p == "vespertino" ? 2 : p == "noturno" ? 3 : "nulo"} />
                       )) : <Picker.Item label={"excecao indisponivel"} value={"nulo"} />}
                     </Picker>
                     <View style={styles.titulo1}>
@@ -199,7 +199,7 @@ export default function Excecao({ navigation }) {
 
               {(opcao.indexOf(selectedOpcao) + 1 === 1 || opcao.indexOf(selectedOpcao) + 1 === 3) && (
                 <TouchableOpacity style={[styles.modalButton, styles.confirmButton]} onPress={() => setOpenVolta(true)}>
-                  <Text style={styles.buttonText}> Selecione o horario de volta: {opcaoVolta}</Text>
+                  <Text style={styles.buttonText}> Selecione o horario de volta: {opcaoVolta == 4 ? "matutino" : opcaoVolta == 5 ? "vespertino" : "noturno"}</Text>
                 </TouchableOpacity>)}
 
               <Modal
@@ -217,7 +217,7 @@ export default function Excecao({ navigation }) {
                       itemStyle={{ color: 'black', fontSize: 20 }}
                     >
                       {usuario ? periodos.filter(p => p !== usuario.horariovolta).map(p => (
-                        <Picker.Item key={p} label={p} value={p} />
+                        <Picker.Item key={p} label={p} value={p == "matutino" ? 4 : p == "vespertino" ? 5 : p == "noturno" ? 6 : "nulo"} />
                       )) : <Picker.Item label={"excecao indisponivel"} value={"nulo"} />}
                     </Picker>
                     <View style={styles.titulo1}>
