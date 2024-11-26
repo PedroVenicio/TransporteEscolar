@@ -183,7 +183,7 @@ const styles = StyleSheet.create({
     },
     aluno: {
         width: '100%',
-        height: '20%',
+        height: '100%',
         justifyContent: 'left',
         borderColor: 'gray',
         borderWidth: 0.5,
@@ -200,8 +200,8 @@ const styles = StyleSheet.create({
         color: '#7A1F1F',
     },
     divft: {
-        width: '20%',
-        height: '55%',
+        width: '17%',
+        height: '80%',
         borderRadius: 100,
         borderWidth: 2,
         borderColor: '#7A1F1F',
