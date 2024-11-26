@@ -35,7 +35,7 @@ export default function Excecao({ navigation }) {
   useEffect(() => {
     async function fetchUser() {
       try {
-        const response = await axios.get('http://192.168.3.37:3000/usuario')
+        const response = await axios.get('http://192.168.0.223:3000/usuario')
         const usuario = response.data.usuarios;
         setUsuarios(usuario);
 
@@ -54,7 +54,7 @@ export default function Excecao({ navigation }) {
     if (descricao && (opcaoIda !== 'nulo' || opcaoVolta !== 'nulo')) {
       try {
         const token = await AsyncStorage.getItem('token');
-        axios.post('http://192.168.3.37:3000/excessao',
+        axios.post('http://192.168.0.223:3000/excessao',
           {
             descricao: descricao,
             status: 0,
@@ -183,9 +183,9 @@ export default function Excecao({ navigation }) {
                       style={styles.Picker}
                       itemStyle={{ color: 'black', fontSize: 20 }}
                     >
-                      {periodos.filter(p => p !== usuario.horarioida).map(p => (
+                      {usuario ? periodos.filter(p => p !== usuario.horarioida).map(p => (
                         <Picker.Item key={p} label={p} value={p} />
-                      ))}
+                      )) : "carregando"}
                     </Picker>
                     <View style={styles.titulo1}>
                       <TouchableOpacity onPress={() => setOpenIda(!openIda)} style={[styles.modalButton2, styles.confirmButton1]}>
@@ -216,10 +216,9 @@ export default function Excecao({ navigation }) {
                       style={styles.Picker}
                       itemStyle={{ color: 'black', fontSize: 20 }}
                     >
-                      {periodos.filter(p => p !== usuario.horariovolta).map(p => (
+                      {usuario ? periodos.filter(p => p !== usuario.horariovolta).map(p => (
                         <Picker.Item key={p} label={p} value={p} />
-                      ))}
-
+                      )) : "carregando"}
                     </Picker>
                     <View style={styles.titulo1}>
                       <TouchableOpacity onPress={() => setOpenVolta(!openVolta)} style={[styles.modalButton2, styles.confirmButton1]}>
